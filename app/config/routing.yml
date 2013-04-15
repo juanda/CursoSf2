@@ -1,0 +1,7 @@
+jc_sf2_templates:
+    resource: "@JCSf2TemplatesBundle/Resources/config/routing.yml"
+    prefix:   /templates
+
+jc_sf2_fundamentos:
+    resource: "@JCSf2FundamentosBundle/Resources/config/routing.yml"
+    prefix:   /fundamentos

@@ -1,0 +1,7 @@
+parameters:
+#    jc_sf2_templates.example.class: Jazzyweb\CursoSf2\LasTemplatesBundle\Example
+
+services:
+#    jc_sf2_templates.example:
+#        class: %jc_sf2_templates.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
