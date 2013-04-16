@@ -1,5 +1,5 @@
 jc_sf2_los_servicios_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: JCSf2LosServiciosBundle:Default:index }
     
 jc_sf2_los_servicios_servicio_basico:
