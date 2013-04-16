@@ -1,0 +1,23 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+
+{% block container %}
+
+<h3>Validación Directa</h3>
+<div class="well">
+    
+    
+   {% if errors|length > 0 %}
+      {% for error in errors %}
+        <div class="alert alert-error">
+        {{ error.message }}
+        </div>
+      {% endfor %}
+    {% else %}
+        <div class="alert alert-success">
+            La dirección de email es correcta!
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

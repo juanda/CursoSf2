@@ -4,11 +4,12 @@ namespace Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\EntidadEclectica;
+use Symfony\Component\Validator\Constraints\Email;
 
-class DefaultController extends Controller {
+class ValidacionController extends Controller {
 
     public function indexAction() {
-        return $this->render('JCSf2ValyFormsBundle:Default:index.html.twig');
+        return $this->render('JCSf2ValyFormsBundle:Validacion:index.html.twig');
     }
 
     public function validacionAction() {
@@ -53,7 +54,7 @@ class DefaultController extends Controller {
         $e2Errors = $validator->validate($e2);
         $e3Errors = $validator->validate($e3);
 
-        return $this->render('JCSf2ValyFormsBundle:Default:validacion.html.twig', array(
+        return $this->render('JCSf2ValyFormsBundle:Validacion:validacion.html.twig', array(
             'e1_errors' => $e1Errors,
             'e2_errors' => $e2Errors,
             'e3_errors' => $e3Errors,
@@ -61,6 +62,23 @@ class DefaultController extends Controller {
             'e2' => $e2,
             'e3' => $e3,
                 ));
+    }
+    
+    public function validacionDirectaAction(){
+        
+    $emailConstraint = new Email();
+    
+    $emailConstraint->message = 'Dirección de email inválida';
+    
+    $validator = $this->get('validator');
+    $errors = $validator->validateValue(
+        'juandalibaba@gmail.com',
+//         'juandalibaba at gmail.com',
+        $emailConstraint
+    );
+
+    return $this->render('JCSf2ValyFormsBundle:Validacion:validacionDirecta.html.twig', array('errors' => $errors));
+
     }
 
 }
