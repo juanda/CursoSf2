@@ -1,0 +1,81 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Ejemplo de servicio básico</h1>
+
+<p>
+    Este ejemplo muestra los aspectos básicos del registro de una clase como
+    servicio instanciable a través del contenedor de dependencias de Symfony2
+    (DIC)
+</p>
+
+<div class="well">
+    <p>
+        Este mensaje ha sido generado a partir de un servicio sencillo.
+
+        <span class="label label-success">{{ mensaje }}</span>
+    </p>
+</div>
+
+<h3>Explicación</h3>
+<p>
+
+    Se ha definido una clase en <code>Jazzyweb/CursoSf2/LosServiciosBundle/Services/EjemploServicio</code>
+    que satisface el requisito necesario para aplicar la inyección de dependencia, esto es, que
+    todas sus dependencias se pasan (inyectan) a través de los argumentos del constructor.
+
+<pre>
+namespace Jazzyweb\CursoSf2\LosServiciosBundle\Services;
+
+class EjemploService{
+    
+    public function __construct($p1, $p2) {
+        $this->p1 = $p1;
+        $this->p2 = $p2;        
+    }
+    
+    public function diHola(){
+        
+        return "EjemploServicio. p1=".$this->p1.",p2=".$this->p2;        
+    }   
+}
+</pre>   
+</p>
+
+<p>
+    A continuación se registra la clase como servicio en el archivo 
+    <code>Jazzyweb/CursoSf2/LosServiciosBundle/Resources/config/services.yml</code>:
+
+<pre>
+parameters:
+
+    jc_sf2_los_servicios.servicio_basico.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\EjemploService
+    jc_sf2_los_servicios.servicio_basico.p1: Hola
+    jc_sf2_los_servicios.servicio_basico.p2: Adios
+            
+services:
+    jc_sf2_los_servicios.servicio_basico:
+        class: %jc_sf2_los_servicios.servicio_basico.class%
+        arguments: [%jc_sf2_los_servicios.servicio_basico.p1%, %jc_sf2_los_servicios.servicio_basico.p2%]   
+</pre>
+</p>
+
+<p>
+    Y entonces ya podemos usar el servicio a través del contenedor de dependencias. Desde un controlador
+    podemos usar dicho contenedor para obtener una instancia del servicio mediante
+    <code>$this->get('nombre del servicio')</code>, y una vez que tengamos dicha instancia ya podemos 
+    usar sus métodos.
+</p>
+
+<pre>
+public function servicioBasicoAction() {
+        
+ $miServicio = $this->get('jc_sf2_los_servicios.servicio_basico');
+          
+ $mensaje = $miServicio->diHola();
+        
+ return $this->render('JCSf2LosServiciosBundle:Default:servicioBasico.html.twig', array('mensaje' => $mensaje));
+}
+</pre>
+
+{% endblock %}

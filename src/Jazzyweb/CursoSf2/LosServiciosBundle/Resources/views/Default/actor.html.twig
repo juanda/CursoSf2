@@ -1,0 +1,26 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+<h1>Películas del actor <i>{{ actor.first_name }} {{ actor.last_name }}</i></h1>
+
+<table class="table">
+    
+    <tr>
+        <th>Title</th>
+        <th>Description</th>        
+    </tr>
+    
+    {% for film in films %}
+    
+    <tr>
+        <td>{{ film.title }}</td>
+        <td>{{ film.description }}</td>
+    </tr>
+    
+    {% endfor %}
+
+</table>
+
+{% endblock %}
+

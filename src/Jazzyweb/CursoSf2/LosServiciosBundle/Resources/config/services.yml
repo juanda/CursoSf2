@@ -1,0 +1,43 @@
+parameters:
+#    jc_sf2_los_servicios.example.class: Jazzyweb\HelloBundle\Example
+    jc_sf2_los_servicios.servicio_basico.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\EjemploService
+    jc_sf2_los_servicios.servicio_basico.p1: Hola
+    jc_sf2_los_servicios.servicio_basico.p2: Adios
+    
+    jc_sf2_los_servicios.sakila.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\SakilaService
+    jc_sf2_los_servicios.sakila.dbname: sakila
+    jc_sf2_los_servicios.sakila.dbuser: root
+    jc_sf2_los_servicios.sakila.dbpass: root
+    jc_sf2_los_servicios.sakila.dbhost: localhost
+    jc_sf2_los_servicios.sakila.chatset: utf8
+    
+    
+    jc_sf2_los_servicios.invitacion.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\InvitacionService
+    
+    
+    
+services:
+#    jc_sf2_los_servicios.example:
+#        class: %jc_sf2_los_servicios.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    jc_sf2_los_servicios.servicio_basico:
+        class: %jc_sf2_los_servicios.servicio_basico.class%
+        arguments: [%jc_sf2_los_servicios.servicio_basico.p1%, %jc_sf2_los_servicios.servicio_basico.p2%]
+        
+    
+    jc_sf2_los_servicios.sakila:
+        class: %jc_sf2_los_servicios.sakila.class%
+        arguments:
+          - %jc_sf2_los_servicios.sakila.dbname%
+          - %jc_sf2_los_servicios.sakila.dbuser%
+          - %jc_sf2_los_servicios.sakila.dbpass%
+          - %jc_sf2_los_servicios.sakila.dbhost%
+          - %jc_sf2_los_servicios.sakila.chatset%
+   
+    jc_sf2_los_servicios.invitacion: 
+        class:  %jc_sf2_los_servicios.invitacion.class%
+        arguments:
+          - "@jc_sf2_los_servicios.sakila"
+          - "@mailer"
+          - "@templating"

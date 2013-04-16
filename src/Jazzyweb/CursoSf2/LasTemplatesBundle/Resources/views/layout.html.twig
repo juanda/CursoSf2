@@ -5,29 +5,43 @@
 {% block mainmenu %}
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
-       <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Curso Symfony2</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Inicio</a></li>
-              <li><a href="#about">Acerca de</a></li>
-              <li><a href="#contact">Contacto</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-      </div>
-     </div>
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">Curso Symfony2</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Inicio</a></li>
+                    <li><a href="#about">Acerca de</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
 </div>
 
 {% endblock %}
 
+<div id="wrap">
+
+    <!-- Begin page content -->
     <div class="container">
-    {% block container %}{% endblock %}
-    </div> <!-- /container -->
+        {% block container %}{% endblock%}
+        </div>
+
+    </div>
+
+    {% block footer %}
+    <hr/>
+    <footer>
+        <div class="container">
+            <p>Curso de Symfony2 by <a href="http://juandarodriguez.es">juandarodriguez.es</a></p>
+        </div>
+    </footer>
+    {% endblock %}
 
 {% endblock %}
 

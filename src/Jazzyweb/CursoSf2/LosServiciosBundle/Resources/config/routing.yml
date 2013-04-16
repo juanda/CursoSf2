@@ -1,0 +1,19 @@
+jc_sf2_los_servicios_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:index }
+    
+jc_sf2_los_servicios_servicio_basico:
+    pattern:  /servicio_basico
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:servicioBasico }
+
+jc_sf2_los_servicios_sakila_actores:
+    pattern:  /actores
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:actores }
+
+jc_sf2_los_servicios_sakila_actor:
+    pattern:  /actor/{id}
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:actor }
+    
+jc_sf2_los_servicios_sakila_invitacion:
+    pattern:  /invitacion/{id}/{to}
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:invitacion }

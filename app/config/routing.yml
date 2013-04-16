@@ -1,3 +1,7 @@
+jc_sf2_los_servicios:
+    resource: "@JCSf2LosServiciosBundle/Resources/config/routing.yml"
+    prefix:   /services
+
 jc_sf2_templates:
     resource: "@JCSf2TemplatesBundle/Resources/config/routing.yml"
     prefix:   /templates
