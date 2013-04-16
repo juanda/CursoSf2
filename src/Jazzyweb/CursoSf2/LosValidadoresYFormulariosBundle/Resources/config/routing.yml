@@ -1,0 +1,8 @@
+jc_sf2_valy_forms_homepage:
+    pattern:  /
+    defaults: { _controller: JCSf2ValyFormsBundle:Default:index }
+
+
+jc_sf2_valy_forms_validacion:
+    pattern:  /validacion
+    defaults: { _controller: JCSf2ValyFormsBundle:Default:validacion }

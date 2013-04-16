@@ -1,0 +1,7 @@
+parameters:
+#    jc_sf2_valy_forms.example.class: Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Example
+
+services:
+#    jc_sf2_valy_forms.example:
+#        class: %jc_sf2_valy_forms.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

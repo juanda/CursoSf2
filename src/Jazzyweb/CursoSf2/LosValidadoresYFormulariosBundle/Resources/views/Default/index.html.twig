@@ -1,0 +1,18 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Validación</h1>
+
+<p>
+<ul>
+    <li><a href="{{ path('jc_sf2_valy_forms_validacion') }}">Validadores en funcionamiento</a></li>
+</ul>
+</p>
+<p>
+    La validación se lleva a cabo mediante el servicio <code>validator</code>
+</p>
+
+<p>
+    <a href="http://symfony.com/doc/current/book/validation.html#constraints">Validadores</a>
+</p>
+{% endblock %}
