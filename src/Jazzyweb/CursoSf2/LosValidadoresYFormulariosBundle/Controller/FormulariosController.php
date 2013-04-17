@@ -3,7 +3,9 @@
 namespace Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\Computadora;
+use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\ConstanteUniversal;
+use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\ConstanteUniversalType;
+use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\CosaType;
 
 class FormulariosController extends Controller {
 
@@ -13,23 +15,73 @@ class FormulariosController extends Controller {
 
     public function enControladorAction() {
 
-        $computer = new Computadora();
+        $veloLuz = new ConstanteUniversal();
 
-        $form = $this->createFormBuilder($computer)
+        $veloLuz->setNombre('Velocidad de la luz');
+        $veloLuz->setValor('300000');
+
+        $form = $this->createFormBuilder($veloLuz)
                 ->add('nombre', 'text')
-                ->add('ubicacion', 'text')
-                ->add('so', 'choice', array(
-                    'choices' => array('0' => 'Linux', '1' => 'MacOSX', '2' => 'Windows'),
-                    'required' => true,
-                ))
-                ->add('ip', 'text')
-                ->add('mac', 'text')
-                ->add('ram', 'integer')
-                ->add('estaEnUso', 'radio')
+                ->add('valor', 'number')
+                ->add('unidad', 'text')
                 ->getForm();
+
+        return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
+                    'form' => $form->createView()
+        ));
+    }
+
+    public function enSuPropiaClaseAction() {
+
+        $veloLuz = new ConstanteUniversal();
+
+        $veloLuz->setNombre('Velocidad de la luz');
+        $veloLuz->setValor('300000');
+
+        $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
+
+        return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
+                    'form' => $form->createView()
+        ));
+    }
+
+    public function envioAction() {
+
+        $request = $this->getRequest();
+
+        $veloLuz = new ConstanteUniversal();
+
+        $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                // perform some action, such as saving the task to the database
+
+                $this->get('session')->getFlashBag()->add('notice', 'El formulario era válido!');
+
+
+                return $this->redirect($this->generateUrl('jc_sf2_valy_forms_formularios_envio'));
+            }
+        }
+
+//        return $this->render('JCSf2ValyFormsBundle:Formularios:formenvio.html.twig', array(
+//                    'form' => $form->createView()
+//        ));
         
-        return $this->render('JCSf2ValyFormsBundle:Formularios:enControlador.html.twig', array(
-            'form' => $form->createView()
+        return $this->render('JCSf2ValyFormsBundle:Formularios:formenviowidgets.html.twig', array(
+                    'form' => $form->createView()
+        ));
+    }
+    
+    
+    public function tiposDeWidgetsAction(){
+                        
+        $form = $this->createForm(new CosaType);
+        
+        return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
+                    'form' => $form->createView()
         ));
     }
 

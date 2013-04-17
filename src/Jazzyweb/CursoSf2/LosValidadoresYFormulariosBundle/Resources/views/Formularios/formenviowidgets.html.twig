@@ -1,0 +1,59 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+    <form action="{{ path('jc_sf2_valy_forms_formularios_envio') }}" method="post" {{ form_enctype(form) }} novalidate>
+
+
+    {% if app.request.method == 'POST' %}
+    {{ form_errors(form) }}
+
+        <div class="control-group {% if form.nombre.vars.errors %}error{% endif %}">
+        {{ form_label(form.nombre) }}
+            <div class="controls">
+            {{ form_widget(form.nombre) }} 
+            <span class="help-inline">{{ form_errors(form.nombre) }}</span>                                   
+            </div>
+        </div>  
+
+        <div class="control-group {% if form.valor.vars.errors %}error{% endif %}">
+        {{ form_label(form.valor) }}
+            <div class="controls">            
+            {{ form_widget(form.valor) }}        
+            <span class="help-inline">{{ form_errors(form.valor) }}</span>
+                    
+            </div>
+        </div>  
+
+        <div class="control-group {% if form.unidad.vars.errors %}error{% endif %}">
+        {{ form_label(form.unidad) }}
+            <div class="controls">
+            {{ form_widget(form.unidad) }} 
+            <span class="help-inline">{{ form_errors(form.unidad) }}</span>                                       
+            </div>
+        </div>  
+
+    {% else %}
+       <label>{{ form_label(form.nombre) }}</label>       
+       {{ form_widget(form.nombre) }}
+
+       <label>{{ form_label(form.valor) }}</label>       
+       {{ form_widget(form.valor) }}
+
+       <label>{{ form_label(form.unidad) }}</label>       
+       {{ form_widget(form.unidad) }}
+    {% endif %}
+
+    {{ form_rest(form) }}
+
+   <div class="control-group">
+   <input type="submit" />
+   </div>
+</form>
+{% endblock %}

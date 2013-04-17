@@ -18,3 +18,15 @@ jc_sf2_valy_forms_formularios:
 jc_sf2_valy_forms_formularios_en_controlador:
     pattern:  /formularios/en/controlador
     defaults: { _controller: JCSf2ValyFormsBundle:Formularios:enControlador }
+
+jc_sf2_valy_forms_formularios_en_controlador:
+    pattern:  /formularios/en/su/clase
+    defaults: { _controller: JCSf2ValyFormsBundle:Formularios:enSuPropiaClase }
+
+jc_sf2_valy_forms_formularios_envio:
+    pattern:  /formularios/envio
+    defaults: { _controller: JCSf2ValyFormsBundle:Formularios:envio }
+
+jc_sf2_valy_forms_formularios_tiposwidgets:
+    pattern:  /formularios/tipos/de/widgets
+    defaults: { _controller: JCSf2ValyFormsBundle:Formularios:tiposDeWidgets }
