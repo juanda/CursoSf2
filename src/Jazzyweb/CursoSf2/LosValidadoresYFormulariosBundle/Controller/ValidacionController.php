@@ -7,11 +7,7 @@ use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\EntidadEclectica;
 use Symfony\Component\Validator\Constraints\Email;
 
 class ValidacionController extends Controller {
-
-    public function indexAction() {
-        return $this->render('JCSf2ValyFormsBundle:Validacion:index.html.twig');
-    }
-
+    
     public function validacionAction() {
 
         $e1 = new EntidadEclectica();

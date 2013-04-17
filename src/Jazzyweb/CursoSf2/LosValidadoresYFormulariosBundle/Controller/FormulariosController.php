@@ -77,8 +77,10 @@ class FormulariosController extends Controller {
     
     
     public function tiposDeWidgetsAction(){
-                        
-        $form = $this->createForm(new CosaType);
+        
+        $datos = array('nombre' => 'Juanda', 'email' => 'juandalibaba@gmail.com');
+        
+        $form = $this->createForm(new CosaType, $datos);
         
         return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
                     'form' => $form->createView()

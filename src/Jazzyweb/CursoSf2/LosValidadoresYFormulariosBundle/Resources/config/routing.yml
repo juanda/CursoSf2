@@ -1,7 +1,6 @@
 jc_sf2_valy_forms_homepage:
     pattern:  /
-    defaults: { _controller: JCSf2ValyFormsBundle:Validacion:index }
-
+    defaults: { _controller: JCSf2ValyFormsBundle:Default:index }
 
 jc_sf2_valy_forms_validacion:
     pattern:  /validacion
@@ -19,7 +18,7 @@ jc_sf2_valy_forms_formularios_en_controlador:
     pattern:  /formularios/en/controlador
     defaults: { _controller: JCSf2ValyFormsBundle:Formularios:enControlador }
 
-jc_sf2_valy_forms_formularios_en_controlador:
+jc_sf2_valy_forms_formularios_en_su_clase:
     pattern:  /formularios/en/su/clase
     defaults: { _controller: JCSf2ValyFormsBundle:Formularios:enSuPropiaClase }
 

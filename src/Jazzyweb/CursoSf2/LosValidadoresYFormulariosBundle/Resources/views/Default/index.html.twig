@@ -1,0 +1,419 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Validación y Formularios</h1>
+
+<h2>Propósito</h2>
+<p>
+    El propósito del servicio de validación es comprobar si los atributos de un objeto
+    cumplen o no una seríe de reglas que hemos definido previamente. Mientras que la
+    finalidad del servicio de formularios es la de crear cómodamente formularios que,
+    por una parte serán enviados en un documento HTML en la respuesta, y por otra
+    servirán para asociar los datos que el cliente envía en la petición HTTP y comprobar
+    su validez antes de realizar ninguna operación. Para esta última función el servicio 
+    de formulario usa (depende de) el servicio de validación
+</p>
+
+<h2>El servicio de validación</h2>
+
+<h3>Validación de objetos planos</h3>
+
+<p>
+    La validación se lleva a cabo sobre objetos planos. Para ello se asignan a
+    cada atributo que deseemos validar alguno de los tipos de validadores que
+    nos ofrece Symfony2:
+</p>
+
+<div class="alert">
+    <a href="http://symfony.com/doc/current/book/validation.html#basic-constraints">Validadores de Sf2</a>
+</div>   
+
+<p>Esta asignación se hace por configuración (yml, xml, php o anotaciones). Por ejemplo:</p>
+
+<pre>
+/**  
+ * @Assert\Length(      
+ *      max = "255",      
+ *      maxMessage = "Este campo no puede tener más de 255 caracteres"
+ * )
+ */
+ private $descripcion;
+</pre>
+
+<p>
+    Una vez que tenemos asignados los validadores a los atributos del objeto
+    la validación se realiza mediante el servicio <code>validator</code>.
+    Por ejemplo, en un controlador:
+
+<pre>
+$validator = $this->get('validator');
+
+$errors = $validator->validate($e1);
+</pre>
+
+<p>
+    <code>errors</code> es un array con todos los errores detectados en la
+    validación.
+</p>
+
+Aquí puedes ver a los validadores en acción. El código involucrado en este 
+ejemplo es:
+
+<ul>
+    <li>
+        <code>Jazzyweb/CursoSf2/Entity/EntidadEclectica.php</code> es el objeto
+        plano cuyos atributos queremos validar.
+    </li>
+    <li>
+        El Controlador <code>JCSf2ValyFormsBundle:Validacion:validacion</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ValyFormsBundle:Validacion:validacion.html.twig</code>
+    </li>
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_valy_forms_validacion') }}">Validación en funcionamiento</a>
+</div>
+
+</p>
+
+<h3>Validación directa</h3>
+
+<p>
+    El servicio de validación también se puede utilizar directamente, esto es
+    sin necesidad de asignar validadores a los atributos de un objeto:
+
+<pre>
+$emailConstraint = new Email();
+    
+$emailConstraint->message = 'Dirección de email inválida';
+    
+$validator = $this->get('validator');
+$errors = $validator->validateValue(
+        'juandalibaba@gmail.com',
+        $emailConstraint
+    );
+</pre>
+
+<p>
+    Aquí puedes ver un ejemplo de validación directa. El código involucrado en este ejemplo es:
+</p>
+
+<ul>    
+    <li>
+        El Controlador <code>JCSf2ValyFormsBundle:Validacion:validacionDirecta</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ValyFormsBundle:Validacion:validacionDirecta.html.twig</code>
+    </li>
+</ul>
+<div class="alert">
+    <a href="{{ path('jc_sf2_valy_forms_validacion_directa') }}">Validación directa en funcionamiento</a>
+</div>
+</p>
+
+
+<h2>El servicio de Formularios</h2>
+
+<h3>Definición de un formulario directamente en un controlador</h3>
+
+<p>
+    La forma más directa de definir un formulario es haciéndolo directamente en
+    la acción:
+</p>
+
+<pre>
+public function enControladorAction() {
+
+    $veloLuz = new ConstanteUniversal();
+
+    $veloLuz->setNombre('Velocidad de la luz');
+    $veloLuz->setValor('300000');
+
+    $form = $this->createFormBuilder($veloLuz)
+             ->add('nombre', 'text')
+             ->add('valor', 'number')
+             ->add('unidad', 'text')
+             ->getForm();
+
+    return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
+               'form' => $form->createView()
+));
+    }
+
+</pre>
+
+<p>
+    Se añaden los campos que vaya a contener el formulario mediante el método <code>add()</code>
+    del servicio de creación de formularios. Para obtener el formulario en sí se usa el método
+    <code>getForm()</code> de este servicio.
+
+    El método <code>add()</code> admite tres argumentos:
+
+</p>
+<ul>
+    <li>
+        El primero es el nombre que tendrá el campo. Cuando se genere el HTML del campo
+        este nombre se usará para denominar a los atributos <code>id</code> y <code>name</code>.
+    </li>
+    <li>
+        El segundo es el tipo de campo.
+    </li>
+    <li>
+        El tercero es un array con las opciones del campo
+    </li>
+</ul>
+
+<p>
+    Aquí tienes la referencia completa de los campos de Symfony2 y sus opciones:
+</p>
+
+<div class="alert">
+    <a href="http://symfony.com/doc/current/book/forms.html#built-in-field-types">Built-in types de los campos de Symfony2</a>
+</div>
+
+Para pintar el formulario en la plantilla <i>twig</i> debemos crear una vista del mismo
+en la acción (<code>$form->createView()</code>) y pasarla a la plantilla.
+
+<p>
+    Aquí puedes ver un ejemplo donde se define un formulario directamente en el controlador.
+    El código involucrado en este ejemplo es:
+</p>
+
+<ul>    
+    <li>
+        El Controlador <code>JCSf2ValyFormsBundle:Formularios:enControlador</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ValyFormsBundle:Formularios:formularios.html.twig</code>
+    </li>
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_valy_forms_formularios_en_controlador') }}">Formularios definidos en el controlador</a>
+</div>
+
+
+<h3>Definición de un formulario en una clase</h3>
+
+<p>
+    Lo más correcto, sin embargo, es definir un <b>tipo</b> a partir del cual el servicio pueda construir
+    el formulario.
+</p>
+
+<p>
+    Un tipo es una clase que deriva de <code>Symfony\Component\Form\AbstractType</code> y en la que
+    se definen los campos del formulario:
+</p>
+
+<pre>
+namespace Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class ConstanteUniversalType extends AbstractType {
+
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $builder->add('nombre', 'text')
+                ->add('valor', 'number')
+                ->add('unidad', 'text');
+    }
+
+    public function getName() {
+        return 'constanteuniversal';
+    }
+
+}
+</pre>
+
+Ahora, para crear un formulario a partir del tipo en un controlador:
+
+<pre>
+public function enSuPropiaClaseAction() {
+
+   $veloLuz = new ConstanteUniversal();
+
+   $veloLuz->setNombre('Velocidad de la luz');
+   $veloLuz->setValor('300000');
+
+   $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
+
+   return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
+                    'form' => $form->createView()
+        ));
+    }
+</pre>
+
+<p>
+    Aquí puedes ver un ejemplo donde se define un formulario a través de un tipo en el controlador.
+    El código involucrado en este ejemplo es:
+</p>
+
+<ul>    
+    <li>
+        La clase <code>Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\ConstanteUniversalType</code> (el tipo)
+    </li>
+    <li>
+        El Controlador <code>JCSf2ValyFormsBundle:Formularios:enSuPropiaClase</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ValyFormsBundle:Formularios:formularios.html.twig</code>
+    </li>
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_valy_forms_formularios_en_su_clase') }}">Formularios definidos a través de un tipo</a>
+</div>
+
+<p>
+    Fíjate que estamos usando la misma plantilla twig para pintar otra acción distinta.
+</p>
+
+<h3>Manejo del envío de formularios(Handling submission)</h3>
+
+<p>
+    El procesamiento de formularios, esto es, la lectura de los datos enviados y
+    su validación previa antes de hacer nada con ellos, se puede realizar mediante la aplicación 
+    de un patrón muy útil y de amplia aplicación.
+</p>
+
+<p>
+    El siguiente código contiene los elementos estructurales fundamentales de dicho patrón:
+</p>
+
+<pre>
+ public function envioAction() {
+
+    $request = $this->getRequest();
+
+    $veloLuz = new ConstanteUniversal();
+
+    $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
+
+    if ($request->isMethod('POST')) {
+        $form->bind($request);
+
+        if ($form->isValid()) {
+           // perform some action, such as saving the task to the database
+
+           $this->get('session')->getFlashBag()->add('notice', 'El formulario era válido!');
+
+
+           return $this->redirect($this->generateUrl('jc_sf2_valy_forms_formularios_envio'));
+        }
+   }
+
+  return $this->render('JCSf2ValyFormsBundle:Formularios:formenvio.html.twig', array(
+           'form' => $form->createView()
+   ));
+            
+}
+</pre>
+
+<p>
+    El funcionamiento de este patrón es el siguiente:
+</p>
+
+<ul>
+    <li>
+        Se recoge la request y se crea un nuevo objeto del tipo que deseamos
+        validar y procesar. Utilizamos este objeto y el tipo correspondiente
+        para crear un formulario.
+    </li>
+    <li>
+        Se comprueba si la petición es de tipo <i>GET</i> o <i>POST</i>
+        <ul>
+            <li>
+                Si es de tipo <i>GET</i> lo único que debemos hacer es pintar el formulario,
+                esto es, enviar al cliente un formulario vacío.
+            </li>
+            <li>
+                Si es de tipo <i>POST</i> entonces se carga/vincula (bind) el formulario con los
+                datos que vienen en la request y se validan:
+                <ul>
+                    <li>
+                        Si son válidos se procesan los datos y se realiza una redirección a
+                        donde deseemos. Esta redirección es muy importante para que no se
+                        vuelvan a enviar los datos en una recarga accidental provocada por el
+                        usuario.                        
+                    </li>
+                    <li>
+                        Si no son válidos se vuelve a pintar el formulario. Pero esta vez
+                        con los datos que introdujo inicialmente el usuario y los errores
+                        que se han detectado. La plantilla debe saber pintar los errores que
+                        van en el formulario.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>       
+</ul>
+
+<p>
+    Aquí puedes ver un ejemplo donde se utiliza este patrón para manipular el envío de un formulario
+    El código involucrado en este ejemplo es:
+</p>
+
+<ul>       
+    <li>
+        El Controlador <code>JCSf2ValyFormsBundle:Formularios:envio</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ValyFormsBundle:Formularios:formenvio.html.twig</code>
+    </li>    
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_valy_forms_formularios_envio') }}">Manejo de envío de formularios</a>
+</div>
+
+<h3>Más control en el renderizado del formulario</h3>
+
+<p>
+    Podemos obtener más control a la hora de pintar el formulario en una plantilla utilizando
+    las funciones de twig:
+</p>
+
+<ul>
+    <li><code>form_widget</code></li>
+    <li><code>form_errors</code></li>
+    <li><code>form_label</code></li>
+    <li><code>form_rest</code></li>
+</ul>
+
+En la plantilla  <code>JCSf2ValyFormsBundle:Formularios:formenviowidgets.html.twig</code> puedes
+ver como se usan. Si quieres verlo funcionar cambia la plantilla con que se pinta el controlador 
+<code>JCSf2ValyFormsBundle:Formularios:envio</code> y usa esta última en lugar de 
+<code>JCSf2ValyFormsBundle:Formularios:formenvio.html.twig</code>.
+
+
+<h3>Tipos de widgets</h3>
+
+<p>
+    Aquí puedes ver un ejemplo donde se usan muchos de los tipos predefinidos 
+    de campos disponibles para la construcción de formularios en Symfony2.
+    El código involucrado en este ejemplo es:
+</p>
+
+<ul>       
+    <li>
+        El tipo <code>Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\CosaType</code>,
+        que define un montón de campos.
+    </li>
+    <li>
+        El Controlador <code>JCSf2ValyFormsBundle:Formularios:tiposDeWidgets</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ValyFormsBundle:Formularios:formulario.html.twig</code>
+    </li>    
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_valy_forms_formularios_tiposwidgets') }}">Ejemplo de formulario con muchos tipos de campo</a>
+</div>
+{% endblock %}
+
+
