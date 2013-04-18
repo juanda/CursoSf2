@@ -11,12 +11,49 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="brand" href="#">Curso Symfony2</a>
+            <a class="brand" href="{{ path('homepage') }}">Curso Symfony2</a>
             <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li class="active"><a href="#">Inicio</a></li>
-                    <li><a href="#about">Acerca de</a></li>
-                    <li><a href="#contact">Contacto</a></li>
+                <ul class="nav">                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Las plantillas <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('jc_sf2_templates_homepage') }}">Las plantillas</a></li>                            
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{{ path('jc_sf2_los_servicios_homepage') }}" class="dropdown-toggle" data-toggle="dropdown">Los servicios <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('jc_sf2_los_servicios_homepage') }}">Texto</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('jc_sf2_los_servicios_servicio_basico') }}">Ejemplo de servicio básico</a></li>
+                            <li><a href="{{ path('jc_sf2_los_servicios_sakila_actores') }}">Ejemplo de servicio sobre base de datos</a></li>                            
+                            <li><a href="{{ path('jc_sf2_los_servicios_sakila_invitacion', {id:1, to: 'juandalibaba@gmail'}) }}">Ejemplo de un servicio que depende del anterior servicio, del mailer y del templating</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="{{ path('jc_sf2_valy_forms_homepage') }}" class="dropdown-toggle" data-toggle="dropdown">Los validadores y formularios <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('jc_sf2_valy_forms_homepage') }}">Texto</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('jc_sf2_valy_forms_validacion') }}">Validación</a></li>
+                            <li><a href="{{ path('jc_sf2_valy_forms_validacion_directa') }}">Validación directa</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('jc_sf2_valy_forms_formularios_en_controlador') }}">Formularios en controlador</a></li>
+                            <li><a href="{{ path('jc_sf2_valy_forms_formularios_en_su_clase') }}">Formularios en su clase</a></li>
+                            <li><a href="{{ path('jc_sf2_valy_forms_formularios_envio') }}">Envío de formularios</a></li>
+                            <li><a href="{{ path('jc_sf2_valy_forms_formularios_tiposwidgets') }}">Tipos de widgets</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">El ORM Doctrine <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"></a></li>
+                        </ul>
+                    </li>                   
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

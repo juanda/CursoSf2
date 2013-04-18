@@ -10,4 +10,8 @@ class DefaultController extends Controller
     {
         return $this->render('JCSf2TemplatesBundle:Default:index.html.twig');
     }
+    
+    public function inicioAction(){
+        return $this->render('JCSf2TemplatesBundle:Default:inicio.html.twig');
+    }
 }
