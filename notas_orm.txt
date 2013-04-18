@@ -1,0 +1,91 @@
+http://docs.doctrine-project.org/projects/doctrine1/en/latest/en/index.html
+
+http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/annotations-reference.html
+
+php app/console generate:doctrine:entity
+
+generamos JCSf2FundamentosBundle:Actor y JCSf2FundamentosBundle:Pelicula
+
+repasamos el código generado y lo tuneamos (nullable="true"), ya tenemos entidades y metadatos
+
+
+
+configuramos parametros de conexión a BD
+
+php app/console doctrine:database:create
+
+php app/console doctrine:schema:create
+
+Cuando queramos actualizar
+
+php app/console doctrine:schema:update
+
+Aún no hemos terminado, quedan las relaciones, pero ya podemos ver como funciona esto.
+
+Insertamos algunos objetos
+
+Recuperamos por Id 
+
+el concepto de repositorio
+
+métodos 
+
+find($id), recupera el objeto con el id especificado por el argumento.
+findOneBy{Atributo}($valor), recupera en primer objeto que tienen como Atributo el parámetro pasado en el argumento. Por ejemplo, findOneByTitulo(), o findOneByTexto() son dos métodos de este tipo disponibles en el repositorio de la entidad Nota.
+findBy{Atributo}($valor), recupera en un ArrayCollection todos los objetos que tienen como Atributo el parámetro pasado en el argumento.
+findAll() recupera todos los objetos.
+
+Refinamos el modelo: las relaciones 1-N, N-1, N-M. El diagrama de bolitas puede ser interesante
+
+http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
+
+1-N, N-1
+--------
+
+En Actor:
+/**
+ * @ORM\OneToMany(targetEntity="Pelicula", mappedBy="actor")
+ */
+
+En Pelicula:
+/**
+ * @ORM\ManyToOne(targetEntity="Actor")
+ */
+
+Se actualizan las entidades (se vuelven a generar)
+
+php app/console doctrine:generate:Entities JCSf2ORMDoctrineBundle
+
+
+N-M
+---
+
+En Actor:
+
+/**
+ * @ORM\ManyToMany(targetEntity="Pelicula", inversedBy="actores")
+ */
+
+En Pelicula:
+
+/**
+ * @ORM\ManyToMany(targetEntity="Actor", mappedBy="peliculas")
+ */
+
+Se actualizan las entidades (se vuelven a generar)
+
+php app/console doctrine:generate:Entities JCSf2ORMDoctrineBundle
+
+Y se actualiza la base de datos:
+
+php app/console doctrine:schema:update --force
+
+Cambio de base de datos
+
+Y cambio metadatos, genero entidades y listo
+
+Creamos algunas dql en el controlador
+
+Creamos las mismas dqls en el repositorio
+
+

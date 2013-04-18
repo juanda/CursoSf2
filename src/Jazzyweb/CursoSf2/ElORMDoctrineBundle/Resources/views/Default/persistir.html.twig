@@ -1,0 +1,22 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Cómo persistir objetos planos</h1>
+
+<h3>Se han persistido en la base de datos los siguientes actores:</h3>
+
+<table class="table">
+    <tr>
+        <th>Nombre</th>        
+        <th>Apellidos</th>
+    </tr>    
+{% for actor in actores %}
+    <tr>
+        <td>{{ actor.nombre }}</td>
+   
+        <td>{{ actor.apellidos }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+{% endblock %}

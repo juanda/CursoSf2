@@ -1,3 +1,7 @@
+jc_sf2_orm_doctrine:
+    resource: "@JCSf2ORMDoctrineBundle/Resources/config/routing.yml"
+    prefix:   /doctrine
+
 jc_sf2_valy_forms:
     resource: "@JCSf2ValyFormsBundle/Resources/config/routing.yml"
     prefix:   /valyforms

@@ -1,0 +1,19 @@
+jc_sf2_orm_doctrine_homepage:
+    pattern:  /
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:index }
+
+jc_sf2_orm_doctrine_homepage:
+    pattern:  /persistir
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:persistir }
+
+jc_sf2_orm_doctrine_homepage:
+    pattern:  /modificar
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:modificar }
+
+jc_sf2_orm_doctrine_dql:
+    pattern:  /dql
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:dql }
+
+jc_sf2_orm_doctrine_dql_en_repositorio:
+    pattern:  /dql_en_repositorio
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:dqlEnRepositorio }

@@ -1,0 +1,62 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Ejemplos de consultas DQL</h1>
+
+<h3>Todos los actores cuyos nombres comienzan con A</h3>
+<table class="table">
+    <tr>
+        <th>Nombre</th>        
+        <th>Apellidos</th>
+    </tr>    
+{% for actor in actores %}
+    <tr>
+        <td>{{ actor.nombre }}</td>
+   
+        <td>{{ actor.apellidos }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+
+
+<h3>Todas las peliculas del actor con id=1</h3>
+<table class="table">
+    <tr>
+        <th>Titulo</th>        
+        <th>Descripcion</th>
+    </tr>    
+{% for pelicula in peliculas %}
+    <tr>
+        <td>{{ pelicula.titulo }}</td>
+   
+        <td>{{ pelicula.descripcion }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+
+<h3>Todas las películas en las que hay algún actor cuyo nombre es como JOHN%</h3>
+<table class="table">
+    <tr>
+        <th>Titulo</th>        
+        <th>Descripcion</th>
+        <th>Actores</th>
+    </tr>    
+{% for pelicula in peliculas2 %}
+    <tr>
+        <td>{{ pelicula.titulo }}</td>
+   
+        <td>{{ pelicula.descripcion }}</td>
+        <td>
+            {% for actor in pelicula.actores %}
+            | {{ actor.nombre }} {{ actor.apellidos }} | 
+            {% endfor %} 
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+{% endblock %}
+
+

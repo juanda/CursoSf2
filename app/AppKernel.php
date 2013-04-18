@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Jazzyweb\CursoSf2\LasTemplatesBundle\JCSf2TemplatesBundle(),
             new Jazzyweb\CursoSf2\LosServiciosBundle\JCSf2LosServiciosBundle(),
             new Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\JCSf2ValyFormsBundle(),
+            new Jazzyweb\CursoSf2\ElORMDoctrineBundle\JCSf2ORMDoctrineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

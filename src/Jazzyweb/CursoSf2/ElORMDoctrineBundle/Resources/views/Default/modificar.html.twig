@@ -1,0 +1,35 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Cómo modificar en la base de datos un objeto existente</h1>
+
+<h3>Se ha modificado en la base de datos el actor con id={{ actor.id }}:</h3>
+
+<h4>Datos antiguos</h4>
+<table class="table">
+    <tr>
+        <th>Nombre</th>        
+        <th>Apellidos</th>
+    </tr>    
+    <tr>
+        <td>{{ actorCopy.nombre }}</td>
+   
+        <td>{{ actorCopy.apellidos }}</td>
+    </tr>
+
+</table>
+
+<h4>Datos nuevos</h4>
+<table class="table">
+    <tr>
+        <th>Nombre</th>        
+        <th>Apellidos</th>
+    </tr>    
+    <tr>
+        <td>{{ actor.nombre }}</td>
+   
+        <td>{{ actor.apellidos }}</td>
+    </tr>
+
+</table>
+{% endblock %}
