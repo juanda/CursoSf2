@@ -113,6 +113,8 @@ class DefaultController extends Controller {
 
         $repoActores = $this->getDoctrine()
                 ->getRepository('JCSf2ORMDoctrineBundle:Actor');
+        
+        
 
         $actores = $repoActores->findByNombreLike("%JOHN%");
         

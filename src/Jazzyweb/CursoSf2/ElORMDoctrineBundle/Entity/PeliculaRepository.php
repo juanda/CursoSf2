@@ -15,7 +15,7 @@ class PeliculaRepository extends EntityRepository {
     public function findByActorId($actor_id) {
 
         // Todas las películas del actor con id=1
-        $query = $em->createQuery(
+        $query = $this->getEntityManager()->createQuery(
                         'SELECT p FROM JCSf2ORMDoctrineBundle:Pelicula p 
                          JOIN p.actores a
                          WHERE a.id = :actor_id'
@@ -26,7 +26,7 @@ class PeliculaRepository extends EntityRepository {
 
     public function findByActorNombreLike($patron) {
         // Todas las películas en las que hay algún actor cuyo nombre es como JOHN%
-        $query = $em->createQuery(
+        $query = $this->getEntityManager()->createQuery(
                         'SELECT p FROM JCSf2ORMDoctrineBundle:Pelicula p 
                          JOIN p.actores a
                          WHERE a.nombre LIKE :patron'

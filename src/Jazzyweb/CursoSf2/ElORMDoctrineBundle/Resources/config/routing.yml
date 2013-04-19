@@ -2,11 +2,11 @@ jc_sf2_orm_doctrine_homepage:
     pattern:  /
     defaults: { _controller: JCSf2ORMDoctrineBundle:Default:index }
 
-jc_sf2_orm_doctrine_homepage:
+jc_sf2_orm_doctrine_persistir:
     pattern:  /persistir
     defaults: { _controller: JCSf2ORMDoctrineBundle:Default:persistir }
 
-jc_sf2_orm_doctrine_homepage:
+jc_sf2_orm_doctrine_modificar:
     pattern:  /modificar
     defaults: { _controller: JCSf2ORMDoctrineBundle:Default:modificar }
 

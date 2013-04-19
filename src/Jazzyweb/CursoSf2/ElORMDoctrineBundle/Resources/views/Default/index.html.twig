@@ -2,4 +2,252 @@
 
 {% block container %}
 <h1>El ORM Doctrine</h1>
+
+<ul>
+    <li>
+        <a href="http://docs.doctrine-project.org/projects/doctrine1/en/latest/en/index.html">Documentación oficial</a>
+    </li>
+    <li>
+        <a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/annotations-reference.html">Documentación oficial sobre anotaciones</a>
+    </li>
+</ul>
+
+<h2>El concepto</h2>
+
+<p>
+    <img src="{{ asset('bundles/jcsf2ormdoctrine/images/doctrine_image_1.png') }}" />
+</p>
+
+<h2>Generación de las entidades</h2>
+
+<p>
+    Generamos dos entidades: <code>JCSf2FundamentosBundle:Actor</code> y <code>JCSf2FundamentosBundle:Pelicula</code>
+</p>
+
+<pre>
+# php app/console generate:doctrine:entity
+</pre>
+
+<p>
+    Repasamos el código generado y lo completamos con nuestras necesidades <code>(nullable="true")</code>. Ya tenemos entidades y metadatos.
+</p>
+
+<h2>Creación de la base de datos</h2>
+
+<p>
+    Configuramos parametros de conexión a BD en <code>app/config/parameters.yml</code>. Ten en cuenta que estos
+    parámetros donde se utilizan realmente es en la sección <code>doctrine</code>  de <code>app/config/config.yml</code>
+</p>
+
+<pre>
+# php app/console doctrine:database:create
+
+# php app/console doctrine:schema:create
+</pre>
+
+<p>
+    Cuando queramos actualizar la base de datos por que hayamos realizado cambios en los metadatos:
+</p>
+
+<pre>
+# php app/console doctrine:schema:update
+</pre>
+
+<p>
+    Aún no hemos terminado, quedan las relaciones, pero ya podemos ver el funcionamiento básico del ORM.
+</p>
+
+<h2>Persistir objetos</h2>
+
+<p>
+    Para persistir un objetos que sea instancia de alguna de nuestras entidades se utiliza el servicio de persistencia
+    de Doctrine. Basta con pasarle como argumento el objeto que deseamos persistir al método <code>persist</code> del
+    servicio. Es importante recordar que la persistencia no se hace efectiva hasta que no se llame al método
+    <code>flush()</code> del servicio. Este último método debería llamarse una sola vez cuando hayamos "encolado"
+    todas solicitudes de persistencia de nuestros objetos.
+</p>
+
+<p>
+    Aquí puedes la persistencia de objetos en acción. El código involucrado en este ejemplo es:
+</p>
+<ul>
+    <li>
+        La entidad <code>Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor</code>, ya que es un objeto
+        plano de este tipo el que queremos persistir.
+    </li>
+    <li>
+        El Controlador <code>JCSf2ORMDocrineBundle:Default:persitir</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ORMDocrineBundle:Default:persitir.html.twig</code>
+    </li>
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_orm_doctrine_persistir') }}">Persistencia en funcionamiento</a>
+</div>
+
+<h2>Recuperación y modificación de objetos</h2>
+
+<p>
+    Para modificar un objeto existente, primero hay que recuperarlo de la base de datos.
+    Una vez que lo tengamos lo podemos modificar mediante sus setters y persistirlo de nuevo
+    de la misma forma que lo hicimos antes.
+</p>
+
+<p>
+    Aquí puedes la modificación de objetos en acción. El código involucrado en este ejemplo es:
+</p>
+<ul>
+    <li>
+        La entidad <code>Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor</code>, ya que es un objeto
+        plano de este tipo el que queremos modificar.
+    </li>
+    <li>
+        El Controlador <code>JCSf2ORMDocrineBundle:Default:modificar</code> 
+    </li>
+    <li>
+        La plantilla <code>JCSf2ORMDocrineBundle:Default:modificar.html.twig</code>
+    </li>
+</ul>
+
+<div class="alert">
+    <a href="{{ path('jc_sf2_orm_doctrine_modificar') }}">Modificación de objetos en funcionamiento</a>
+</div>
+
+<h2>El repositorio</h2>
+
+En el código que hemos propuesto para recuperar y modificar un objeto se utiliza un concepto de Doctrine
+denominado <b>repositorio</b>.  Cada entidad tiene su repositorio, el cual no es más que una clase que
+contiene métodos para recuperar colecciones de objetos de esa entidad. Doctrine ofrece una serie de métodos
+muy útiles:
+
+* ``find($id)``, .
+
+* ``findOneBy{Atributo}($valor)``, recupera en primer objeto que tienen como 
+``Atributo`` el parámetro pasado en el argumento. Por ejemplo, ``findOneByTitulo()``,
+o ``findOneByTexto()`` son dos métodos de este tipo disponibles en el repositorio
+de la entidad ``Nota``.
+
+* ``findBy{Atributo}($valor)``, recupera en un ``ArrayCollection`` todos los objetos
+que tienen como ``Atributo`` el parámetro pasado en el argumento.
+
+* ``findAll()`` recupera todos los objetos.
+
+<ul>
+    <li>
+        <code>find($id)</code>,recupera el objeto con el ``id`` especificado por el argumento.
+    </li>
+    <li>
+        <code>findOneBy{Atributo}($valor)</code> recupera en primer objeto que tienen como ``Atributo`` el 
+        parámetro pasado en el argumento. Por ejemplo, <code>findOneByNombre("JOHN")</code> recuperaria
+        el primer actor con nombre JOHN.
+    </li>
+    <li>
+        <code>findBy{Atributo}($valor)</code> recupera en un <code>ArrayCollection</code> todos los objetos
+        que tienen como ``Atributo`` el parámetro pasado en el argumento.
+    </li>
+    <li>
+        <code>findAll()</code> recupera todos los objetos.
+    </li>
+</ul>
+
+<p>
+    No obstante, es muy probable que nuestra aplicación tenga necesiades más sofisticadas para la 
+    consulta y recuperación de objetos. Podemos, entonces, ampliar el repositorio con nuestros propios
+    métodos. Lo veremos más adelante.
+</p>
+
+<h2>Relaciones entre objetos</h2>
+
+<p>Las más típicas son:</p>
+
+<ul>
+    <li>1-N y N-1</li>
+    <li>N-M</li>
+</ul>
+<p>
+    Aunque existen algunas más (<a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html">Documentación oficial sobre asociaciones</a>)
+</p>
+
+<p>
+    Veamos como añadir los metadatos necesarios para añadir relaciones a nuestras entidades <code>Actor</code> y
+    <code>Pelicula</code>.
+</p>
+
+<p>
+    Si queremos que la relación sea 1-N de Actor a Pelicula, es decir que un Actor pueda tener muchas peliculas,
+    pero una película sólo pueda tener asociado un actor, debemos añadir un atributo <code>$peliculas</code> y
+    la siguiente anotación con información sobre la relación 1-N a la entidad Actor:
+</p>
+
+<pre>
+/**
+ * @ORM\OneToMany(targetEntity="Pelicula", mappedBy="actor")
+ */
+private $peliculas;
+
+</pre>
+
+Y en la entida Pelicula debemos añadir la parte N-1, es decir un atributo <code>$actor</code> y su anotación:
+
+<pre>
+/**
+ * @ORM\ManyToOne(targetEntity="Actor")
+ */
+private $actor;
+</pre>
+
+<p>
+    Ahora se deben actualizar las entidades (se vuelven a generar) para que se generen todos los getters y setters
+    asociados a los nuevos atributos:
+</p>
+
+<pre>
+php app/console doctrine:generate:Entities JCSf2ORMDoctrineBundle
+</pre>
+
+Y actualizamos la base de datos:
+
+<pre>
+# php app/console doctrine:schema:update
+</pre>
+
+<p>
+    Ahora vamos a tratar el caso más correcto para las relaciones entre actores y 
+    peliculas, que es el de una relación N-M:
+</p>
+
+<p>
+    Sustituimos la anotación del atributo <code>$peliculas</code> en la entidad Actor por:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToMany(targetEntity="Pelicula", inversedBy="actores")
+ */
+</pre>
+
+<p>
+    Y en la entidad pelicula sustituimos el atributo <code>$actor</code> por <code>$actores</code>,
+    ya que ahora una película también puede tener muchos actores. También cambiamos la anotación 
+    para que tenga en cuenta la relacion M-N:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToMany(targetEntity="Actor", mappedBy="peliculas")
+ */
+private $actores
+</pre>
+
+<p>
+    De nuevo se deben actualizar las entidades y la base de datos.
+</p>
+
+<h2>Las consultas DQL</h2>
+
+<h2>Los respositorios a medida</h2>
+
 {% endblock %}
+

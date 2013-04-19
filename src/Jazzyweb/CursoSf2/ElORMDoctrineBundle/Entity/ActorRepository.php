@@ -13,10 +13,12 @@ use Doctrine\ORM\EntityRepository;
 class ActorRepository extends EntityRepository {
 
     public function findByNombreLike($patron) {
+        
         // Todos los actores cuyo nombre comienza por 'A'
-        $queryActores = $em->createQuery(
+        $queryActores = $this->getEntityManager()->createQuery(
                         'SELECT a FROM JCSf2ORMDoctrineBundle:Actor a WHERE a.nombre LIKE :patron'
                 )->setParameter('patron', $patron);
+            
 
         return $queryActores->getResult();
     }       
