@@ -1,0 +1,19 @@
+jc_sf2_seguridad_login:
+    pattern:   /login
+    defaults:  { _controller: JCSf2SeguridadBundle:Default:login }
+    
+jc_sf2_seguridad_login_check:
+    pattern:   /check_signin
+
+jc_sf2_seguridad_logout:
+    pattern: /logout
+    
+jc_sf2_seguridad_segura:
+    pattern:  /segura
+    defaults: { _controller: JCSf2SeguridadBundle:Default:segura }
+
+jc_sf2_seguridad_no_segura:
+    pattern:  /nosegura
+    defaults: { _controller: JCSf2SeguridadBundle:Default:noSegura }
+
+

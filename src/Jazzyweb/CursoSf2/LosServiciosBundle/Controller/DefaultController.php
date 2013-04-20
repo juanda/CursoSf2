@@ -17,7 +17,9 @@ class DefaultController extends Controller {
         /**
          * wrapper de $this->container->get('jc_sf2_los_servicios.servicio_basico');
          */
-        $mensaje = $miServicio->diHola();
+        //$mensaje = $miServicio->diHola();
+        
+        $mensaje = $this->container->getParameter('database_user');
 
         return $this->render('JCSf2LosServiciosBundle:Default:servicioBasico.html.twig', array('mensaje' => $mensaje));
     }
@@ -52,7 +54,7 @@ class DefaultController extends Controller {
         $request = $this->getRequest();
         $id = $request->get('id');
         $to = $request->get('to');
-
+        
         $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
 
         $invitacionService->enviaInvitacion($id, $to);

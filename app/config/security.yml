@@ -16,6 +16,7 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    juanda: {password: juanda, roles: [ 'ROLE_ADMIN' ]}
 
     firewalls:
         dev:
@@ -37,6 +38,19 @@ security:
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
+        area_nosegura:
+            pattern:  ^/seguridad/(nosegura|login)
+            security: false
+            
+        area_segura:
+            pattern:    ^/seguridad/
+            form_login:                
+                login_path: jc_sf2_seguridad_login
+                check_path: jc_sf2_seguridad_login_check
+            logout:
+                path:   jc_sf2_seguridad_logout
+                target: jc_sf2_seguridad_no_segura
+           
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

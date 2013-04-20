@@ -2,6 +2,10 @@ homepage:
     pattern:  /
     defaults: { _controller: JCSf2TemplatesBundle:Default:inicio }
     
+jc_sf2_seguridad:
+    resource: "@JCSf2SeguridadBundle/Resources/config/routing.yml"
+    prefix:   /seguridad
+    
 jc_sf2_orm_doctrine:
     resource: "@JCSf2ORMDoctrineBundle/Resources/config/routing.yml"
     prefix:   /doctrine

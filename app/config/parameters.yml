@@ -5,6 +5,8 @@ parameters:
     database_name:     sakila
     database_user:     root
     database_password: root
+    
+    jc_sf2_los_servicios.servicio_basico.p1: estoy en app
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
