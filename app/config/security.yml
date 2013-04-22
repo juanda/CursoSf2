@@ -44,8 +44,12 @@ security:
             
         area_segura:
             pattern:    ^/seguridad/
-            http_basic:
-              realm: "Área Segura"
+            form_login:                
+                login_path: jc_sf2_seguridad_login
+                check_path: jc_sf2_seguridad_login_check
+            logout:
+                path:   jc_sf2_seguridad_logout
+                target: jc_sf2_seguridad_no_segura
            
 
     access_control:

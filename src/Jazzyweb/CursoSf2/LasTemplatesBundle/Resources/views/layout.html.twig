@@ -13,11 +13,23 @@
             </button>
             <a class="brand" href="{{ path('homepage') }}">Curso Symfony2</a>
             <div class="nav-collapse collapse">
-                <ul class="nav">                    
+                <ul class="nav">       
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Introducción<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('jc_sf2_fundamentos_homepage') }}">Texto</a></li>                            
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Los fundamentos<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Texto</a></li>                            
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Las plantillas <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('jc_sf2_templates_homepage') }}">Las plantillas</a></li>                            
+                            <li><a href="{{ path('jc_sf2_templates_homepage') }}">Texto</a></li>                            
                         </ul>
                     </li>
                     <li class="dropdown">

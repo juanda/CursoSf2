@@ -196,4 +196,8 @@ class Pelicula {
     {
         return $this->actores;
     }
+    
+    public function __toString() {
+        return $this->getTitulo();
+    }
 }
