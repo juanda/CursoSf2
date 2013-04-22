@@ -10,4 +10,9 @@ class DefaultController extends Controller
     {
         return $this->render('JCSf2FundamentosBundle:Default:index.html.twig');
     }
+    
+    public function fundamentosAction()
+    {
+        return $this->render('JCSf2FundamentosBundle:Default:fundamentos.html.twig');
+    }
 }

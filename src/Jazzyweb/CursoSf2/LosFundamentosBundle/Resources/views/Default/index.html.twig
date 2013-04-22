@@ -16,17 +16,17 @@
 
 <ul>
     <li>La propia <a target="_blank" href="https://github.com/juanda/CursoSf2">guía del curso</a> es también una aplicación Symfony2 
-            con snnipets de código para ilustrar los distintos temas que se tratan.
+        con snnipets de código para ilustrar los distintos temas que se tratan.
     </li>
     <li>
         La aplicación <a target="_blank" href="https://github.com/juanda/AlimentosPHP">AlimentosPHP</a>, construida en PHP crudo y
         que se desarrolla como ejemplo de aplicación MVC en la unidad 2 del curso;
     </li>
     Las aplicaciones <a target="_blank" href="https://github.com/juanda/AlimentosApp">AlimentosApp</a> y <a target="_blank" href="https://github.com/juanda/MentorNotasApp">MentorNotasApp</a> son dos aplicaciones Symfony2 que se
-        desarrollan en el <a target="_blank" href="http://juandarodriguez.es/.~~cursosf20~~/">curso</a>.
-    </li>
-    </li>
-    
+    desarrollan en el <a target="_blank" href="http://juandarodriguez.es/.~~cursosf20~~/">curso</a>.
+</li>
+</li>
+
 </ul>
 
 <h2>El Patrón de diseño Modelo-Vista-Controlador</h2>
@@ -49,10 +49,27 @@
 
     </li>
 </ul>
-
 <p>
     <img src="{{ asset('bundles/jcsf2fundamentos/img/mvc.png') }}"/>
 </p>
+
+<h3>Elementos típicos de aplicaciones PHP que implementan este patrón</h3>
+
+<ul>
+    <li>
+        El controlador frontal. Procesa todas las request, carga la configuración, realiza las tareas de inicialización (bootstraping), interpreta la request y elige la acción que se debe procesar.
+    </li>
+    <li>
+        Los controladores o acciones. Implementan cada una de las funcionalidades de la aplicación. Cada acción se asocia con una ruta. Se apoyan en el Modelo para obtener los datos y usan una plantilla para pintarlos.
+    </li>
+    <li>
+        Las plantillas. Son archivos mediante los cuales se pueden generar dinámicamente ficheros de texto en distintos formatos (HTML, JSON, XML ...)
+    </li>
+    <li>
+        Clases del modelo. Librerías que implementan la lógica de negocio de la aplicación.
+    </li>
+</ul>
+
 
 
 <div class="alert">
@@ -171,6 +188,10 @@
 &lt;/VirtualHost&gt
 </pre>
 
+<div class="alert">
+    <a href="{{ path('_welcome') }}">Aquí</a> puedes acceder a la demo que viene incluida en 
+    la distribución standard de Symfony2 en el bundle AcmeDemoBundle.
+</div>
 
 <h1></h1>
 

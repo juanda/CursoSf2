@@ -1,3 +1,7 @@
 jc_sf2_fundamentos_homepage:
     pattern:  /
     defaults: { _controller: JCSf2FundamentosBundle:Default:index }
+
+jc_sf2_fundamentos_texto:
+    pattern:  /fundamentos
+    defaults: { _controller: JCSf2FundamentosBundle:Default:fundamentos }

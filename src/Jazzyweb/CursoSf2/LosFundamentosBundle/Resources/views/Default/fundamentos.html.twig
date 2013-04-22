@@ -1,0 +1,180 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+<h1>Los Fundamentos</h1>
+
+<h2>Estructura de ficheros</h2>
+
+<ul>
+    <li>
+        <code>web</code>. Aquí se encuentran los controladores frontales y todos los assets (javascripts, css's, imágenes, ...)
+        del proyecto.
+    </li>
+
+    <li>
+        <code>app</code>. Bootstraping y configuración. Son especialmente relevantes los archivos:
+        <ul>
+            <li>
+                <code>cache</code>. Directorio usado por el mecanismo de cache de Symfony2. Debe tener permisos de
+                escritura para el web server,
+            </li>
+            <li>
+                <code>logs</code>. Directorio usado por el logger de Symfony2. Debe tener permisos de
+                escritura para el web server,
+            </li>
+            <li>
+                <code>AppKernel.php</code>, pues ahí se registran los bundles del proyecto.
+            </li>
+            <li>
+                <code>config/config_{entorno}.yml</code>. Es la configuración general del proyecto.                
+            </li>
+            <li>
+                <code>config/parameters.yml</code>. Declaración de los parámetros más relevantes de cara
+                a una instalación de la aplicación.
+            </li>
+            <li>
+                <code>config/routing.yml y config/routing_dev.php</code>. Definición de las rutas del proyecto.
+            </li>
+            <li>
+                <code>security.yml</code>. Configuración del componente de seguridad.
+            </li>
+            <li>
+                <code>AppKernel.php</code>, pues ahí se registran los bundles usados por el proyecto.
+            </li>
+            <li>
+                <code>console</code>. Es la navaja suiza de Symfony2. Una aplicación que nos asiste en 
+                el desarrollo de los proyectos.
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <code>src</code>. Aquí se encuentran el código que escribe el desarrollador de la aplicación organizado en bundles.
+    </li>
+    <li>
+        <code>vendors</code>. Aquí se encuentran todas las librerías de terceros, incluido el núcleo de Symfony2.
+    </li>
+
+    <li>
+        <code>bin</code>. El nombre de este directorio es un clásico en el mundo UNIX. En él se colocan archivos ejecutables.
+
+    </li>
+
+
+</ul>
+
+<h2>Creación de páginas web con Symfony2</h2>
+
+<h3>Generación de un bundle</h3>
+
+<pre>
+# php app/console generate:bundle
+</pre>
+
+<p>
+    Y se responde a las siguientes preguntas:
+</p>
+
+<pre>
+Bundle namespace: Jazzyweb/GeoLibBundle
+Bundle name [JazzywebGeoLibBundle]: [enter]
+Target directory [/home/juanda/sites/Symfony/src]: [enter]
+Configuration format (yml, xml, php, or annotation) [annotation]: yml
+Do you want to generate the whole directory structure [no]? yes
+
+You are going to generate a "Jazzyweb\GeoLibBundle\JazzywebGeoLibBundle" bundle
+in "/home/juanda/sites/Symfony/src/" using the "yml" format.
+
+Do you confirm generation [yes]? [enter]
+
+Confirm automatic update of your Kernel [yes]? [enter]
+
+Confirm automatic update of the Routing [yes]? [enter]
+</pre>
+
+<p>
+    Se prueba el bundle a través de la siguiente URL:
+    <a href="http://localhost/Symfony/web/app_dev.php/hello/world">http://localhost/Symfony/web/app_dev.php/hello/world</a>
+</p>
+
+<h3>Flujo básico de creación de páginas en Symfony2</h3>
+
+<ul>
+    <li>Creación de la ruta que mapea la URL de la página en una acción de algún controlador (<code>{Bundle}/config/Resources/routing.yml</code> , <code>app/config/routing</code>).</li>
+    <li>Creación de dicha acción en el controlador correspondiente (<code>{Bundle}/Controllers</code>).</li>
+    <li>Creación de la plantilla (<code>{Bundle}/Resources/views</code>)</li>
+</ul>
+
+<h3>Funcionamiento básico del framework</h3>
+<ul>
+    <li>Cada request es manejada por un sólo controlador frontal.</li>
+    <li>El Router lee e interpreta la URL de la petición, busca una ruta que coincida con dicha URL y le asigna su controlador asociado.</li>
+    <li>Se ejecuta el controlador, hace sus cositas y devuelve un objeto <code>Response</code></li>
+    <li>Se envía al cliente los header y contenido de la <code>Response</code></li>
+</ul>
+
+<h3>Definición de una ruta</h3>
+
+<pre>
+jc_sf2_fundamentos_texto:
+    pattern:  /fundamentos
+    defaults: { _controller: JCSf2FundamentosBundle:Default:fundamentos }
+</pre>
+
+<h3>Nombres lógicos de acciones y plantillas</h3>
+
+<p>
+    Dentro del framework, las plantillas y los controladores son denominados usando su nombre lógico.
+    La función de los nombres lógicos es doble:
+</p>
+
+<ul>
+    <li>
+        Nombrar unívocamente a la plantilla o al controlador.
+    </li>
+    <li>
+        Definir la ubicación física del archivo (plantilla/controlador)
+    </li>
+</ul>
+
+<p>
+    El formato de un nombre lógico es el que sigue:
+</p>
+
+<ul>
+    <li>
+        <code>NombreBundle:NombreControllador:NombreAccion</code> para un controlador
+    </li>
+    <li>
+        <code>NombreBundle:Directorio:NombrePlantilla</code> para un controlador
+    </li>
+</ul>
+
+<p>
+    Para las plantillas, <code>Directorio</code> es el directorio a partir del 
+    directorio <code>{bundle}/Resources/views</code>, donde se encuentra la plantilla.
+</p>
+
+<p>
+    Un Ejemplo de nombres lógico de controlador sería: <code>JazzywebGeoBundle:Geo2D:area</code>
+</p>
+
+<p>
+    Se trata de la acción <code>areaAction()</code> del controlador <code>{Bundle}/Controllers/Geo2DController</code> del
+    bundle <code>JazzywebGeoBundle</code>.
+</p>
+<p>
+    Y el de una plantilla: <code>JazzywebGeoBundle:Geo2D:area.html.twig</code>
+</p>
+<p>
+    Se trata de la plantilla <code>area.html.twig</code> que está en el directorio <code>{Bundle}/Resources/view/Geo2D</code>
+    del bundle <code>JazzywebGeoBundle</code>.
+</p>
+
+
+
+
+
+
+{% endblock %}
