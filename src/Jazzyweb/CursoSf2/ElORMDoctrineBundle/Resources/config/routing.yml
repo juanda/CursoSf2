@@ -1,7 +1,3 @@
-jc_sf2_orm_doctrine_actor:
-    resource: "@JCSf2ORMDoctrineBundle/Resources/config/routing/actor.yml"
-    prefix:   /actor
-
 jc_sf2_orm_doctrine_homepage:
     pattern:  /
     defaults: { _controller: JCSf2ORMDoctrineBundle:Default:index }
