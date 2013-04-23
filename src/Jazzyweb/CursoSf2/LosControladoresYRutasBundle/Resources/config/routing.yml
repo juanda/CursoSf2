@@ -1,0 +1,13 @@
+jc_sf2_control_rutas_homepage:
+    pattern:  /
+    defaults: { _controller: JCSf2ControlRutasBundle:Default:index }
+    
+jc_sf2_control_rutas_rutas:
+    pattern:  /rutas
+    defaults: { _controller: JCSf2ControlRutasBundle:Default:rutas }
+    
+jc_sf2_control_rutas_articulos:
+    pattern:  /articulos.{_format}
+    defaults: { _controller: JCSf2ControlRutasBundle:Default:articulos }
+    requirements:
+      _format: html|json

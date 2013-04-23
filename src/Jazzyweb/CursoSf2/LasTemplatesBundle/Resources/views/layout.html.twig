@@ -33,6 +33,16 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controladores y Rutas<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('jc_sf2_control_rutas_homepage') }}">Controladores</a></li> 
+                            <li class="divider"></li>
+                            <li><a href="{{ path('jc_sf2_control_rutas_rutas') }}">Rutas</a></li> 
+                            <li><a href="{{ path('jc_sf2_control_rutas_articulos', {'_format': 'html'}) }}">Artículos en HTML</a></li>
+                            <li><a href="{{ path('jc_sf2_control_rutas_articulos', {'_format': 'json'}) }}">Artículos en JSON</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="{{ path('jc_sf2_los_servicios_homepage') }}" class="dropdown-toggle" data-toggle="dropdown">Los servicios <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('jc_sf2_los_servicios_homepage') }}">Texto</a></li>

@@ -1,0 +1,6 @@
+{"articulos":  [
+{% for articulo in articulos%}
+       {"id": {{ articulo.id }}, "titulo": {{ articulo.titulo}}, "categoria": {{ articulo.categoria }} },       
+{% endfor %}
+     ]
+}

@@ -1,0 +1,347 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+<h1>Routing</h1>
+
+<p>
+    El componente <i>Routing</i> permite realizar las siguientes funciones:
+</p>
+
+<ul>
+    <li>Crear rutas limpias que se asocian a controladores</li>
+    <li>Generar desde las plantillas y controladores rutas dinámicamente</li>
+    <li>Cargar conjuntos de rutas desde los bundles</li>
+    <li>Depurar las rutas de un proyecto</li>
+</ul>
+
+<h2>Funcionamiento</h2>
+
+<p>
+    Las rutas se definen por configuración, ya sea utilizando ficheros (yml, xml o php) o anotaciones. 
+    En el primer caso se especifican un fichero definido en la configuración, y en el segundo caso se anotan en 
+    cada acción del controlador. La ubicación precisa del fichero de rutas a utilizar se hace en el apartado 
+    <code>framework:router</code> de la configuración del proyecto (ficheros <code>config_env.yml</code>).
+</p>
+
+<pre>
+#app/config/config.yml
+framework:
+    # ...
+    router:        { resource: "%kernel.root_dir%/config/routing.yml" }
+</pre>
+
+<h3>
+    Ejemplo de ruta en fichero yml
+</h3>
+<pre>
+# app/config/routing.yml
+blog_show:
+    path:      /blog/{slug}
+    defaults:  { _controller: AcmeBlogBundle:Blog:show }
+</pre>
+
+<h3>
+    Ejemplo de ruta en fichero xml
+</h3>
+<pre>
+&lt;!-- app/config/routing.xml --&gt;
+&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd"&gt;
+
+    &lt;route id="blog_show" path="/blog/{slug}"&gt;
+        &lt;default key="_controller"&gt;AcmeBlogBundle:Blog:show&lt;/default&gt;
+    &lt;/route&gt
+&lt;/routes&gt
+</pre>
+
+<h3>
+    Ejemplo de ruta en fichero php
+</h3>
+
+<pre>
+// app/config/routing.php
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+
+$collection = new RouteCollection();
+$collection->add('blog_show', new Route('/blog/{slug}', array(
+    '_controller' => 'AcmeBlogBundle:Blog:show',
+)));
+
+return $collection;
+</pre>
+
+<p>
+    La definición más sencilla de una ruta consta, como se puede ver en los ejemplos anteriores de dos partes:
+</p>
+
+<ul>
+    <li>El patrón de la ruta, que se especifica en el valor del elemento <code>path</code>.</li>
+    <li>Y el controlador sobre el que se mapea la ruta, que se especifica en el elemento <code>_controller</code>
+        del array <code>defaults</code></li>
+</ul>
+
+<p>
+    Utilizaremos en este curso los ficheros yml como formato de configuracion.
+</p>
+
+<p>
+    El siguiente gráfico muestra el funcionamiento del sistema de routing.
+</p>
+
+<img src="{{ asset('bundles/jcsf2controlrutas/images/request-flow.png') }}" />
+
+
+<h2>Pasando parámetros a través de rutas. Los placeholders</h2>
+
+<p>
+    Podemos hacer que partes de la ruta sean variables que se pasan como parametros GET al
+    controlador. Para ello basta con encerrar entre llaves al parámetro en cuestión. El 
+    nombre del parámetro que recibe el controlador coincide con el texto que está dentro
+    de las llaves. A estos parámetros encerrados entre llaves se les llama placeholders.
+
+    Cuando el sistema de routing casa (matches) la ruta de la URL con alguna ruta definida por 
+    nosotros establece el valor de cada parámetro teniendo en cuenta la posición del placeholder.
+</p>
+
+<h4>Ejemplos</h4>
+
+<pre>
+blog_show:
+    path:      /blog/{articulo_id}/{category}
+    defaults:  { _controller: AcmeBlogBundle:Blog:show }
+</pre>
+
+<p>
+    Las siguientes URL's casan con la ruta anterior:
+</p>
+
+<table class="table">
+    <tr>
+        <td>http://elservidor.com/app.php/blog/4/sociedad</td>
+        <td>Al controlador se le pasan las variables articulo_id=4 y category=sociedad </td>
+    </tr>
+    <tr>
+        <td>http://elservidor.com/app.php/blog/articulo1/deportes</td>
+        <td>Al controlador se le pasan las variables articulo_id=articulo1 y category=deportes </td>
+    </tr>
+</table>
+
+<h3>Placeholders opcionales</h3>
+
+<p>
+    Añadiendo un valor por defecto a algún placeholder en el array <code>defaults</code>, se considera
+    dicho placeholder opcional.
+</p>
+<pre>
+blog_show:
+    path:      /blog/{slug}
+    defaults:  { _controller: AcmeBlogBundle:Blog:show, slug: articulo1 }
+</pre>
+
+<p>
+    Para esta ruta la siguiente URL sería válida:   
+</p>
+
+<table class="table">
+    <tr>
+        <td>http://elservidor.com/app.php/blog</td>
+        <td>Al controlador se le pasan las variables slug=articulo1</td>
+    </tr>
+
+</table>
+
+<h2>Requisitos en las rutas</h2>
+
+<p>
+    También podemos exigir que nuestras rutas cumplan ciertos requisitos  mediante
+    la opción <code>requirements</code>:
+</p>
+
+<h3>Requisitos sobre los placeholders</h3>
+
+<pre>
+blog:
+    path:      /blog/{page}
+    defaults:  { _controller: AcmeBlogBundle:Blog:index, page: 1 }
+    requirements:
+        page:  \d+
+</pre>
+
+<p>
+    Especificamos el valor de los placeholders mendiante expresiones regurares como <code>\d+</code> (nº entero positivo)
+</p>
+
+<h3>Requisitos sobre el método HTTP</h3>
+
+<pre>
+contact:
+    path:     /contact
+    defaults: { _controller: AcmeDemoBundle:Main:contact }
+    methods:  [GET]
+
+contact_process:
+    path:     /contact
+    defaults: { _controller: AcmeDemoBundle:Main:contactProcess }
+    methods:  [POST]
+</pre>
+
+<h3>El parámetro especial <code>_format</code></h3>
+
+<p>
+    Si definimos en nuestra ruta un placeholder llamado {_fomat}, el framework
+    lo interpretará para definit el  Content-Type de la respuesta en función de
+    dicho parámetro. Este parámetro es muy útil para construir distintos formatos
+    de respuesta para la misma acción.
+</p>
+
+<h4>Ejemplo:</h4>
+
+<pre>
+articulos:
+    path:      /articulos.{_format}
+    defaults:  { _controller: AcmeBlogBundle:Blog:articulos }
+    requirements:
+        _format:  html|json|xml
+</pre>
+
+
+<div class="alert alert-danger">
+    <p> 
+        Cuando definamos nuestras rutas, es MUY importante tener en cuenta que el sistema
+        de routing usa la primera ruta que case con la URL. Por otro lado los placeholders 
+        y sus requisitos introducen cierto grado de generalidad en las rutas, por lo que puede
+        haber rutas que, al ser más específicas, machaquen a otras más generales. Por ello las 
+        rutas más generales deben colocarse detras de las más específicas.
+    </p>
+
+
+    <p>
+        Un ejemplo:
+    </p>
+
+    <pre>
+    blog:
+      path:      /blog/{page}
+      defaults:  { _controller: AcmeBlogBundle:Blog:index }      
+    
+    blog:
+      path:      /blog/{id}
+      defaults:  { _controller: AcmeBlogBundle:Blog:index }
+      requirements:
+        page:  \d+
+    </pre>
+
+    <p>
+        La segunda ruta nunca se ejecutará, pues al ser la primer más general, cualquier ruta
+        del tipo /blog/loquesea, casará con la primera. Por tanto hay que cambiarle el orden.
+    </p>
+</div>
+
+<h2>Capturando los parámetros en el controlador</h2>
+
+<p>
+    Supongamos que tenemos la siguiente ruta:
+</p>
+<pre>
+blog:
+  path:      /blog/{articulo_id}/{category}
+  defaults:  { _controller: AcmeBlogBundle:Blog:index }      
+</pre>
+
+<p>
+    En el controlador podemos capturar los párametros de dos formas:
+</p>
+
+<ol>
+    <li>
+        Mediante argumentos de la acción cuyos nombre coinciden con los placeholder.
+        <pre>
+        public function indexAction($articulo_id, $category){
+        ...
+        }
+        </pre>
+    </li>
+    <li>
+        Usando directamente el servicio <i>Request</i> en la acción.
+        <pre>
+        public function indexAction(){
+           $request = $this->getRequest();
+
+           $art_id = $request->get('articulo_id');
+           $cat    = $request->get('category);
+        }
+        </pre>
+    </li>
+</ol>
+
+<h2>Incluir ficheros de rutas externos</h2>
+
+<p>
+    Si se utiliza una configuración basada en ficheros (yml, xml o php), es una práctica
+    habitual colocar los ficheros de rutas en el propio bundle. Entonces, para que el framework
+    los cargue hay que incluirlos en el <code>app/config/routing.yml</code>.
+</p>
+
+<pre>
+# app/config/routing.yml
+acme_hello:
+    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+</pre>
+
+<p>
+    También es habitual colocar un prefijo a todas las rutas importadas:
+</p>
+
+<pre>
+# app/config/routing.yml
+acme_hello:
+    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+    prefix: /acme
+</pre>
+
+<h2>Generación dinámica de rutas en el controlador y en las plantillas</h2>
+
+<h3>En un controlador</h3>
+<p>
+    Se hace mediante el servicio <i>router</i>. Puede ser relativa:
+</p>
+<pre>
+$uri = $this->generateUrl('blog_show', array('slug' => 'my-blog-post'));
+// /blog/my-blog-post
+</pre>
+
+<p>
+    O absoluta (url completa)
+</p>
+
+<pre>
+uri = $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), true);
+</pre>
+
+<h3>En una plantilla</h3>
+
+<p>
+    Relativas:
+</p>
+
+<pre>
+
+&lt;a href="{ { path('blog_show', {'slug': 'my-blog-post'}) } }"&gt;
+  Read this blog post.
+&lt;/a&gt;
+
+</pre>
+<p>
+    O absoluta (url completa)
+</p>
+<pre>
+&lt;a href="{ { url('blog_show', {'slug': 'my-blog-post'}) } }"&gt;
+  Read this blog post.
+&lt;/a&gt;
+</pre>
+
+{% endblock %}

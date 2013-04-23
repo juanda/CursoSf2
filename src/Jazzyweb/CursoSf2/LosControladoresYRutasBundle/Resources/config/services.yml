@@ -1,0 +1,7 @@
+parameters:
+#    jc_sf2_control_rutas.example.class: Jazzyweb\CursoSf2\LosControladoresYRutasBundle\Example
+
+services:
+#    jc_sf2_control_rutas.example:
+#        class: %jc_sf2_control_rutas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
