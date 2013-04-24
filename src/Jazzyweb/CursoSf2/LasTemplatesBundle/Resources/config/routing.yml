@@ -1,3 +1,7 @@
 jc_sf2_templates_homepage:
     pattern:  /
     defaults: { _controller: JCSf2TemplatesBundle:Default:index }
+
+jc_sf2_templates_bootstrap:
+    pattern:  /bootstrap
+    defaults: { _controller: JCSf2TemplatesBundle:Default:bootstrap }

@@ -1,0 +1,41 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+<h1>Bundle para mostrar el uso de las plantillas twig</h1>
+
+<p>
+    El propósito de este bundle es mostrar como se trabaja en Symfony2 con las
+    plantillas <i>twig</i>. Para ello hemos incorporado el popular framework
+    HTML5 <a href="http://twitter.github.io/bootstrap">Bootstrap</a>.
+</p>
+<p>
+    Hemos seguido la estrategia de herencia en tres niveles recomendada por los
+    desarrolladores de Symfony2:
+</p>
+<ul>
+    <li>
+        En la plantilla <code>JCSf2TemplatesBundle::base.html.twig</code> definimos 
+        la estructura básica del fichero HTML, con sus secciones <code>head</code> y
+        <code>body</code>.
+    </li>
+    <li>
+        La plantilla <code>JCSf2TemplatesBundle::layout.html.twig</code> extiende
+        a la anterior y define una barra de navegación superior y fija así como 
+        un pie de página.
+    </li>
+    <li>
+        Por último las plantillas con las que se pintan el resultado de las acciones,
+        debe extender a <code>JCSf2TemplatesBundle::layout.html.twig</code>  y 
+        definir su propio contenido.
+    </li>
+</ul>
+
+<p>
+    Estas plantillas pueden ser utilizadas desde cualquier otro <i>bundle</i>.
+</p>
+
+{% endblock %}
+
+
+

@@ -25,21 +25,23 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('jc_sf2_fundamentos_texto') }}">Texto</a></li>                            
                         </ul>
+                    </li>                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controladores y Rutas<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('jc_sf2_control_rutas_rutas') }}">Rutas</a></li> 
+                            <li><a href="{{ path('jc_sf2_control_rutas_articulos', {'_format': 'html'}) }}">Artículos en HTML</a></li>
+                            <li><a href="{{ path('jc_sf2_control_rutas_articulos', {'_format': 'json'}) }}">Artículos en JSON</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('jc_sf2_control_rutas_controller') }}">Controladores</a></li> 
+
+                        </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Las plantillas <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('jc_sf2_templates_homepage') }}">Texto</a></li>                            
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Controladores y Rutas<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('jc_sf2_control_rutas_controller') }}">Controladores</a></li> 
-                            <li class="divider"></li>
-                            <li><a href="{{ path('jc_sf2_control_rutas_rutas') }}">Rutas</a></li> 
-                            <li><a href="{{ path('jc_sf2_control_rutas_articulos', {'_format': 'html'}) }}">Artículos en HTML</a></li>
-                            <li><a href="{{ path('jc_sf2_control_rutas_articulos', {'_format': 'json'}) }}">Artículos en JSON</a></li>
+                            <li><a href="{{ asset('bundles/jcsf2templates/twig.html') }}">Texto</a></li> 
+                            <li><a href="{{ path('jc_sf2_templates_bootstrap') }}">Adaptación a bootstrap</a></li> 
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -92,7 +94,7 @@
     <div class="container">
         {% block container %}{% endblock%}
         </div>
-    
+
     {% if code is defined %}
         <h2>Code behind this page</h2>
         <div class="block">
