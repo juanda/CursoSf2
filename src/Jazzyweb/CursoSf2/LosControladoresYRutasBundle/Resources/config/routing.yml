@@ -1,13 +1,17 @@
 jc_sf2_control_rutas_homepage:
     pattern:  /
-    defaults: { _controller: JCSf2ControlRutasBundle:Default:index }
+    defaults: { _controller: JCSf2ControlRutasBundle:Routing:index }
     
 jc_sf2_control_rutas_rutas:
     pattern:  /rutas
-    defaults: { _controller: JCSf2ControlRutasBundle:Default:rutas }
+    defaults: { _controller: JCSf2ControlRutasBundle:Routing:index }
     
 jc_sf2_control_rutas_articulos:
     pattern:  /articulos.{_format}
-    defaults: { _controller: JCSf2ControlRutasBundle:Default:articulos }
+    defaults: { _controller: JCSf2ControlRutasBundle:Routing:articulos }
     requirements:
       _format: html|json
+      
+jc_sf2_control_rutas_controller:
+    pattern:  /controller
+    defaults: { _controller: JCSf2ControlRutasBundle:Controller:index }

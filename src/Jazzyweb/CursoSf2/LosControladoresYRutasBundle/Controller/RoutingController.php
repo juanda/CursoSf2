@@ -4,15 +4,11 @@ namespace Jazzyweb\CursoSf2\LosControladoresYRutasBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller {
+class RoutingController extends Controller {
 
     public function indexAction() {
-        return $this->render('JCSf2ControlRutasBundle:Default:index.html.twig');
-    }
-
-    public function rutasAction() {
-        return $this->render('JCSf2ControlRutasBundle:Default:rutas.html.twig');
-    }
+        return $this->render('JCSf2ControlRutasBundle:Routing:index.html.twig');
+    }    
 
     public function articulosAction($_format) {
 
@@ -37,7 +33,7 @@ class DefaultController extends Controller {
 //        $request = $this->getRequest();
 //        $_format = $request->getRequestFormat();
         
-        return $this->render('JCSf2ControlRutasBundle:Default:articulos.'.$_format.'.twig', array('articulos' => $articulos));
+        return $this->render('JCSf2ControlRutasBundle:Routing:articulos.'.$_format.'.twig', array('articulos' => $articulos));
     }
 
 }

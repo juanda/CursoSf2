@@ -1,0 +1,238 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+<h1>Controller</h1>
+
+<p>El único requisito de un controlador es devolver un objeto Response. A los controladores también 
+    se les llama <b>acciones</b>.
+</p>
+
+<p>
+    Un controlador o acción puede ser cualquier función callable de PHP. Lo más cómodo es agrupar las
+    acciones en clases que tengan que ver con una misma funcionalidad. Además, para sacar más provecho del
+    framework, lo más útil es hacer que esta clase derive de 
+    Symfony\Bundle\FrameworkBundle\Controller\Controller, pues ofrece muchos métodos útiles para:
+</p>
+
+<ul>
+    <li>leer la Request</li>
+    <li>generar rutas</li>
+    <li>hacer redirecciones</li>
+    <li>hacer fordward hacia otro controlador</li>
+    <li>devolver errores 404 (excepciones)</li>
+    <li>renderizar respuestas</li>
+    <li>construir formularios</li>
+    <li>tratar con la sesión</li>
+</ul>
+
+<p>
+    Estos métodos son conocidos como <b>Helpers</b> Helpers
+    En la <a href="http://api.symfony.com/2.2/index.html">API</a> de Symfony2 puedes verlos todos.
+</p>
+
+<h2>Argumentos de las funciones controladoras</h2>
+
+<p>
+    El framework pasa a las funciones controladoras los argumentos que se especifican en su ruta asociada mediante 
+    parámetros. El nombre del argumento debe coincidir con el del parámetro en la ruta. 
+    (Ver el apartado correspondiente en <a href="{{ path('jc_sf2_control_rutas_rutas')}}">Rutas</a>). Por ejemplo:
+</p>
+
+<p>
+    Desde la ruta:
+</p>
+<pre>
+hello:
+    path:      /hello/{first_name}/{last_name}
+    defaults:  { _controller: AcmeHelloBundle:Hello:index, color: green }
+</pre>
+
+<p>
+    Se le pasa al controlador los argumentos cuyos nombres coinciden con los de los placeholders
+</p>
+<pre>
+public function indexAction($first_name, $last_name, $color)
+{
+    // ...
+}
+</pre>
+
+<p>
+    Si hacemos que nuestros controladores extiendan la clase <code>Symfony\Bundle\FrameworkBundle\Controller\Controller</code>,
+    que es lo más adecuado, hay una manera directa de recoger los parámetros de la query sin necesidad de utilizar los parámetros
+    de la función controladora. Se trata de recuperar el objeto request completo y pedir los parámetros que 
+    necesitemos:
+</p>
+
+<pre>
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+public function indexAction()
+{
+            $request = $this->getRequest();
+
+            $name = $request->get('name');
+}
+</pre>
+
+
+<h2>Helpers de la clase base <code>Symfony\Bundle\FrameworkBundle\Controller\Controller</code></h2>
+
+<h3>Redirección</h3>
+
+<pre>
+public function indexAction()
+{
+    return $this->redirect($this->generateUrl('homepage'));
+}
+</pre>
+
+<h3>Forwarding</h3>
+<pre>
+public function indexAction($name)
+{
+    $response = $this->forward('AcmeHelloBundle:Hello:fancy', array(
+        'name'  => $name,
+        'color' => 'green',
+    ));
+
+    // ... further modify the response or return it directly
+
+    return $response;
+}
+</pre>
+
+<h2>Errores y páginas 404</h2>
+
+<p>Excepciones</p>
+<pre>
+public function indexAction()
+ {
+    ...
+    throw new \Exception('Something went wrong!');
+...
+ }
+</pre>
+
+<p>Error 404</p>
+<pre>
+public function indexAction()
+{
+    // retrieve the object from database
+    $product = ...;
+    if (!$product) {
+        throw $this->createNotFoundException('The product does not exist');
+    }
+
+    return $this->render(...);
+}
+</pre>
+
+<h2>Renderizado de la plantilla</h2>
+
+<pre>
+public function indexAction(){
+   ...
+   return $this->render('AcmeDemoBundle:Demo:index.html.twig', array('name' => $nombre))
+
+}
+</pre>
+
+
+<h2>Manejo de la sesión</h2>
+
+<pre>
+public function indexAction(){
+   ...
+   $session = $this->getRequest()->getSession();
+
+   // store an attribute for reuse during a later user request
+   $session->set('foo', 'bar');
+
+   // in another controller for another request
+   $foo = $session->get('foo');
+
+   // use a default value if the key doesn't exist
+   $filters = $session->get('filters', array());
+
+</pre>
+
+<h2>Atributos flash</h2>
+
+<pre>
+public function updateAction()
+{
+    $form = $this->createForm(...);
+
+    $form->bind($this->getRequest());
+    if ($form->isValid()) {
+        // do some sort of processing
+
+        $this->get('session')->getFlashBag()->add('notice', 'Your changes were saved!');
+
+        return $this->redirect($this->generateUrl(...));
+    }
+
+    return $this->render(...);
+}
+</pre>
+
+<p>Y en la plantilla:</p>
+
+<pre>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="flash-notice">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+</pre>
+
+<h2>Manejo de la Request</h2>
+
+<pre>
+public function indexAction(){
+   ...
+   $request = $this->getRequest();
+
+   $request->isXmlHttpRequest(); // is it an Ajax request?
+
+   $request->getPreferredLanguage(array('en', 'fr'));
+
+   $request->query->get('page'); // get a $_GET parameter
+
+   $request->request->get('page'); // get a $_POST parameter
+}
+</pre>
+
+<h2>Manejo de la Response</h2>
+
+<pre>
+use Symfony\Component\HttpFoundation\Response;
+
+public function indexAction(){
+   ...
+   // create a simple Response with a 200 status code (the default)
+   $response = new Response('Hello '.$name, 200);
+
+   // create a JSON-response with a 200 status code
+   $response = new Response(json_encode(array('name' => $name)));
+   $response->headers->set('Content-Type', 'application/json');
+}
+</pre>
+
+<h2>Otros servicios accesibles desde el controlador</h2>
+
+<pre>
+$request = $this->getRequest();
+
+$templating = $this->get('templating');
+
+$router = $this->get('router');
+
+$mailer = $this->get('mailer');
+
+$otro = $this->get('otro_servicio_definido_por_el_usuario');
+</pre>
+
+{% endblock %}
