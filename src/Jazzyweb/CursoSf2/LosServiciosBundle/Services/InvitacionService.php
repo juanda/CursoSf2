@@ -20,7 +20,7 @@ class InvitacionService {
                 ->setTo($to)
                 ->setBody(
                 $this->templating->render(
-                        'JCSf2LosServiciosBundle:Default:email.html.twig', array('film' => $film)
+                        'JCSf2LosServiciosBundle:Default:email.txt.twig', array('film' => $film)
                 )
                 )
         ;
