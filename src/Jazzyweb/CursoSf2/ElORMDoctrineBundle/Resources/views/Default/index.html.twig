@@ -122,30 +122,19 @@ denominado <b>repositorio</b>.  Cada entidad tiene su repositorio, el cual no es
 contiene métodos para recuperar colecciones de objetos de esa entidad. Doctrine ofrece una serie de métodos
 muy útiles:
 
-* ``find($id)``, .
-
-* ``findOneBy{Atributo}($valor)``, recupera en primer objeto que tienen como 
-``Atributo`` el parámetro pasado en el argumento. Por ejemplo, ``findOneByTitulo()``,
-o ``findOneByTexto()`` son dos métodos de este tipo disponibles en el repositorio
-de la entidad ``Nota``.
-
-* ``findBy{Atributo}($valor)``, recupera en un ``ArrayCollection`` todos los objetos
-que tienen como ``Atributo`` el parámetro pasado en el argumento.
-
-* ``findAll()`` recupera todos los objetos.
 
 <ul>
     <li>
-        <code>find($id)</code>,recupera el objeto con el ``id`` especificado por el argumento.
+        <code>find($id)</code>,recupera el objeto con el <code>id</code> especificado por el argumento.
     </li>
     <li>
-        <code>findOneBy{Atributo}($valor)</code> recupera en primer objeto que tienen como ``Atributo`` el 
+        <code>findOneBy{Atributo}($valor)</code> recupera en primer objeto que tienen como <code>Atributo</code> el 
         parámetro pasado en el argumento. Por ejemplo, <code>findOneByNombre("JOHN")</code> recuperaria
         el primer actor con nombre JOHN.
     </li>
     <li>
         <code>findBy{Atributo}($valor)</code> recupera en un <code>ArrayCollection</code> todos los objetos
-        que tienen como ``Atributo`` el parámetro pasado en el argumento.
+        que tienen como <code>Atributo</code> el parámetro pasado en el argumento.
     </li>
     <li>
         <code>findAll()</code> recupera todos los objetos.

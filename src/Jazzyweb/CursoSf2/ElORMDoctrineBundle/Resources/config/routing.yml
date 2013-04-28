@@ -17,3 +17,11 @@ jc_sf2_orm_doctrine_dql:
 jc_sf2_orm_doctrine_dql_en_repositorio:
     pattern:  /dql_en_repositorio
     defaults: { _controller: JCSf2ORMDoctrineBundle:Default:dqlEnRepositorio }
+    
+jc_sf2_orm_doctrine_crear_categorias:
+    pattern:  /crear_categorias
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:crearArbolCategorias }
+    
+jc_sf2_orm_doctrine_sqldbal:
+    pattern:  /sqldbal
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:sqlDbal }

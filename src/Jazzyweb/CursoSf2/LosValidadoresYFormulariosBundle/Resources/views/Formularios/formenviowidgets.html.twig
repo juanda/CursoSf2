@@ -1,6 +1,8 @@
 {% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
 
 {% block container %}
+<h1>Envío y manipulación de formularios</h1>
+<h3>(con más control sobre los widgets)</h3>
 
 {% for flashMessage in app.session.flashbag.get('notice') %}
 <div class="alert alert-success">

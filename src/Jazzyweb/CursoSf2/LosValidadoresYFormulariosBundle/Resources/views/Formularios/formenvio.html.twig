@@ -2,6 +2,8 @@
 
 {% block container %}
 
+<h1>Envío y manipulación de formularios</h1>
+
 {% for flashMessage in app.session.flashbag.get('notice') %}
     <div class="alert alert-success">
         {{ flashMessage }}

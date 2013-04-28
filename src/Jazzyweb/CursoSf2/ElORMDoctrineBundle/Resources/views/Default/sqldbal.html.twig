@@ -1,0 +1,21 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Consulta realizada con una consulta SQL</h1>
+
+
+<table class="table">
+    <tr>
+        <th>Nombre</th>        
+        <th>Apellidos</th>
+    </tr>    
+{% for actor in actores %}
+    <tr>
+        <td>{{ actor.nombre }}</td>
+   
+        <td>{{ actor.apellidos }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+{% endblock %}
