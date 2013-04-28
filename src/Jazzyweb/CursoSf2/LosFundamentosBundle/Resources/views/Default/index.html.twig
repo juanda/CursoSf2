@@ -170,22 +170,38 @@
 </p>
 
 <p>
-    El siguiente código muestra una posible configuración para añadir un VirtualHost a <i>apache</i>.
-    El resto de la configuración la propone el propio Symfony2 en el archivo <code>web/.htaccess</code>
+    El siguiente código muestra una posible configuración para añadir un VirtualHost a <i>apache</i>,
+    con reescritura del controlador frontal, de manera que no es necesario indicar este en las URL's 
+    de la aplicación. Es importante tener activado el modulo rewrite de apache para que esto funcione.
 </p>
 
 <pre>
 &lt;VirtualHost *:80&gt;
-  ServerName mi.aplicacion.web
+    ServerName     cursosf2.lan
 
-  DocumentRoot /home/juanda/miaplicacionweb/proyecto/web/
+    DocumentRoot    "/home/juanda/sites/CursoSf2/web/"
+    DirectoryIndex  app.php
 
-  &lt;Directory &gt
-    Options FollowSymLinks
-    AllowOverride None
-  &lt;/Directory&gt
+    &lt;Directory "/home/juanda/sites/CursoSf2/web/"&gt;
+        AllowOverride None
+        Allow from All
 
-&lt;/VirtualHost&gt
+        &lt;IfModule mod_rewrite.c&gt;
+                RewriteEngine On
+
+                RewriteCond %{ENV:REDIRECT_STATUS} ^$
+                RewriteRule ^app\.php(/(.*)|$) %{CONTEXT_PREFIX}/$2 [R=301,L]
+
+                RewriteCond %{REQUEST_FILENAME} -f
+                RewriteRule .? - [L]
+
+                RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
+                RewriteRule ^(.*) - [E=BASE:%1]
+                RewriteRule .? %{ENV:BASE}app.php [L]
+        &lt;/IfModule&gt;
+
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
 </pre>
 
 <div class="alert">
