@@ -29,6 +29,8 @@ class ConstanteUniversal {
     
     /**
      *
+     * @Assert\NotBlank(message = "No se puede dejar en blanco")
+     *
      * @Assert\Type(type="numeric", message="El valor {{ value }} no es un {{ type }} válido.")
      *
      */

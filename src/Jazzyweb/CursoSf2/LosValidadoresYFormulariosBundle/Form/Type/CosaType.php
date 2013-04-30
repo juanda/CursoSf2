@@ -38,7 +38,8 @@ class CosaType extends AbstractType {
                         'linux' => 'Linux',
                         'windows' => 'Windows',
                         'macosx' => 'MacOSX'
-                    )
+                    ),
+                    'empty_value' => 'Elige una opción',
                 ))
                 ->add('intereses', 'choice', array(
                     'choices' => array(

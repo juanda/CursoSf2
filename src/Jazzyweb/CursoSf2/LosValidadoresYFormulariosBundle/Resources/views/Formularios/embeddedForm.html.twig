@@ -1,0 +1,17 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Ejemplo de formulario embedded</h1>
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+<form action="{{ path('jc_sf2_valy_forms_formularios_embeddedForm') }}" method="post" {{ form_enctype(form) }} novalidate>
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+{% endblock %}
