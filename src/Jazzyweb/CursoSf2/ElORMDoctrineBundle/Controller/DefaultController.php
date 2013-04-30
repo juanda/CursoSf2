@@ -39,26 +39,7 @@ class DefaultController extends Controller {
         $actores[2]->setApellidos('LOLLOBRIGIDA');
         $actores[2]->setActualizacion(new \DateTime());
 
-        $em->persist($actores[2]);
-
-        $peliculas = array();
-        $peliculas[0] = new Pelicula();
-        $peliculas[0]->setTitulo('Peli 0');
-
-        $em->persist($peliculas[0]);
-
-        $peliculas[1] = new Pelicula();
-        $peliculas[1]->setTitulo('Peli 1');
-
-        $em->persist($peliculas[1]);
-
-        $peliculas[2] = new Pelicula();
-        $peliculas[2]->setTitulo('Peli 2');
-
-        $em->persist($peliculas[2]);
-
-        $actores[0]->addPelicula($peliculas[0]); // si persiste (parte propietaria)
-        $peliculas[1]->addActore($actores[1]);   // no persiste (parte inversa)
+        $em->persist($actores[2]);             
 
 
         $em->flush();

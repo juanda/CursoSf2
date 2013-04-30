@@ -31,31 +31,22 @@ class Pelicula
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion",nullable=true, type="string", length=255)
+     * @ORM\Column(name="descripcion", nullable=true, type="string", length=255)
      */
     private $descripcion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="duracion",nullable=true, type="integer")
+     * @ORM\Column(name="duracion", nullable=true, type="integer")
      */
     private $duracion;
 
-
     /**
      * @ORM\ManyToMany(targetEntity="Actor", mappedBy="peliculas")
-     * 
      */
     private $actores;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->actores = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Get id
      *
@@ -134,7 +125,14 @@ class Pelicula
     {
         return $this->duracion;
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->actores = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Add actores
      *
