@@ -13,11 +13,11 @@ class Direccion{
     private $calle;
     
     /**
-     * 
+     * @Assert\NotBlank()
      * @Assert\Type(type="numeric", message="El valor {{ value }} no es un {{ type }} válido.")
      *
      */
-    private $number;
+    private $numero;
   
     public function getCalle() {
         return $this->calle;
@@ -28,12 +28,12 @@ class Direccion{
         return $this;
     }
 
-    public function getNumber() {
-        return $this->number;
+    public function getNumero() {
+        return $this->numero;
     }
 
-    public function setNumber($number) {
-        $this->number = $number;
+    public function setNumero($numero) {
+        $this->numero = $numero;
         return $this;
     }
 

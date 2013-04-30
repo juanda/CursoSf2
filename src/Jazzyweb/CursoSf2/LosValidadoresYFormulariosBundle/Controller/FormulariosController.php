@@ -54,10 +54,10 @@ class FormulariosController extends Controller {
         $request = $this->getRequest();
 
         $persona = new Persona();
-        $direccion = new Direccion();
-        $persona->setDireccion($direccion);
+        
+        
 
-        $form = $this->createForm(new PersonaType);
+        $form = $this->createForm(new PersonaType, $persona);
 
 
         if ($request->isMethod('POST')) {
