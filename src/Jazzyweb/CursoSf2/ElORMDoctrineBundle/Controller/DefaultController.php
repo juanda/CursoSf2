@@ -6,7 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor;
 use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Pelicula;
 use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Categoria;
-use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Usuario;
+use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona;
+use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Direccion;
 
 class DefaultController extends Controller {
 
@@ -39,7 +40,12 @@ class DefaultController extends Controller {
         $actores[2]->setApellidos('LOLLOBRIGIDA');
         $actores[2]->setActualizacion(new \DateTime());
 
-        $em->persist($actores[2]);             
+        $em->persist($actores[2]);
+
+        $p = new Pelicula();
+        $p->setTitulo('El algo');
+
+        $em->persist($p);
 
 
         $em->flush();
@@ -54,7 +60,8 @@ class DefaultController extends Controller {
         $repository = $this->getDoctrine()
                 ->getRepository('JCSf2ORMDoctrineBundle:Actor');
 
-        $actor = $repository->find(1);
+        $id = 1;
+        $actor = $repository->find($id);
 
 
         if (!$actor) {
@@ -101,9 +108,17 @@ class DefaultController extends Controller {
                          JOIN p.actores a
                          WHERE a.nombre LIKE :patron'
                 )->setParameter('patron', 'JOHN%');
-
+        
+        // Todas las películas en las que hay algún actor cuyo nombre es como JOHN%
+        // versión fetched join
+//        $queryPeliculas2 = $em->createQuery(
+//                        'SELECT p,a FROM JCSf2ORMDoctrineBundle:Pelicula p 
+//                         JOIN p.actores a
+//                         WHERE a.nombre LIKE :patron'
+//                )->setParameter('patron', 'J%');
+//
         $peliculas2 = $queryPeliculas2->getResult();
-
+        
         return $this->render('JCSf2ORMDoctrineBundle:Default:dql.html.twig', array(
                     'actores' => $actores,
                     'peliculas' => $peliculas,
@@ -224,6 +239,124 @@ class DefaultController extends Controller {
         }
 
         return $this->render('JCSf2ORMDoctrineBundle:Default:sqldbal.html.twig', array('actores' => $actores));
+    }
+
+    public function persistirRelacionesAction() {
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $deletePersonas = $em->createQuery('DELETE JCSf2ORMDoctrineBundle:Persona');
+        $deleteDirecciones = $em->createQuery('DELETE JCSf2ORMDoctrineBundle:Direccion');
+        $deletePersonas->execute();
+        $deleteDirecciones->execute();
+
+        $p1 = new Persona();
+        $p1->setNombre('Juan');
+        $p1->setApellidos('Palomo');
+
+        $p2 = new Persona();
+        $p2->setNombre('Pepe');
+        $p2->setApellidos('Pinto');
+
+        $p3 = new Persona();
+        $p3->setNombre('Rafael');
+        $p3->setApellidos('García');
+
+        $d1 = new Direccion();
+        $d1->setCalle('c/ Parras');
+        $d1->setNumero(20);
+
+        // Relacionando desde la parte propietaria        
+        $p1->setDireccion($d1);
+
+        // Relacionando desde la parte inversa (no persiste)
+        $d1->addPersona($p2);
+
+        // Relacionando correctamente, de cara a la persistencia y a los objetos
+        $p3->setDireccion($d1);
+        $d1->addPersona($p3);
+
+        $em->persist($d1);
+        $em->persist($p1);
+        $em->persist($p2);
+        $em->persist($p3);
+
+        $em->flush();
+
+        // Recupero datos desde los objetos        
+
+        echo $p1->getNombre() . ' vive en ' . $p1->getDireccion()->getCalle() . ' ' . $p1->getDireccion()->getNumero();
+        echo '<br/>';
+
+        // Este falla por que no se ha asociado la dirección a la persona 2
+//        echo $p2->getNombre(). ' vive en ' . $p2->getDireccion()->getCalle() . ' ' . $p2->getDireccion()->getNumero();;
+//        echo '<br/>';
+
+        echo $p3->getNombre() . ' vive en ' . $p3->getDireccion()->getCalle() . ' ' . $p3->getDireccion()->getNumero();
+        ;
+        echo '<br/>';
+
+        echo '<hr/>';
+        echo "En " . $d1->getCalle() . ' ' . $d1->getNumero() . ' viven:';
+        echo '<br/>';
+        $personas = $d1->getPersonas();
+        foreach ($personas as $p) {
+            echo $p->getNombre();
+            echo '<br/>';
+        }
+
+        exit;
+    }
+
+    public function recuperarRelacionesAction() {
+        // Recupero datos desde el repositorio
+
+        $repoPersonas = $this->getDoctrine()->getRepository('JCSf2ORMDoctrineBundle:Persona');
+        $repoDirecciones = $this->getDoctrine()->getRepository('JCSf2ORMDoctrineBundle:Direccion');
+
+        $personas2 = $repoPersonas->findAll();
+        $direcciones = $repoDirecciones->findAll();
+
+        echo '<hr/>';
+        echo "Obteniendo datos desde el repositorio<br/>";
+        echo "Todas las personas<br/>";
+        echo "------------------<br/>";
+
+        foreach ($personas2 as $p) {
+            $d = $p->getDireccion();
+            if ($d instanceof Direccion) {
+                echo $p->getNombre() . ' vive en ' . $d->getCalle() . ' ' . $d->getNumero();
+                echo '<br/>';
+                echo "Y en " . $d->getCalle() . ' ' . $d->getNumero() . ' viven:<br/>';
+
+                foreach ($d->getPersonas() as $p) {
+                    echo $p->getNombre();
+                    echo '<br/>';
+                }
+            } else {
+                echo $p->getNombre() . ' no tiene direccion asociada<br/>';
+            }
+            
+            echo '<br/>';
+        }
+
+        echo '<hr/>';
+        echo "Todas las direcciones<br/>";
+        echo "---------------------<br/>";
+        foreach ($direcciones as $d) {
+            $personas3 = $d->getPersonas();
+            echo "Desde ". $d->getCalle() . ' ' . $d->getNumero() . ':<br/>'; 
+            foreach ($personas3 as $p) {
+                if ($p->getDireccion() instanceof Direccion) {
+                    echo $p->getNombre() . ' vive en ' . $p->getDireccion()->getCalle() . ' ' . $p->getDireccion()->getNumero();
+                    echo '<br/>';
+                } else {
+                    echo $p->getNombre() . ' no tiene asociada direccion<br/>';
+                }
+            }
+        }
+
+        exit;
     }
 
 }

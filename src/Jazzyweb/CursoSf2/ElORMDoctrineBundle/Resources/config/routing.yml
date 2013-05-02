@@ -25,3 +25,14 @@ jc_sf2_orm_doctrine_crear_categorias:
 jc_sf2_orm_doctrine_sqldbal:
     pattern:  /sqldbal
     defaults: { _controller: JCSf2ORMDoctrineBundle:Default:sqlDbal }
+
+jc_sf2_orm_doctrine_persistirRelaciones:
+    pattern:  /persistirRelaciones
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:persistirRelaciones }
+
+jc_sf2_orm_doctrine_recuperarRelaciones:
+    pattern:  /recuperarRelaciones
+    defaults: { _controller: JCSf2ORMDoctrineBundle:Default:recuperarRelaciones }
+  
+    
+    

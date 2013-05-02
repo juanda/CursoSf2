@@ -172,4 +172,8 @@ public function addActore(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor $a
 public function removeActore(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor $actores)
 
 public function getActores()
+
+-----------------------------------------------------------------------------
+
+Persistencia en cascada
     
