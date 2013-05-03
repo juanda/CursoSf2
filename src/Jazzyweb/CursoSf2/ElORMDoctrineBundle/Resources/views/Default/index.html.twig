@@ -147,92 +147,386 @@ muy útiles:
     métodos. Lo veremos más adelante.
 </p>
 
-<h2>Relaciones entre objetos</h2>
+<h2>Asociaciones entre objetos y mapeo en la base de datos</h2>
 
-<p>Las más típicas son:</p>
+<p>Las entidades de Doctrine admiten los siguientes tipos de relaciones entre objetos:</p>
 
 <ul>
-    <li>1-N y N-1</li>
-    <li>N-M</li>
+    <li>OneToOne</li>
+    <li>OneToMany y ManyToOne</li>
+    <li>ManyToMany</li>
+</ul>
+
+<p>
+    Cada una de estos tipos de relaciones puede ser:
+</p>
+
+<ul>
+    <li>
+        Unidireccional, cuando solo uno de los objetos de la relación implementa métodos para
+        acceder al otro.
+    </li>
+    <li>
+        Bidireccional, cuando los dos objetos de la relación implementan métodos para acceder 
+        al otro.
+    </li>
+    <li>
+        Autoreferente, cuando los dos objetos de la relación pertenecen a la misma clase.
+    </li>
+</ul>
+
+<p>
+    Como en las bases de datos relacionales tan solo existe la relación OneToMany-ManyToOne,
+    Doctrine mapea las relaciones:
+<ul>
+    <li>
+        OneToOne entre objetos como OneToMany-ManyToOne en base de datos, controlando que la clave 
+        foránea en una de las tablas no se repita.
+    </li>
+    <li>
+        OneToMany-ManyToOne entre objetos como OneToMany-ManyToOne en base de datos.
+    </li>
+    <li>
+        ManyToMany entre objetos mediante una tabla intermedia con claves foráneas a cada una de las tablas
+        que modela cada objeto.
+    </li>
+</ul>
+</p>
+
+<p>
+    De cara al mapeo de las asociaciones entre objetos en la base de datos y a la persistencia de 
+    los mismos, cuando la asociación es bidireccional, Doctrine denomina a uno de los objetos 
+    <b>parte propietaria</b> y al otro <b>parte inversa</b>. En el caso de asociaciones unidireccionales
+    Doctrine tan sólo establece la parte propietaria.
+</p>
+
+<p>
+    Las reglas que hemos de tener en cuenta para reconocer la parte propietaria y la inversa son las 
+    siguientes:
+</p>
+
+<ul>
+    <li>
+        En las asociaciones unidirecionales, sólo hay parte propietaria y es aquella que implementa
+        los métodos de acceso al objeto asociado. También es la única que define reglas de mapeo.
+    </li>
+    <li>
+        En las asociaciones bidireccionales:
+        <ul>
+            <li>
+                Si la relación es OneToOne, la parte propietaria será aquella que, en la base de datos,
+                posea la clave foránea que la relaciona con la otra parte. De manera que podemos elegir
+                nosotros la que queramos.
+            </li>
+            <li>
+                Si la relación es ManyToMany, igual que antes, la parte propietaria es la que decidamos 
+                nosotros. Hay que resaltar que como la asociación ManyToMany se mapea en la base de datos
+                mediante una tabla intermedia, ninguna de las tablas correspondientes a la entidad posee 
+                la clave.                 
+            </li>
+            <li>
+                Si la relación es OneToMany-ManyToOne, la parte propietaria es siempre la ManyToOne, ya
+                que, en la base de datos, es la que posee la clave foránea. 
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<p>
+    En los tres casos, la selección de la parte propietaria se realiza en los metadatos de mapeo.
+</p>
+
+<p>
+    Los tres tipos de asociaciones combinada con la direccionalidad de las mismas da lugar a los siguientes
+    casos:
+</p>
+
+<ul>
+    <li>OneToMany unidireccional</li>
+    <li>OneToMany bidireccional</li>
+    <li>OneToMany autoreferente</li>
+    <li>ManyToOne unidireccional</li>
+    <li>OneToMany unidireccional</li>
+    <li>OneToMany-ManyToOne bidireccional</li>
+    <li>OneToMany-ManyToOne autoreferente</li>
+    <li>ManyToMany unidireccional</li>
+    <li>ManyToMany bidireccional</li>
+    <li>ManyToMany autoreferente</li>
 </ul>
 <p>
-    Aunque existen algunas más (<a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html">Documentación oficial sobre asociaciones</a>)
+    Aquí puedes encontrar la 
+    <a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html">Documentación oficial sobre asociaciones</a>
 </p>
 
 <p>
-    Veamos como añadir los metadatos necesarios para añadir relaciones a nuestras entidades <code>Actor</code> y
-    <code>Pelicula</code>.
+    A continuación vamos a explicar como se especifican las relaciones unidireccionales y
+    bidireccionales. Si quieres saber como se trabaja con las autoreferentes puedes consultar el documento
+    anterior.
+</p>
+
+<h3>OneToMany unidireccional</h3>
+
+<p>
+    Ejemplo: Asociación Persona-NIF, unidirecional desde persona hasta NIF, es decir,
+    que será la entidad Persona la que implemente métodos para acceder al NIF, pero no al revés.
 </p>
 
 <p>
-    Si queremos que la relación sea 1-N de Actor a Pelicula, es decir que un Actor pueda tener muchas peliculas,
-    pero una película sólo pueda tener asociado un actor, debemos añadir un atributo <code>$peliculas</code> y
-    la siguiente anotación con información sobre la relación 1-N a la entidad Actor:
+    Primero debemos crear las entidades Persona y NIF, para lo que podemos usar el generador
+    de entidades <code>php app/console generate:doctrine:entitity</code>.
+</p>
+
+<p>
+    Añadimos a la entidad Persona un atributo <code>$nif</code> con los siguientes metadatos de mapeo:
 </p>
 
 <pre>
 /**
- * @ORM\OneToMany(targetEntity="Pelicula", mappedBy="actor")
+ * @ORM\OneToOne(targetEntity="NIF")
+ * @ORM\JoinColumn(name="nif_id", referencedColumnName="id")
  */
-private $peliculas;
-
-</pre>
-
-Y en la entida Pelicula debemos añadir la parte N-1, es decir un atributo <code>$actor</code> y su anotación:
-
-<pre>
-/**
- * @ORM\ManyToOne(targetEntity="Actor")
- */
-private $actor;
+ private $nif;
 </pre>
 
 <p>
-    Ahora se deben actualizar las entidades (se vuelven a generar) para que se generen todos los getters y setters
-    asociados a los nuevos atributos:
-</p>
-
-<pre>
-php app/console doctrine:generate:Entities JCSf2ORMDoctrineBundle
-</pre>
-
-Y actualizamos la base de datos:
-
-<pre>
-# php app/console doctrine:schema:update
-</pre>
-
-<p>
-    Ahora vamos a tratar el caso más correcto para las relaciones entre actores y 
-    peliculas, que es el de una relación N-M:
+    Y listo, no hay que tocar la entidad NIF para nada, puesto que la asociación es unidireccional
+    desde Persona a NIF.
 </p>
 
 <p>
-    Sustituimos la anotación del atributo <code>$peliculas</code> en la entidad Actor por:
+    Como hemos modificado la entidad Persona hay que reconstruir la entidades para que se añadan 
+    los getters y setters del atributo <code>$nif</code>. Usamos <code>php app/console generate:doctrine:entities JCSf2ELORMDoctrineBundle</code>
 </p>
 
-<pre>
-/**
- * @ORM\ManyToMany(targetEntity="Pelicula", inversedBy="actores")
- */
-</pre>
+<p>
+    Como consecuencia de la esta operación se han creado los métodos <code>setNIF()</code> y <code>setNIF</code>
+</p>
 
 <p>
-    Y en la entidad pelicula sustituimos el atributo <code>$actor</code> por <code>$actores</code>,
-    ya que ahora una película también puede tener muchos actores. También cambiamos la anotación 
-    para que tenga en cuenta la relacion M-N:
+    También hay que actualizar la base de datos para que se establezca la correspondiente asociación entre las tablas.
+    <code>php app/console doctrine:schema:update --force</code>
+</p>
+
+<p>
+    Como consecuencia de esta operación se han creado (o actualizado) las tablas Persona y NIF, incorporando
+    la primera una clave foránea <code>nif_id</code> hacia la tabla NIF.
+</p>
+
+<h3>OneToMany bidireccional</h3>
+
+<p>
+    Ejemplo: Asociación Persona-NIF, bidirecional con Persona como parte propietaria, es decir,
+    que será la entidad Persona la que posea la clave foránea.
+</p>
+
+<p>
+    Añadimos a la entidad Persona un atributo <code>$nif</code> con los siguientes metadatos de mapeo:
 </p>
 
 <pre>
 /**
- * @ORM\ManyToMany(targetEntity="Actor", mappedBy="peliculas")
+ * @ORM\OneToOne(targetEntity="NIF", inversedBy="persona")
+ * @ORM\JoinColumn(name="nif_id", referencedColumnName="id")
  */
-private $actores
+ private $nif;
 </pre>
 
 <p>
-    De nuevo se deben actualizar las entidades y la base de datos.
+    Y en la entidad NIF añadimos un atributo <code>$persona</code> con los siguientes metadatos de mapeo:
 </p>
+
+<pre>
+/**
+ * @ORM\OneToOne(targetEntity="Persona", mappedBy="nif")
+ */
+ private $persona;
+</pre>
+
+<p>
+    Fíjate en que se ha añadido una opción <code>inversedBy</code> en la parte propietaria y una opción
+    <code>mappedBy</code> en la parte inversa. Cada una de estas opciones indica el nombre del atributo que,
+    en la otra parte, referencia a la entidad en cuestión. 
+</p>
+
+<p>
+    También es importante percatarse de que es la parte propietaria la que define la clave foránea.
+</p>
+
+<p>
+    Al regenerar los getters y setters de estas entidades, comprobamos que en la entidad NIF aparecen
+    los métodos <code>getPersona()</code> y <code>setPersona</code>. Estableciéndose la bidireccionalidad.
+</p>
+
+<p>
+    Sin embargo, al actualizar la base de datos comprobamos que no sufre ningún cambio. La razón es que
+    el concepto de direccionalidad es propio de las entidades, no de la base de datos. Esta última
+    no "sabe" que significa una asociación uni o bidireccional.
+</p>
+
+<h3>ManyToOne unidireccional</h3>
+
+<p>
+    Ejemplo: Persona-Dirección, de manera que en una casa puedan vivir varias personas, y
+    una persona tan sólo pueda vivir en una casa. Además queremos que Persona implemente los
+    métodos de acceso a Dirección. Es decir que persona sea la parte propietaria.
+</p>
+
+<p>
+    Según hemos expuesto antes en las reglas que Doctrine aplica sobre cada una de las partes,
+    en una relación OneToMany-ManyToOne, la parte ManyToOne es siempre la propietaria. 
+    Observa que es lo que sucede en este caso: Persona es la parte ManyToOne.
+</p>
+
+<p>
+    Primero debemos crear la entidad y Direccion, para lo que podemos usar el generador de 
+    entidades php app/console generate:doctrine:entitity.
+</p>
+
+<p>
+    Añadimos a la entidad Persona un atributo <code>direccion</code> con los siguientes metadatos de mapeo:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToOne(targetEntity="Direccion")
+ * @ORM\JoinColumn(name="direccion_id", referencedColumnName="id")
+ * */
+ private $direccion;
+</pre>
+
+<p>
+    Y listo, no hay que tocar la entidad Direccion para nada, puesto que la asociación es
+    unidireccional desde Persona a Direccion.
+</p>
+
+<p>
+    Reconstruimos las entidades y obsevamos que aparecen en la entidad Persona los métodos
+    <code>getDireccion()</code> y <code>setDireccion()</code>.
+</p>
+
+<p>
+    Al actualiza la base de datos, además de crearse la tabla Direccion, se añade una clave
+    foránea <code>direccion_id</code> a la tabla Persona, que la relaciona con la tabla Direccion.
+</p>
+    
+<h3>OneToMany unidireccional</h3>
+
+<p>
+    Ejemplo: Persona-Telefono, de manera que una persona tiene varios teléfonos, pero cada teléfono
+    sólo pueda pertenecer a una persona. La parte propietaria será persona.
+</p>
+    
+<p>
+    Este caso plantea un problema: las reglas de Doctrine que hemos mencionado más arriba declaran
+    rotundamente que en una relación OneToMany-ManyToOne la parte propietaria es la ManyToOne. 
+    El caso que estamos tratando establece como parte propietaria la parte OneToMany. Así que, en
+    principio, Doctrine no resuelve este caso. 
+</p>
+
+<p>
+    La solución que propone Doctrine es utilizar, en lugar de una asociación OneToMany-ManyToOne, una
+    ManyToMany en la que se establezca a única la clave foránea que apunta a la parte inversa (Many). 
+    Así, dado que en una asociación ManyToMany podemos elegir cualquier entidad como parte propietaria,
+    queda resuelto el problema. Veámos como se hace en la práctica.
+</p>
+
+<p>
+    Creamo la entidad teléfono.
+</p>
+
+<p>
+    Añadimos a la entidad Persona un atributo <code>$telefonos</code> con los siguientes metadatos de mapeo:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToMany(targetEntity="Telefono")
+ * @ORM\JoinTable(name="persona_telefono",
+ *      joinColumns={@ORM\JoinColumn(name="persona_id", referencedColumnName="id")},
+ *      inverseJoinColumns={@ORM\JoinColumn(name="telefono_id", referencedColumnName="id", unique=true)}
+ *      )
+ **/
+    private $telefonos;
+</pre>
+
+<p>
+    Dado que la asociación es unidireccional, no hay que todar la parte no propietaria (teléfono).
+</p>
+
+<p>
+    Regeneramos las entidades y actualizamos la base de datos. Observamos que en la entidad Persona
+    aparecen los métodos <code>addTelefono()</code> (singular) y <code>getTelefonos()</code> (plural).
+    Además, en la base de datos se ha creado la tabla Telefono y una tabla intermedia persona_telefono con
+    claves foráneas a Persona y Telefono. Además la clave foránea a Teléfono debe ser única, para 
+    ganantizar la relación OneToMany desde Persona a Telefono.
+</p>
+
+<p>
+    Observa también que se ha creado un constructor de la clase Persona, en el que se inicializa el
+    atributo <code>telefonos</code> como un <code>ArrayCollection</code>, que es un tipo de array
+    propio de Doctrine que soporta ciertas operaciones que el ORM necesita:
+</p>
+
+<pre>
+public function __construct()
+{
+        $this->telefonos = new \Doctrine\Common\Collections\ArrayCollection();
+}
+</pre>
+
+<h3>OneToMany-ManyToOne bidireccional</h3>
+
+<p>
+    Ejemplo: Persona-Dirección, de manera que en una casa puedan vivir varias personas, y
+    una persona tan sólo pueda vivir en una casa. Además queremos que tanto Persona como Direccion
+    implementen métodos de acceso, es decir, que la asociación sea bidireccional.
+</p>
+
+<p>
+    Añadimos a la parte propietaria (Persona) el atributo <code>$direccion</code> con los siguientes
+    metadatos:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToOne(targetEntity="Direccion", inversedBy="personas")
+ * @ORM\JoinColumn(name="direccion_id", referencedColumnName="id")
+ * */
+ private $direccion;
+</pre>
+
+<p>
+    Es igual que en el caso unidireccional pero especificando el atributo <code>inversedBy</code>, es decir
+    el nombre del atributo en la otra parte (Direccion) que hace referencia a la clase Persona.
+</p>
+
+<p>
+    En la clase Direccion añadimos el atributo <code>$personas</code> con los siguientes metadatos:
+</p>
+
+<pre>
+/**
+ * @ORM\OneToMany(targetEntity="Persona", mappedBy="direccion")
+ **/
+ private $personas;
+</pre>
+
+<p>
+    La opción <code>mappedBy</code> indica el nombre del atributo en la otra parte (Persona) que
+    hace referencia a la entidad Direccion.
+</p>
+
+<p>
+    Regeneramos las entidades y aparecen en la clase Direccion los métodos <code>addPersona()</code> y
+    <code>getPersonas()</code>.
+</p>
+
+<p>
+    Sin embargo al actualizar la base de datos no se produce ningún cambio. Recuerda, la base de datos
+    no sabe nada acerca del concepto de direccionalidad.
+</p>
+
+<h3>ManyToMany unidireccional</h3>
 
 <h2>Las consultas DQL</h2>
 

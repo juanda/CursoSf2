@@ -142,7 +142,7 @@ class Persona {
 
     /**
      * Get direccion
-     *
+     * 
      * @return \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Direccion 
      */
     public function getDireccion() {
