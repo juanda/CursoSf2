@@ -16,13 +16,13 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-                    juanda: {password: juanda, roles: [ 'ROLE_ADMIN' ]}
+                    juanda: {password: juanda, roles: [ 'ROLE_ADMIN', 'ROLE_REDACTOR' ]}
 
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+            
         login:
             pattern:  ^/demo/secured/login$
             security: false
@@ -47,6 +47,7 @@ security:
             form_login:                
                 login_path: jc_sf2_seguridad_login
                 check_path: jc_sf2_seguridad_login_check
+                
             logout:
                 path:   jc_sf2_seguridad_logout
                 target: jc_sf2_seguridad_no_segura
@@ -54,3 +55,5 @@ security:
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/seguridad/admin, roles: ROLE_ADMIN }
+        - { path: ^/seguridad/redaccion, roles: ROLE_REDACTOR }

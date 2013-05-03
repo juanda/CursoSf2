@@ -7,8 +7,12 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class DefaultController extends Controller {
 
-    public function indexAction($name) {
-        return $this->render('JCSf2SeguridadBundle:Default:index.html.twig', array('name' => $name));
+    public function indexAction() {
+        
+        echo '<pre>';
+        print_r($this->get('security.context')->getToken());
+        exit;
+        return $this->render('JCSf2SeguridadBundle:Default:index.html.twig');
     }
 
     public function loginAction() {
@@ -38,12 +42,15 @@ class DefaultController extends Controller {
         
     }
 
-    public function seguraAction() {
-        return $this->render('JCSf2SeguridadBundle:Default:segura.html.twig');
-    }
-
-    public function noseguraAction() {
+    public function noSeguraAction() {
         return $this->render('JCSf2SeguridadBundle:Default:noSegura.html.twig');
     }
+    
+    public function adminAction() {
+        return $this->render('JCSf2SeguridadBundle:Default:admin.html.twig');
+    }
 
+    public function redaccionAction() {
+        return $this->render('JCSf2SeguridadBundle:Default:redaccion.html.twig');
+    }
 }

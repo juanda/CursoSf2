@@ -1,3 +1,7 @@
+jc_sf2_seguridad_homepage:
+    pattern:  /
+    defaults: { _controller: JCSf2SeguridadBundle:Default:index }
+
 jc_sf2_seguridad_login:
     pattern:   /login
     defaults:  { _controller: JCSf2SeguridadBundle:Default:login }
@@ -7,10 +11,14 @@ jc_sf2_seguridad_login_check:
 
 jc_sf2_seguridad_logout:
     pattern: /logout
+   
+jc_sf2_seguridad_admin:
+    pattern:  /admin
+    defaults: { _controller: JCSf2SeguridadBundle:Default:admin }
     
-jc_sf2_seguridad_segura:
-    pattern:  /segura
-    defaults: { _controller: JCSf2SeguridadBundle:Default:segura }
+jc_sf2_seguridad_redaccion:
+    pattern:  /redaccion
+    defaults: { _controller: JCSf2SeguridadBundle:Default:redaccion }
 
 jc_sf2_seguridad_no_segura:
     pattern:  /nosegura
