@@ -14,7 +14,7 @@ Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario:
         nombre: juanda
         apellidos: rodríguez
         username: juanda
-        password: pruebas
+        password: 620a7de82763527406a413ca7ee267816d332811
         salt: ""  
         email: juandalibaba@gmail.com
         activo: 1
@@ -26,7 +26,7 @@ Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario:
         nombre: <firstName()>
         apellidos: <lastName()>
         username: <username()>
-        password: pruebas
+        password: 620a7de82763527406a413ca7ee267816d332811
         salt: ""
         email: <email()>       
         activo: 1
@@ -38,7 +38,7 @@ Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario:
         nombre: <firstName()>
         apellidos: <lastName()>
         username: <username()>
-        password: pruebas
+        password: 620a7de82763527406a413ca7ee267816d332811
         salt: ""
         email: <email()>
         activo: 1
@@ -50,7 +50,7 @@ Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario:
         nombre: <firstName()>
         apellidos: <lastName()>
         username: <username()>
-        password: pruebas
+        password: 620a7de82763527406a413ca7ee267816d332811
         salt: ""
         email: <email()>
         activo: 1

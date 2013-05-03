@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 class DefaultController extends Controller {
 
     public function indexAction() {
-        
+                
         echo '<pre>';
         print_r($this->get('security.context')->getToken());
         exit;
@@ -37,15 +37,23 @@ class DefaultController extends Controller {
                         )
         );
     }
-    
-    public function loginCheckAction(){
+
+    public function loginCheckAction() {
         
     }
 
     public function noSeguraAction() {
+        
+        $factory = $this->get('security.encoder_factory');
+        $user = new \Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario();
+
+        $encoder = $factory->getEncoder($user);
+        $password = $encoder->encodePassword('pruebas', $user->getSalt());
+        echo $password;
+        
         return $this->render('JCSf2SeguridadBundle:Default:noSegura.html.twig');
     }
-    
+
     public function adminAction() {
         return $this->render('JCSf2SeguridadBundle:Default:admin.html.twig');
     }
@@ -53,4 +61,5 @@ class DefaultController extends Controller {
     public function redaccionAction() {
         return $this->render('JCSf2SeguridadBundle:Default:redaccion.html.twig');
     }
+
 }
