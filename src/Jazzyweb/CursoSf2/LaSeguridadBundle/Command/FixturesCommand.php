@@ -1,0 +1,44 @@
+<?php
+
+// src/Acme/DemoBundle/Command/GreetCommand.php
+
+namespace Jazzyweb\CursoSf2\LaSeguridadBundle\Command;
+
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class FixturesCommand extends ContainerAwareCommand {
+
+    protected function configure() {
+        $this
+                ->setName('jcsf2:fixtures:load')
+                ->setDescription('Load fixtures')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output) {
+
+        $doctrine = $this->getContainer()->get('doctrine');
+
+        try {
+            $em = $doctrine->getEntityManager();
+
+            $query = $em
+                    ->createQuery('DELETE FROM JCSf2SeguridadBundle:Perfil p');
+            $query->execute();
+            
+            $query = $em
+                    ->createQuery('DELETE FROM JCSf2SeguridadBundle:Usuario u');
+            $query->execute();
+
+            $objects = \Nelmio\Alice\Fixtures::load(__DIR__ . '/../Fixtures/Fixtures.yml', $em);
+
+
+            $output->writeln("Fixtures have been loaded");
+        } catch (\Exception $e) {
+            $output->writeln("<error>" . $e->getMessage() . "</error>");
+        }
+    }
+
+}

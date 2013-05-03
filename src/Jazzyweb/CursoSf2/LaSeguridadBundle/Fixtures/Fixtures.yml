@@ -1,0 +1,61 @@
+Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Perfil:
+  perfil1:
+    nombre: registrado
+    rol: ROLE_REGISTRADO
+  perfil2:
+    nombre: redactor
+    rol: ROLE_REDACTOR
+  perfil3:
+    nombre: admin
+    rol: ROLE_ADMIN
+
+Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario:
+  usuario_juanda:
+        nombre: juanda
+        apellidos: rodríguez
+        username: juanda
+        password: pruebas
+        salt: ""  
+        email: juandalibaba@gmail.com
+        activo: 1
+        bloqueado: false
+        fechaAlta: <dateTimeBetween('-200 days', 'now')>
+        fechaVencimiento: <dateTimeBetween('now', '+200 days')>
+        perfiles: ["@perfil1", "@perfil2", "@perfil3"]
+  usuario{1..5}:
+        nombre: <firstName()>
+        apellidos: <lastName()>
+        username: <username()>
+        password: pruebas
+        salt: ""
+        email: <email()>       
+        activo: 1
+        bloqueado: false
+        fechaAlta: <dateTimeBetween('-200 days', 'now')>
+        fechaVencimiento: <dateTimeBetween('now', '+200 days')>
+        perfiles: ["@perfil1"]
+  usuario{5..10}:
+        nombre: <firstName()>
+        apellidos: <lastName()>
+        username: <username()>
+        password: pruebas
+        salt: ""
+        email: <email()>
+        activo: 1
+        bloqueado: false
+        fechaAlta: <dateTimeBetween('-200 days', 'now')>
+        fechaVencimiento: <dateTimeBetween('now', '+200 days')>
+        perfiles: ["@perfil2"]
+  usuario{11..15}:
+        nombre: <firstName()>
+        apellidos: <lastName()>
+        username: <username()>
+        password: pruebas
+        salt: ""
+        email: <email()>
+        activo: 1
+        bloqueado: false
+        fechaAlta: <dateTimeBetween('-200 days', 'now')>
+        fechaVencimiento: <dateTimeBetween('now', '+200 days')>
+        perfiles: ["@perfil3"]
+  
