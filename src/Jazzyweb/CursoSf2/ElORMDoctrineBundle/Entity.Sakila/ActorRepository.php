@@ -14,7 +14,7 @@ class ActorRepository extends EntityRepository {
 
     public function findByNombreLike($patron) {
         
-        // Todos los actores cuyo nombre comienza por 'A'
+        // Todos los actores cuyo nombre es como $patron
         $queryActores = $this->getEntityManager()->createQuery(
                         'SELECT a FROM JCSf2ORMDoctrineBundle:Actor a WHERE a.nombre LIKE :patron'
                 )->setParameter('patron', $patron);
