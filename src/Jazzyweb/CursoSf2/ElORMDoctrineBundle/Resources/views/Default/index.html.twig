@@ -96,7 +96,7 @@
 </p>
 
 <p>
-    Aquí puedes la modificación de objetos en acción. El código involucrado en este ejemplo es:
+    Aquí puedes ver la modificación de objetos en acción. El código involucrado en este ejemplo es:
 </p>
 <ul>
     <li>
@@ -177,7 +177,8 @@ muy útiles:
 
 <p>
     Como en las bases de datos relacionales tan solo existe la relación OneToMany-ManyToOne,
-    Doctrine mapea las relaciones:
+    Doctrine mapea las relaciones de la siguiente manera:
+</p>
 <ul>
     <li>
         OneToOne entre objetos como OneToMany-ManyToOne en base de datos, controlando que la clave 
@@ -191,8 +192,11 @@ muy útiles:
         que modela cada objeto.
     </li>
 </ul>
-</p>
 
+<p>
+    Respecto a la direccionalidad, es un concepto propio del mundo de los objetos y no tiene
+    cabida en el espacio de la base de datos, por lo que es algo que no se mapea.
+</p>
 <p>
     De cara al mapeo de las asociaciones entre objetos en la base de datos y a la persistencia de 
     los mismos, cuando la asociación es bidireccional, Doctrine denomina a uno de los objetos 
@@ -374,11 +378,11 @@ muy útiles:
 <p>
     Según hemos expuesto antes en las reglas que Doctrine aplica sobre cada una de las partes,
     en una relación OneToMany-ManyToOne, la parte ManyToOne es siempre la propietaria. 
-    Observa que es lo que sucede en este caso: Persona es la parte ManyToOne.
+    Observa que es precisamente lo que sucede en este caso: Persona es la parte ManyToOne.
 </p>
 
 <p>
-    Primero debemos crear la entidad y Direccion, para lo que podemos usar el generador de 
+    Primero debemos crear la entidad Direccion, para lo que podemos usar el generador de 
     entidades php app/console generate:doctrine:entitity.
 </p>
 
@@ -408,14 +412,14 @@ muy útiles:
     Al actualiza la base de datos, además de crearse la tabla Direccion, se añade una clave
     foránea <code>direccion_id</code> a la tabla Persona, que la relaciona con la tabla Direccion.
 </p>
-    
+
 <h3>OneToMany unidireccional</h3>
 
 <p>
     Ejemplo: Persona-Telefono, de manera que una persona tiene varios teléfonos, pero cada teléfono
     sólo pueda pertenecer a una persona. La parte propietaria será persona.
 </p>
-    
+
 <p>
     Este caso plantea un problema: las reglas de Doctrine que hemos mencionado más arriba declaran
     rotundamente que en una relación OneToMany-ManyToOne la parte propietaria es la ManyToOne. 
@@ -455,7 +459,8 @@ muy útiles:
 
 <p>
     Regeneramos las entidades y actualizamos la base de datos. Observamos que en la entidad Persona
-    aparecen los métodos <code>addTelefono()</code> (singular) y <code>getTelefonos()</code> (plural).
+    aparecen los métodos <code>addTelefono()</code> (singular), <code>removeTelefono()</code> (singular) y 
+    <code>getTelefonos()</code> (plural).
     Además, en la base de datos se ha creado la tabla Telefono y una tabla intermedia persona_telefono con
     claves foráneas a Persona y Telefono. Además la clave foránea a Teléfono debe ser única, para 
     ganantizar la relación OneToMany desde Persona a Telefono.
@@ -528,7 +533,253 @@ public function __construct()
 
 <h3>ManyToMany unidireccional</h3>
 
+<p>
+    Ejemplo: Actor-Pelicula, de manera que un actor pueda aparecer en varias películar y en una película
+    puedan intervenir varios actores. Queremos que la relación ser unidireccional siendo Actor la entidad que
+    implemente los métodos de acceso a Pelicula.
+</p>
+
+<p>
+    En la entidad Actor añadimos el atributo <code>$peliculas</code> con los siguientes metadatos de mapeo:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToMany(targetEntity="Pelicula")
+ * @ORM\JoinTable(name="actor_pelicula",
+ *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id")},
+ *      inverseJoinColumns={@ORM\JoinColumn(name="pelicula_id", referencedColumnName="id")}
+ *      )
+ **/
+ private $peliculas;
+</pre>
+
+<p>
+    En la entidad Pelicula no hacemos nada puesto que la relación en unidireccional.
+</p>
+
+<p>
+    Generamos las entidades y aparecen en la entidad Actor los métodos <code>addPelicula()</code>
+    <code>removePelicula()</code> y <code>getPeliculas()</code>. Y cuando actualizamos la base de
+    datos aparece una tabla intermedia que implementa la relación ManyToMany con claves foráneas
+    hacia las tablas Actor y Pelicula.
+</p>
+
+<h3>ManyToMany bidireccional</h3>
+
+<p>
+    Ejemplo: Actor-Pelicula, de manera que un actor pueda aparecer en varias películar y en una película
+    puedan intervenir varios actores. Queremos que la relación sea bidireccional.
+    implemente los métodos de acceso a Pelicula.
+</p>
+
+<p>
+    Debemos añadir al atributo <code>$peliculas</code> de la entidad Actor la opción <code>inversedBy</code>
+    en sus metadatos, indicando el nombre del campo en la entidad Pelicula que invierte la relación:    
+</p>
+
+<pre>
+ /**
+  * @ORM\ManyToMany(targetEntity="Pelicula", inversedBy="actores")
+  * @ORM\JoinTable(name="actor_pelicula",
+  *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id")},
+  *      inverseJoinColumns={@ORM\JoinColumn(name="pelicula_id", referencedColumnName="id")}
+  *      )
+  **/
+private $peliculas;
+</pre>
+
+<p>
+    Y en la entidad Pelicula añadimos el atributo <code>$actores</code> con los siguientes metadatos:
+</p>
+
+<pre>
+/**
+ * @ORM\ManyToMany(targetEntity="Actor", mappedBy="peliculas")
+ */
+ private $actores;
+</pre>
+
+<p>
+    Generamos las entidades y aparecen en la entidad Pelicula los métodos <code>addActore()</code>,
+    <code>removeActore()</code> y <code>getActores()</code>. Observa que los singulares no están 
+    bien construidos desde el punto de vista de la gramática castellana. Si no te gustan así puedes
+    cambiarlos tú a mano.
+</p>
+
+<p>
+    Por otro lado, al actualizar la base de datos no ocurre ningún cambio. De nuevo, la direccionalidad
+    no es algo que incumba a la base de datos.
+</p>
+
+<h3>Persistencia de las asociaciones</h3>
+
+<p>
+    En la <a href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/unitofwork-associations.html#important-concepts">
+        documentación oficial</a>, Doctrine deja muy claro que <b>ante cambios (inserciones, actualizaciones y borrados)
+        tan sólo chequeará la parte propietaria de la asociación</b>.
+</p>
+
+<p>
+    Lo que significa que al utilizar el método <code>persist()</code> del Entity Manager, únicamente
+    los cambios que se hayan realizado con los setters (<code>set{Propiedad}</code>, <code>add{Propiedad}</code>,
+    <code>remove{Propiedad}</code>) de la entidad propietaria serán efectuados la base de datos.
+</p>
+<p>
+    En el caso de las asociaciones unidireccionales no hay ningún problema pues los únicos setter que
+    existen son los de la parte propietaria, pero si la asociación es bidireccional debemos asegurarnos
+    de usar dichos métodos si deseamos persistir en la base de datos. Además, si queremos mantener la
+    bidireccionalidad, también debemos utilizar los setters de la otra parte.
+</p>
+<p>
+    Ilustrémoslo con un ejemplo. Si <code>$persona</code> es un objeto de la clase Persona, y
+    <code>$direccion</code> lo es de la clase Direccion, y queremos asociar la dirección a la
+    persona, la manera correcta de hacerlo es:
+</p>
+
+<pre>
+$persona->setDireccion($direccion);  
+$direccion->addPersona($persona);    
+</pre>
+
+<p>
+    Aquí puedes ver un ejemplo de persistencia de asociaciones en acción. En él se 
+    muestra el efecto de usar sólo los setters de la parte propietaria (persiste pero
+    no mantiene la coherencia bidireccional), sólo los setters de la parte inversa
+    (ni persiste ni mantienen la coherencia bidireccional) y ambos setters (persiste y
+    mantiene la coherencia bidireccional).  
+    involucrado en este ejemplo es:
+</p>
+<ul>
+    <li>
+        Las entidades <code>Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona</code>, y
+        <code>Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Direccion</code>,
+    </li>
+    <li>
+        El Controlador <code>JCSf2ORMDocrineBundle:Default:persistirRelacionesAction</code> 
+    </li>   
+</ul>
+
 <h2>Las consultas DQL</h2>
+
+<p>
+    La recuperación de objetos filtrando por sus propiedades se realiza en Doctrine mediante
+    un lenguaje de consulta sobre el modelo de objetos denominado DQL (Doctrine Query Language).
+    Cuando se utiliza DQL es importante pensar en un repositorio de objetos en el que estamos 
+    filtrando un subconjunto en lugar de hacerlo en tablas y relaciones en una base de datos.
+</p>
+
+<h2>Anatomía de una consulta DQL</h2>
+
+<h3>Consultas de selección de objetos</h3>
+
+<p>
+    <b>Ejemplo</b>. "Dame una colección de objetos pelicula en las que participen actores cuyo nombre
+    case con el patrón '%JOHN%' y cuyo año de producción sea posterior a 1980":
+</p>
+<pre>
+SELECT p FROM JCSf2ORMDoctrineBundle:Pelicula p JOIN p.actores a WHERE a.name LIKE '%JOHN%' AND p.year > 1980
+</pre>
+
+<h4>El resultado es un array de objetos (<code>FROM</code>). </h4>
+
+<div class="alert">
+    <code>FROM JCSf2ORMDoctrineBundle:Pelicula p</code>
+
+</div>
+<p>
+    El resultado de lanzar una consulta DQL sobre el repositorio de objetos, es un array
+    de objetos del tipo especificado por la clausula <code>FROM</code>. De manera que esta
+    define la ráiz de la consulta. Dicha clausula <code>FROM</code> siempre va seguida del 
+    nombre de una entidad y del alias que le asignamos. En el ejemplo anterior, cuando
+    ejecutemos la consulta, obtendremos un array de entidades <code>JCSf2ORMDoctrineBundle:Pelicula</code>.    
+</p>
+
+<h3>Las asociaciones se especifican con <code>JOIN</code></h3>
+
+<div class="alert">
+    <code>JOIN p.actores a</code>
+</div>
+
+<p>
+    Mediante la palabra clave <code>JOIN</code> podemos especificar las asociaciones que 
+    vayamos a necesitar en la definición del filtrado. <code>JOIN</code> va seguida de un
+    atributo que es un objeto (o colección de objetos) asociado a otro objeto especificado
+    por su alias y del alias que le asignamos a este nuevo objeto.
+</p>
+
+<p>
+    En el ejemplo anterior <code>p</code> es el alias de la entidad <code>JCSf2ORMDoctrineBundle:Pelicula</code>,
+    <code>actores</code> es una colección que está asociada a dicha entidad, y <code>a</code> es el
+    alias que damos a los objetos de esta asociación, es decir, a los actores.
+</p>
+
+<h3>Establecemos filtros con <code>WHERE</code></h3>
+
+<div class="alert">
+    <code>WHERE a.name LIKE '%JOHN%' AND p.year > 1980</code>
+</div>
+
+<p>
+    Una vez que tenemos alias para todos los objetos por cuyos atributos queremos
+    filtrar, simplemente establecemos los filtros usando dichos alias para referirnos
+    a los objetos.
+</p>
+
+<h4>Los objetos no se construyen completamente (lazzy loading y <code>SELECT</code>)</h4>
+
+<div class="alert">
+    <code>SELECT p</code>
+</div>
+
+<p>
+    Como ya hemos estudiado, los objetos pueden estar asociados con otros objetos de varias 
+    maneras (OneToOne, ManyToMany ...). Esto significa que construir completamente en memoria
+    un sólo objeto significa construir todos los que estén asociados con él. Esto puede repetirse
+    de una manera recursiva, pues a su vez un objeto asociado puede tener otros objetos asociados y
+    así sucesivamente. La cantidad de objetos que se crearían dependerá de la complejidad del
+    modelo de objetos.
+</p>
+
+<p>
+    Por tanto, la ejecución de una consulta DQL podría producir como resultado un array excesivamente 
+    grande si no fuese gracias a la aplicación del concepto de <i>lazzy loading</i>. Este consiste
+    en construir parcialmente los objetos seleccionados por la consulta, de manera que los atributos
+    correspondientes a las asociaciones con otros objetos se dejan vacíos. Si en un momento dado se piden
+    a través de un getter del objeto, entonces se realiza una nueva consulta a la base de datos para
+    construirlo.
+</p>
+<p>
+    Con la palabra reservada <code>SELECT</code> indicamos los objetos de la asociación que queremos 
+    recuperar de un tirón desde la base de datos (sin lazzy loading). En el ejemplo de DQL que
+    encabeza esta sección, se está pidiendo únicamente los objetos peliculas. De manera que 
+    en la construcción en memoria de los mismos se rellenarán los atributos escalares pero no
+    las asociaciones.
+</p>
+
+<p>
+    Si cambiamos la clausula <code>SELECT</code> por <code>SELECT p,a</code>, la consulta se 
+    realizaría de manera que en una única query a la base de datos se obtendrían los datos
+    suficientes para construir en memoria los objetos pelicula y los objetos actores asociados.
+    De esta manera, cuando se utilice el método <code>getActores()</code> no se vuelve a consultar
+    a la base de datos. 
+</p>
+<p>
+    Doctrine llama Cuando indicamos en el <code>SELECT</code> más de un tipo de objeto, se dice que estamos
+    realizano
+</p>
+
+<p>
+    Por tanto la clausual <code>SELECT</code> nos permite controlar hasta que profundidad queremos
+    aplicar el lazzy loading. Cuantos más objetos asociados queramos construir en memoria "del tirón",
+    más necesidades de memoria tendremos, pero si necesitamos acceder a muchos de los objetos asociados
+    estaremos ahorrando en número de consultas (provocadas por el lazzy loading) y, por tanto
+    en tiempo de ejecución, pues las operaciones de entrada/salida suelen ser costosas en tiempo.
+</p>
+
+<p>
+    Usando el profiler de Symfony2 puedes comprobar la diferencia entre realizar 
+</p>
 
 <h2>Los respositorios a medida</h2>
 

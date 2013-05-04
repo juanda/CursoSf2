@@ -5,7 +5,11 @@ jms_security_extra:
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-
+        Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario: 
+            algorithm:   sha1
+            iterations: 1
+            encode_as_base64: false
+        
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
@@ -16,19 +20,22 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-                    juanda: {password: juanda, roles: [ 'ROLE_ADMIN' ]}
+                    juanda: {password: juanda, roles: [ 'ROLE_ADMIN', 'ROLE_REDACTOR' ]}
+        
+        basedatos:
+            entity: {class: Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario, property: username}
 
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+            
         login:
             pattern:  ^/demo/secured/login$
             security: false
 
         secured_area:
-            pattern:    ^/demo/secured/
+            pattern:    ^/demo/secured/            
             form_login:
                 check_path: _security_check
                 login_path: _demo_login
@@ -44,9 +51,11 @@ security:
             
         area_segura:
             pattern:    ^/seguridad/
+            provider: basedatos
             form_login:                
                 login_path: jc_sf2_seguridad_login
                 check_path: jc_sf2_seguridad_login_check
+                
             logout:
                 path:   jc_sf2_seguridad_logout
                 target: jc_sf2_seguridad_no_segura
@@ -54,3 +63,5 @@ security:
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/seguridad/admin, roles: ROLE_ADMIN }
+        - { path: ^/seguridad/redaccion, roles: ROLE_REDACTOR }

@@ -8,10 +8,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 class DefaultController extends Controller {
 
     public function indexAction() {
-                
-        echo '<pre>';
-        print_r($this->get('security.context')->getToken());
-        exit;
+                        
+        //ld($this->get('security.context')->getToken());
         return $this->render('JCSf2SeguridadBundle:Default:index.html.twig');
     }
 
@@ -49,7 +47,8 @@ class DefaultController extends Controller {
 
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword('pruebas', $user->getSalt());
-        echo $password;
+        ld($encoder);
+        ld($password);
         
         return $this->render('JCSf2SeguridadBundle:Default:noSegura.html.twig');
     }

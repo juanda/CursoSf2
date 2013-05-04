@@ -1,0 +1,17 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<p>
+    Hola {{ app.user.username }}
+</p>
+
+<p>
+    <a href="{{ path('fos_user_security_logout') }}">Desconectar</a>
+</p>
+
+<h1>Administración (fosuser)</h1>
+
+<p>
+    Sólo para administradores
+</p>
+{% endblock %}

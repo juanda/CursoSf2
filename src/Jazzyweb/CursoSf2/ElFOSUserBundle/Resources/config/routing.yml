@@ -1,0 +1,13 @@
+jc_sf2_fos_seguridad_admin:
+    pattern:  /admin
+    defaults: { _controller: JCSf2FOSUserBundle:Default:admin }
+    
+jc_sf2_fos_seguridad_redaccion:
+    pattern:  /redaccion
+    defaults: { _controller: JCSf2FOSUserBundle:Default:redaccion }
+
+jc_sf2_fos_seguridad_no_segura:
+    pattern:  /nosegura
+    defaults: { _controller: JCSf2FOSUserBundle:Default:noSegura }
+
+
