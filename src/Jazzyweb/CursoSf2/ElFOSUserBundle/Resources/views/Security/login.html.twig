@@ -44,25 +44,34 @@
 {% block body %}
 
     <div class="container">
+    
+    {% block fos_user_content %}
 {% if error %}
-    <div class="alert alert-error">{{ error.message }}</div>
+    <div class="alert alert-error">{{ error|trans({}, 'FOSUserBundle') }}</div>
 {% endif %}
-    
-    <form  class="form-signin" action="{{ path('jc_sf2_seguridad_login_check') }}" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        
-        <input class="input-block-level" placeholder="Usuario" type="text" id="username" name="_username" value="{{ last_username }}" />
-        
-        <input class="input-block-level" placeholder="Password" type="password" id="password" name="_password" />
 
-    {#
-        If you want to control the URL the user is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
+<form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-        <button class="btn btn-large btn-primary" type="submit">login</button>
+    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+    <input class="input-block-level" placeholder="Usuario" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+
+    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="password" class="input-block-level" placeholder="Password" id="password" name="_password" required="required" />
+
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
     
+    <button class="btn btn-large btn-primary" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}"  type="submit">login</button>
+
+</form>
+{% endblock fos_user_content %}
+    
+  
 
     </div> <!-- /container -->
 
 {% endblock %}  
+
+
+
