@@ -660,6 +660,15 @@ $direccion->addPersona($persona);
     </li>   
 </ul>
 
+<div class="alert">
+    <p>
+        Cuando recuperamos objetos desde la base de datos a través del mecanimos de consulta de
+        Doctrine (que veremos en el siguiente apartado), todos los métodos getters de las 
+        entidades, tanto de la parte propietaria como de la inversa, funcionan perfectamente.
+        Lo anterior tiene que ver únicamente con las operaciones de modificación.
+    </p>
+</div>
+
 <h2>Las consultas DQL</h2>
 
 <p>
@@ -765,23 +774,249 @@ SELECT p FROM JCSf2ORMDoctrineBundle:Pelicula p JOIN p.actores a WHERE a.name LI
     a la base de datos. 
 </p>
 <p>
-    Doctrine llama Cuando indicamos en el <code>SELECT</code> más de un tipo de objeto, se dice que estamos
-    realizano
+    Cuando indicamos en el <code>SELECT</code> más de un tipo de objeto, se dice que estamos
+    realizando un <i>fetch join</i>, mientras que cuando sólo especificamos uno, se dice 
+    que realizamos un <i>regular join</i>.
 </p>
 
 <p>
-    Por tanto la clausual <code>SELECT</code> nos permite controlar hasta que profundidad queremos
-    aplicar el lazzy loading. Cuantos más objetos asociados queramos construir en memoria "del tirón",
-    más necesidades de memoria tendremos, pero si necesitamos acceder a muchos de los objetos asociados
-    estaremos ahorrando en número de consultas (provocadas por el lazzy loading) y, por tanto
-    en tiempo de ejecución, pues las operaciones de entrada/salida suelen ser costosas en tiempo.
+    Por tanto la clausula <code>SELECT</code> nos permite controlar hasta que punto aplicar el
+    lazzy loading en la construcción de objetos. Cuantos más objetos asociados queramos construir
+    en memoria "del tirón", más necesidades de memoria tendremos. Pero si necesitamos acceder a 
+    muchos de los objetos asociados estaremos ahorrando en número de consultas (provocadas por el
+    lazzy loading) y, por tanto en tiempo de ejecución, pues las operaciones de entrada/salida
+    son costosas en tiempo. 
+</p>
+<p>
+    Para decidir cuántos objetos hemos de recuperar de una vez (fetch), 
+    en una consulta, deberíamos analizar si, cuando dispongamos de los objetos solicitados,
+    vamos a acceder algunos de sus objetos asociados con frecuencia. Si es así, la opción más
+    eficiente es la de realizar un fetch join.
+</p>
+
+<h2>Consulta para la actualización y el borrado de objetos</h2>
+
+<p>
+    También podemos utilizar DQL cuando queramos borrar o actualizar varios objetos de una sola 
+    vez, como alternativa a realizar un bucle en el que se llame al método <code>remove()</code>
+    o <code>persist()</code> del entity manager.  
+</p>
+<p>
+    Por otro lado, las consultas de inserción de nuevos objetos no se pueden hacer en DQL. Sólo seç
+    pueden hacer con el método <code>persist</code>.
+</p>
+
+<h3>Ejemplo de borrado en bloque</h3>
+
+<pre>
+DELETE JCSf2ORMDoctrineBundle:Pelicula p WHERE p.titulo LIKE '%TIEMPO%'
+</pre>
+
+<h3>Ejemplo de actualización en bloque</h3>
+
+<pre>
+UPDATE JCSf2ORMDoctrineBundle:Pelicula p SET p.duracion=180 WHERE p.titulo LIKE '%TIEMPO%'
+</pre>
+
+<h2>Consultas DQL en la acción</h2>
+
+<p>
+    La forma más directa de realizar una consulta DQL es usando la función <code>createQuery()</code>
+    del Entity Manager en la propia acción.
+</p>
+
+<pre>
+public function indexAction(){
+
+    $em = $this->getDoctrine()->getManager();
+    $queryActores = $em->createQuery(
+                 'SELECT a FROM JCSf2ORMDoctrineBundle:Actor a WHERE a.nombre LIKE :patron'
+                )->setParameter('patron', 'A%');
+
+    $actores = $queryActores->getResult();
+
+    // Manejar el array $actores
+    ...
+
+}
+</pre>
+
+<p>
+    Puedes verlo en funcionamiento ejecutando la acción <code>JCSf2ORMDoctrineBundle:Default:dqlAction</code>
+    cuya ruta es <code>doctrine/dql</code>.
 </p>
 
 <p>
-    Usando el profiler de Symfony2 puedes comprobar la diferencia entre realizar 
+    Usando el profiler de Symfony2 sobre dicha acción y modificando la consulta DQL puedes 
+    comprobar la diferencia entre realizar el fetch join y no hacerlo. La plantilla con la que
+    se pinta dicha acción realiza un bucle para pintar todas las películas con sus actores
+    obtenidas por la consulta <code>$queryPeliculas2</code>. Por ello, cuando se utiliza un 
+    regular join, es decir, cuando se usa el lazzy loading, se realizan más de 80 consultas a la 
+    base de datos. Sin embargo, si se utiliza un fetch join haciendo <code>SELECT p,a</code>,
+    Se realiza sólo una consulta, disminuyendo considerablemente el tiempo de ejecución.
 </p>
 
 <h2>Los respositorios a medida</h2>
 
-{% endblock %}
+<p>
+    Aunque realizar consultas directamente en la acción funciona perfectamente, no es lo más adecuado.
+    Entre otras cosas por que no podemos reutilizarlas en otras acciones a menos que las dupliquemos,
+    lo cual atenta contra las buenas prácticas de programación.
+</p>
 
+<p>
+    El lugar correcto donde debemos construir las consultas DQL es el repositorio de cada entidad.
+    Cada consulta que queramos hacer la encapsulamos en una nueva función del repositorio. Después
+    podemos utilizar dichas funciones desde cualquier parte de la aplicación donde tengamos
+    acceso al Entity Manager de Doctrine, por ejemplo desde una acción.
+</p>
+<p>
+    Las clases repositorios se declaran en el mismo espacio de nombre que las entidades 
+    asociadas. Si se utiliza el generador de entidades del comando <code>console</code>,
+    podemos generar el esqueleto de estas clases para rellenarlo cuando lo necesitemos.
+</p>
+
+<p>
+    A continuación mostramos un ejemplo de clase repositorio.
+</p>
+<pre>
+namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity;
+
+use Doctrine\ORM\EntityRepository;
+
+class ActorRepository extends EntityRepository {
+
+    public function findByNombreLike($patron) {
+        
+        // Todos los actores cuyo nombre es como $patron
+        $queryActores = $this->getEntityManager()->createQuery(
+                        'SELECT a FROM JCSf2ORMDoctrineBundle:Actor a WHERE a.nombre LIKE :patron'
+                )->setParameter('patron', $patron);
+            
+
+        return $queryActores->getResult();
+    }       
+}
+</pre>
+
+<p>
+    Y así es como lo utilizamos en una acción:
+</p>
+
+<pre>
+public function indexAction(){
+    $em = $this->getDoctrine()->getManager();
+
+    $repoActores = $this->getDoctrine()
+                  ->getRepository('JCSf2ORMDoctrineBundle:Actor');
+
+    $actores = $repoActores->findByNombreLike("%JOHN%");
+
+    // Manejar el array $actores
+    ...
+</pre>
+
+<p>
+    En la acción  <code>JCSf2ORMDoctrineBundle:Default:dqlEnRepositorioAction</code>, 
+    cuya ruta es <code>doctrine/dql_en_repositorio</code>, puedes comprobar como 
+    funcionan las consultas DQL en los repositorios.
+</p>
+
+<h2>Generación mediante ingeniería inversa de los metadatos de mapeo</h2>
+
+<p>
+    En muchas ocasiones el desarrollo de una aplicación está condicionado a la
+    existencia de una base de datos existente. En tal caso debemos confeccionar
+    las entidades y sus metadatos de mapeo de manera que sean compatibles con
+    dicha base de datos. 
+</p>
+<p>
+    Doctrine ofrece una herramienta muy útil que, en más del 70% de los casos,
+    ofrece una solución a este problema de ingeniería inversa. Aunque los metadatos
+    generados por dicha herramienta no siempre sean completamente correctos, suponen
+    un buen punto de partida que nos ahorra tiempo y neuronas.     
+</p>
+
+<pre>
+# php app/console doctrine:mapping:import "JCSf2ORMDoctrineBundle" annotation
+</pre>
+
+<p>
+    Cuando utilicemos esta herramienta hemos de tener en cuenta que existen tipos
+    propios de cada sistema gestor de base de datos que Doctrine no "sabe" como
+    mapear a la inversa (desde la base de datos al metadato). En tal caso la herramienta
+    de ingeniería inversa fallará. La solución a este problema es indicar en la configuración
+    del servicio Doctrine como deben mapearse dichos tipos.
+</p>
+<p>
+    Un ejemplo típico es el tipo <code>enum</code> de MySQL. Docrine no "sabe" cómo debe
+    mapearlo, pero nosotros podemos ayudarle añadiendo al fichero <code>app/config/config.yml</code>
+    las siguientes líneas:
+</p>
+<pre>
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        ...
+        mapping_types:
+          enum: string         
+</pre>
+
+
+<h3>Generación de un formulario asociado a una entidad de Doctrine</h3>
+
+<p>
+    En muchas ocasiones necesitaremos generar formulario (tipos) asociados a las
+    entidades de nuestra aplicación. Obviamente podemos generarlos manualmente
+    según lo aprendido en el tema de los formularios. Pero la herramienta <code>console</code>
+    nos ofrece un comando que nos asiste automáticamente en tal tarea:
+</p>
+
+<pre>
+# php app/console doctrine:generate:form JCSf2ORMDoctrineBundle:Actor
+</pre>
+
+<p>
+    Si fuese necesario siempre podemos "tunear" el tipo generado para adaptarlo a las
+    necesidades de la aplicación.
+</p>
+
+<h3>Generación de módulos CRUD de Doctrine</h3>
+
+<p>
+    Añadir (Create), recuperar (Retrieve), actualizar (Update) y borrar (Delete) 
+    entidades es un problema que surge con frecuencia en el desarrollo de aplicaciones
+    que manejen datos persistentes.
+</p>
+
+<p>
+    Otro útil comando de la herramienta <code>console</code> nos genera automáticamente
+    código totalmente funcional para realizar dichas operaciones, conocidas como CRUD (las
+    primeras letras de cada operación).
+</p>
+
+<pre>
+#php app/console generate:doctrine:crud
+</pre>
+
+<p>
+    Se trata de un comando interactivo que pregunta al usuario los datos que necesita para
+    la construcción del código del módulo, que consiste en:
+</p>
+
+<ul>
+    <li>Un controlador asociado a la entidad (<code>{Entidad}Controller.php</code>).</li>
+    <li>Un conjunto de plantillas twig para pintar las acciones del controlador anterior.
+    <li>Un conjunto de rutas que deben ser importadas en el routing general de la aplicación.</li>
+    <li>El tipo <code>{Entidad}Type</code>, asociado a la entidad.</li>
+    <li>Un <i>TestCase</i> para añadir los test funcionales asociados al controlador.</li>
+</ul>
+
+<p>
+    Si fuese necesario siempre podemos "tunear" el tipo generado para adaptarlo a las
+    necesidades de la aplicación.
+</p>
+
+<h3>Subida de archivos vinculados con entidades Doctrine</h3>
+
+{% endblock %}
