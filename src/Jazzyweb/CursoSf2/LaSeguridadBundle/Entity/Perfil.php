@@ -43,7 +43,7 @@ class Perfil {
     private $rol;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="perfiles")
+     * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="perfiles")
      */
     private $usuarios;
 

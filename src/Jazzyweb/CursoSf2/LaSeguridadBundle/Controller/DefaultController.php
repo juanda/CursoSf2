@@ -4,13 +4,19 @@ namespace Jazzyweb\CursoSf2\LaSeguridadBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller {
 
     public function indexAction() {
-                        
+
         //ld($this->get('security.context')->getToken());
-        return $this->render('JCSf2SeguridadBundle:Default:index.html.twig');
+
+        //$this->getRequest()->setLocale('es');
+        $translated = $this->get('translator')->trans('Symfony2 is great');
+
+        return new Response($translated);
+       // return $this->render('JCSf2SeguridadBundle:Default:index.html.twig');
     }
 
     public function loginAction() {
@@ -41,7 +47,7 @@ class DefaultController extends Controller {
     }
 
     public function noSeguraAction() {
-        
+
         $factory = $this->get('security.encoder_factory');
         $user = new \Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Usuario();
 
@@ -49,7 +55,7 @@ class DefaultController extends Controller {
         $password = $encoder->encodePassword('pruebas', $user->getSalt());
         ld($encoder);
         ld($password);
-        
+
         return $this->render('JCSf2SeguridadBundle:Default:noSegura.html.twig');
     }
 
