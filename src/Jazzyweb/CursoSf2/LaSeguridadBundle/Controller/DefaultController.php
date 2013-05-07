@@ -11,12 +11,11 @@ class DefaultController extends Controller {
     public function indexAction() {
 
         //ld($this->get('security.context')->getToken());
-
         //$this->getRequest()->setLocale('es');
         $translated = $this->get('translator')->trans('Symfony2 is great');
 
-        return new Response($translated);
-       // return $this->render('JCSf2SeguridadBundle:Default:index.html.twig');
+        //return new Response($translated);
+        return $this->render('JCSf2SeguridadBundle:Default:index.html.twig');
     }
 
     public function loginAction() {
