@@ -26,5 +26,3 @@ class DireccionType extends AbstractType {
     }
 
 }
-
-?>

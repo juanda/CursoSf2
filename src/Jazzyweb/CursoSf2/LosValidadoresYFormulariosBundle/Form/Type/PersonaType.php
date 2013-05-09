@@ -26,5 +26,3 @@ class PersonaType extends AbstractType {
     }
 
 }
-
-?>
