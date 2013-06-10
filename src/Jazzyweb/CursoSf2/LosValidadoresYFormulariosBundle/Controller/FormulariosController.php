@@ -80,9 +80,12 @@ class FormulariosController extends Controller {
         ));
     }
 
-    public function envioAction() {
+    public function envioAction() {        
 
         $request = $this->getRequest();
+//        
+        ld($_FILES);
+        ld($request);
 
         $veloLuz = new ConstanteUniversal();
 

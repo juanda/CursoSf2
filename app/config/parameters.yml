@@ -2,11 +2,11 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     seguridad
+    database_name:     elormdoctrine
     database_user:     root
     database_password: root
-    
-    jc_sf2_los_servicios.servicio_basico.p1: estoy en app
+
+
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1

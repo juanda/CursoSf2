@@ -58,7 +58,7 @@ class DefaultController extends Controller {
         return $this->render('JCSf2SeguridadBundle:Default:noSegura.html.twig');
     }
 
-    public function adminAction() {
+    public function adminAction() {       
         return $this->render('JCSf2SeguridadBundle:Default:admin.html.twig');
     }
 

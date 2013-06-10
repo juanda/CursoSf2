@@ -2,6 +2,14 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+jc_sf2_los_servicios:
+   servicio_basico:    
+      kaka: keke  
+
+raul_fraile_ladybug:
+   object:
+        max_nesting_level:    8
+  
 fos_user:
     db_driver: orm
     firewall_name: main

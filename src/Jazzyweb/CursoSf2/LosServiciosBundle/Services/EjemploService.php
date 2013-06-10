@@ -11,6 +11,8 @@ class EjemploService{
     
     public function diHola(){
         
+        
+        
         return "EjemploServicio. p1=".$this->p1.",p2=".$this->p2;        
     }   
 }

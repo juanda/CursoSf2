@@ -1,0 +1,7 @@
+parameters:
+#    jazzyweb_chismorreos.example.class: Jazzyweb\ChismorreosBundle\Example
+
+services:
+#    jazzyweb_chismorreos.example:
+#        class: %jazzyweb_chismorreos.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

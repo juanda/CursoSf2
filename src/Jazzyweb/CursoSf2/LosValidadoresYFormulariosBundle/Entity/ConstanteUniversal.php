@@ -36,6 +36,8 @@ class ConstanteUniversal {
      */
     private $valor;
     
+    public $file;
+    
     public function getNombre() {
         return $this->nombre;
     }

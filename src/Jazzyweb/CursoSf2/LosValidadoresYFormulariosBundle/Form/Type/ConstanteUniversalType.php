@@ -11,7 +11,8 @@ class ConstanteUniversalType extends AbstractType {
 
         $builder->add('nombre', 'text')
                 ->add('valor', 'number')
-                ->add('unidad', 'text');
+                ->add('unidad', 'text')
+                ->add('file','file');
     }
 
     public function getName() {

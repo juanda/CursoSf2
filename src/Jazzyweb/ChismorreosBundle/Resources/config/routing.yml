@@ -1,0 +1,12 @@
+jazzyweb_chismorreos_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: JazzywebChismorreosBundle:Default:index }
+
+
+jazzyweb_chismorreos_postlist:
+    pattern: /postlist
+    defaults: { _controller: JazzywebChismorreosBundle:PostList:index }
+
+jazzyweb_chismorreos_addcomment:
+    pattern: /addcomment/{post}
+    defaults: { _controller: JazzywebChismorreosBundle:PostList:addComment }
