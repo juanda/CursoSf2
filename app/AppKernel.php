@@ -27,7 +27,6 @@ class AppKernel extends Kernel {
             new Jazzyweb\CursoSf2\LosControladoresYRutasBundle\JCSf2ControlRutasBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Jazzyweb\CursoSf2\ElFOSUserBundle\JCSf2FOSUserBundle(),
-            new Jazzyweb\ChismorreosBundle\JazzywebChismorreosBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
