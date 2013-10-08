@@ -1,15 +1,3 @@
-JazzywebChismorreosBundle_comentario:
-    resource: "@JazzywebChismorreosBundle/Resources/config/routing/comentario.yml"
-    prefix:   /comentario
-
-JazzywebChismorreosBundle_post:
-    resource: "@JazzywebChismorreosBundle/Resources/config/routing/post.yml"
-    prefix:   /post
-
-jazzyweb_chismorreos:
-    resource: "@JazzywebChismorreosBundle/Resources/config/routing.yml"
-    prefix:   /
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
