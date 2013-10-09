@@ -1,21 +1,21 @@
 <?php
 
-namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity;
+namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Actor
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\ActorRepository")
+ * @ORM\Table(name="actor")
+ * @ORM\Entity(repositoryClass="Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\ActorRepository")
  */
 class Actor {
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="actor_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,42 +24,32 @@ class Actor {
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="apellidos", nullable=true,type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $apellidos;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="actualizacion",  nullable=true, type="datetime")
+     * @ORM\Column(name="last_update", type="datetime")
      */
     private $actualizacion;
-
-
+    
     /**
      * @ORM\ManyToMany(targetEntity="Pelicula", inversedBy="actores")
-     * @ORM\JoinTable(name="actor_pelicula",
-     *      joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="pelicula_id", referencedColumnName="id")}
-     *      )
+     * @ORM\JoinTable(name="film_actor",
+     *                joinColumns={@ORM\JoinColumn(name="actor_id", referencedColumnName="actor_id")},
+     *                inverseJoinColumns={@ORM\JoinColumn(name="film_id", referencedColumnName="film_id", unique=true)})
      */
     private $peliculas;
-   
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->peliculas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Get id
      *
@@ -138,14 +128,21 @@ class Actor {
     {
         return $this->actualizacion;
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->peliculas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Add peliculas
      *
-     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Pelicula $peliculas
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula $peliculas
      * @return Actor
      */
-    public function addPelicula(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Pelicula $peliculas)
+    public function addPelicula(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula $peliculas)
     {
         $this->peliculas[] = $peliculas;
     
@@ -155,9 +152,9 @@ class Actor {
     /**
      * Remove peliculas
      *
-     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Pelicula $peliculas
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula $peliculas
      */
-    public function removePelicula(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Pelicula $peliculas)
+    public function removePelicula(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula $peliculas)
     {
         $this->peliculas->removeElement($peliculas);
     }

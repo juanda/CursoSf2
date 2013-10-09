@@ -3,18 +3,18 @@
 {% block container %}
 <h1>Cómo persistir objetos planos</h1>
 
-<h3>Se han persistido en la base de datos los siguientes actores:</h3>
+<h3>Se han persistido en la base de datos las siguientes personas:</h3>
 
 <table class="table">
     <tr>
         <th>Nombre</th>        
         <th>Apellidos</th>
     </tr>    
-{% for actor in actores %}
+{% for persona in personas %}
     <tr>
-        <td>{{ actor.nombre }}</td>
+        <td>{{ persona.nombre }}</td>
    
-        <td>{{ actor.apellidos }}</td>
+        <td>{{ persona.apellidos }}</td>
     </tr>
 {% endfor %}
 

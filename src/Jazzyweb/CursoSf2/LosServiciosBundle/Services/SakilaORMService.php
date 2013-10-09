@@ -13,7 +13,7 @@ class SakilaORMService {
     public function __construct(EntityManagerInterface $em){
 
         $this->em = $em;
-        $this->repoActor = $this->em->getRepository('JCSf2LosServiciosBundle:Actor');
+        $this->repoActor = $this->em->getRepository('Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor');
     }
 
     public function getActors() {

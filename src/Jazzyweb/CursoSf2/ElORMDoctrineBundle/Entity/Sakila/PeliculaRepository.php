@@ -1,6 +1,6 @@
 <?php
 
-namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity;
+namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -16,7 +16,7 @@ class PeliculaRepository extends EntityRepository {
 
         // Todas las películas del actor con id=1
         $query = $this->getEntityManager()->createQuery(
-                        'SELECT p FROM JCSf2ORMDoctrineBundle:Pelicula p 
+                        'SELECT p FROM Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula p
                          JOIN p.actores a
                          WHERE a.id = :actor_id'
                 )->setParameter('actor_id', $actor_id);
@@ -27,7 +27,7 @@ class PeliculaRepository extends EntityRepository {
     public function findByActorNombreLike($patron) {
         // Todas las películas en las que hay algún actor cuyo nombre es como JOHN%
         $query = $this->getEntityManager()->createQuery(
-                        'SELECT p FROM JCSf2ORMDoctrineBundle:Pelicula p 
+                        'SELECT p FROM Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula p
                          JOIN p.actores a
                          WHERE a.nombre LIKE :patron'
                 )->setParameter('patron', $patron);

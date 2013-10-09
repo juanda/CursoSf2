@@ -1,6 +1,6 @@
 <?php
 
-namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity;
+namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -16,7 +16,7 @@ class ActorRepository extends EntityRepository {
         
         // Todos los actores cuyo nombre es como $patron
         $queryActores = $this->getEntityManager()->createQuery(
-                        'SELECT a FROM JCSf2ORMDoctrineBundle:Actor a WHERE a.nombre LIKE :patron'
+                        'SELECT a FROM Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor a WHERE a.nombre LIKE :patron'
                 )->setParameter('patron', $patron);
             
 

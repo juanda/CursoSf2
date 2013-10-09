@@ -2,7 +2,7 @@
 
 namespace Jazzyweb\CursoSf2\LosServiciosBundle\Controller;
 
-use Jazzyweb\CursoSf2\LosServiciosBundle\Entity\Actor;
+use Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller {
@@ -64,8 +64,8 @@ class DefaultController extends Controller {
         $id = $request->get('id');
         $to = $request->get('to');
         
-        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
-//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
+//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
+        $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
 
         $invitacionService->enviaInvitacion($id, $to);
 

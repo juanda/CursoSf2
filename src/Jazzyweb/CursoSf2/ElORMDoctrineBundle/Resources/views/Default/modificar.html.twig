@@ -3,7 +3,7 @@
 {% block container %}
 <h1>Cómo modificar en la base de datos un objeto existente</h1>
 
-<h3>Se ha modificado en la base de datos el actor con id={{ actor.id }}:</h3>
+<h3>Se ha modificado en la base de datos la persona con id={{ persona.id }}:</h3>
 
 <h4>Datos antiguos</h4>
 <table class="table">
@@ -12,9 +12,9 @@
         <th>Apellidos</th>
     </tr>    
     <tr>
-        <td>{{ actorCopy.nombre }}</td>
+        <td>{{ personaCopy.nombre }}</td>
    
-        <td>{{ actorCopy.apellidos }}</td>
+        <td>{{ personaCopy.apellidos }}</td>
     </tr>
 
 </table>
@@ -26,9 +26,9 @@
         <th>Apellidos</th>
     </tr>    
     <tr>
-        <td>{{ actor.nombre }}</td>
+        <td>{{ persona.nombre }}</td>
    
-        <td>{{ actor.apellidos }}</td>
+        <td>{{ persona.apellidos }}</td>
     </tr>
 
 </table>

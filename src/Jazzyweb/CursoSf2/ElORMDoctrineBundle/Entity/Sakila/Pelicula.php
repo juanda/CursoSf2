@@ -1,21 +1,21 @@
 <?php
 
-namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity;
+namespace Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Pelicula
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\PeliculaRepository")
+ * @ORM\Table("film")
+ * @ORM\Entity(repositoryClass="Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\PeliculaRepository")
  */
-class Pelicula
-{
+class Pelicula {
+
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="film_id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,38 +24,37 @@ class Pelicula
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $titulo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion",nullable=true, type="string", length=255)
+     * @ORM\Column(name="description", type="string", nullable=true, length=255)
      */
     private $descripcion;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="release_year", type="string", nullable=true, length=4)
+     */
+    private $anio;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="duracion",nullable=true, type="integer")
+     * @ORM\Column(name="length", type="integer", nullable=true)
      */
     private $duracion;
-
-
+    
     /**
+     *
      * @ORM\ManyToMany(targetEntity="Actor", mappedBy="peliculas")
-     * 
      */
     private $actores;
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->actores = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Get id
      *
@@ -113,6 +112,29 @@ class Pelicula
     }
 
     /**
+     * Set anio
+     *
+     * @param string $anio
+     * @return Pelicula
+     */
+    public function setAnio($anio)
+    {
+        $this->anio = $anio;
+    
+        return $this;
+    }
+
+    /**
+     * Get anio
+     *
+     * @return string 
+     */
+    public function getAnio()
+    {
+        return $this->anio;
+    }
+
+    /**
      * Set duracion
      *
      * @param integer $duracion
@@ -134,14 +156,21 @@ class Pelicula
     {
         return $this->duracion;
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->actores = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Add actores
      *
-     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor $actores
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor $actores
      * @return Pelicula
      */
-    public function addActore(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor $actores)
+    public function addActore(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor $actores)
     {
         $this->actores[] = $actores;
     
@@ -151,9 +180,9 @@ class Pelicula
     /**
      * Remove actores
      *
-     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor $actores
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor $actores
      */
-    public function removeActore(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Actor $actores)
+    public function removeActore(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor $actores)
     {
         $this->actores->removeElement($actores);
     }
@@ -166,5 +195,9 @@ class Pelicula
     public function getActores()
     {
         return $this->actores;
+    }
+    
+    public function __toString() {
+        return $this->getTitulo();
     }
 }
