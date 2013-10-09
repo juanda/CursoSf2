@@ -63,8 +63,8 @@ class DefaultController extends Controller {
         $id = $request->get('id');
         $to = $request->get('to');
         
-//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
-        $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
+        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
+//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
 
         $invitacionService->enviaInvitacion($id, $to);
 
