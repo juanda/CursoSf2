@@ -1,0 +1,24 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+
+<h1>Listado con todos los actores</h1>
+
+<table class="table table-striped">
+    <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    {% for actor in actores %}
+    <tr>
+        <td><a href="{{ path('jc_sf2_los_servicios_sakila_actor', {id: actor.id}) }}">{{ actor.id }}</a></td>
+        <td>{{ actor.nombre }}</td>
+        <td>{{ actor.apellidos }}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+
+{% endblock %}
+
