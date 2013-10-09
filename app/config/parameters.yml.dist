@@ -1,11 +1,11 @@
 parameters:
     database_driver:   pdo_mysql
-    database_host:     10.200.16.27
+    database_host:     127.0.0.1
     database_port:     ~
     database_name:     cursosf2
 #    database_name:     sakila
     database_user:     root
-    database_password: 1cadsggm2
+    database_password: root
 
 
 
