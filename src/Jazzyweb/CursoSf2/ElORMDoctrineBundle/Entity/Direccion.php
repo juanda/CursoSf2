@@ -34,6 +34,11 @@ class Direccion
      * @ORM\Column(name="numero", type="integer")
      */
     private $numero;
+        
+    /**
+     * @ORM\OneToMany(targetEntity="Persona", mappedBy="direccion")
+     **/
+   private $personas;
 
     /**
      * Get id
@@ -90,5 +95,44 @@ class Direccion
     {
         return $this->numero;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->personas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add personas
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona $personas
+     * @return Direccion
+     */
+    public function addPersona(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona $personas)
+    {
+        $this->personas[] = $personas;
+    
+        return $this;
+    }
 
+    /**
+     * Remove personas
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona $personas
+     */
+    public function removePersona(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona $personas)
+    {
+        $this->personas->removeElement($personas);
+    }
+
+    /**
+     * Get personas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPersonas()
+    {
+        return $this->personas;
+    }
 }

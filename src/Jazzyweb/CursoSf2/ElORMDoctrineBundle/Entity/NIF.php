@@ -42,7 +42,11 @@ class NIF
      */
     private $equipo;
     
-
+    /**
+     * @ORM\OneToOne(targetEntity="Persona", mappedBy="nif")
+     * 
+     */
+    private $persona;
 
     /**
      * Get id
@@ -123,4 +127,26 @@ class NIF
         return $this->equipo;
     }
 
+    /**
+     * Set persona
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona $persona
+     * @return NIF
+     */
+    public function setPersona(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona $persona = null)
+    {
+        $this->persona = $persona;
+    
+        return $this;
+    }
+
+    /**
+     * Get persona
+     *
+     * @return \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Persona 
+     */
+    public function getPersona()
+    {
+        return $this->persona;
+    }
 }

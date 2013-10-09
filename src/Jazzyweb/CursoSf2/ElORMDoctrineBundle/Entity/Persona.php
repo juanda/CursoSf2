@@ -35,6 +35,26 @@ class Persona {
      */
     private $apellidos;
 
+    /**
+     * @ORM\OneToOne(targetEntity="NIF", inversedBy="persona")
+     * @ORM\JoinColumn(name="nif_id", referencedColumnName="id")
+     */
+    private $nif;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Direccion", inversedBy="personas")
+     * @ORM\JoinColumn(name="direccion_id", referencedColumnName="id")
+     * */
+    private $direccion;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Telefono")
+     * @ORM\JoinTable(name="persona_telefono",
+     *      joinColumns={@ORM\JoinColumn(name="persona_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="telefono_id", referencedColumnName="id", unique=true)}
+     *      )
+     * */
+    private $telefonos;
 
     /**
      * Get id
@@ -87,4 +107,86 @@ class Persona {
         return $this->apellidos;
     }
 
+    /**
+     * Set nif
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\NIF $nif
+     * @return Persona
+     */
+    public function setNif(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\NIF $nif = null) {
+        $this->nif = $nif;
+
+        return $this;
+    }
+
+    /**
+     * Get nif
+     *
+     * @return \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\NIF 
+     */
+    public function getNif() {
+        return $this->nif;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Direccion $direccion
+     * @return Persona
+     */
+    public function setDireccion(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Direccion $direccion = null) {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     * 
+     * @return \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Direccion 
+     */
+    public function getDireccion() {
+        return $this->direccion;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->telefonos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add telefonos
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Telefono $telefonos
+     * @return Persona
+     */
+    public function addTelefono(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Telefono $telefonos)
+    {
+        $this->telefonos[] = $telefonos;
+    
+        return $this;
+    }
+
+    /**
+     * Remove telefonos
+     *
+     * @param \Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Telefono $telefonos
+     */
+    public function removeTelefono(\Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Telefono $telefonos)
+    {
+        $this->telefonos->removeElement($telefonos);
+    }
+
+    /**
+     * Get telefonos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTelefonos()
+    {
+        return $this->telefonos;
+    }
 }
