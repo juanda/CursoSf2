@@ -2,6 +2,7 @@
 
 namespace Jazzyweb\CursoSf2\LosServiciosBundle\Controller;
 
+use Jazzyweb\CursoSf2\LosServiciosBundle\Entity\Actor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller {
@@ -69,6 +70,21 @@ class DefaultController extends Controller {
         $invitacionService->enviaInvitacion($id, $to);
 
         return $this->render('JCSf2LosServiciosBundle:Default:invitacionSuccess.html.twig', array('to' => $to));
+    }
+
+    public function insertarActorAction(){
+
+        $actor = new Actor();
+        $actor->setNombre('Alfredo');
+        $actor->setApellidos('Landa');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($actor);
+
+        $em->flush();
+
+        ldd($actor);
     }
 
 }

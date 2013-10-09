@@ -72,7 +72,7 @@ services:
           - "@logger"
         tags:
           - { name: kernel.event_listener, event: invitacion_send, method: onEventInfo }
-#          - { name: kernel.event_listener, event: otro_evento , method: onEventError }
+          - { name: doctrine.event_listener, event: postPersist , method: postPersist }
 
     jc_sf2_los_servicios.mailer.listener:
         class: Jazzyweb\CursoSf2\LosServiciosBundle\EventListener\MailerListener
