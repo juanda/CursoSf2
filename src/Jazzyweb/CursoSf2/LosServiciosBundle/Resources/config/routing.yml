@@ -10,6 +10,10 @@ jc_sf2_los_servicios_sakila_actores:
     pattern:  /actores
     defaults: { _controller: JCSf2LosServiciosBundle:Default:actores }
 
+jc_sf2_los_servicios_sakilaorm_actores:
+    pattern:  /actoresorm
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:actoresorm }
+
 jc_sf2_los_servicios_sakila_actor:
     pattern:  /actor/{id}
     defaults: { _controller: JCSf2LosServiciosBundle:Default:actor }

@@ -32,6 +32,15 @@ class DefaultController extends Controller {
         return $this->render('JCSf2LosServiciosBundle:Default:actores.html.twig', array('actores' => $actores));
     }
 
+    public function actoresORMAction() {
+
+        $sakilaService = $this->get('jc_sf_los_servicios.sakilaorm');
+
+        $actores = $sakilaService->getActors();
+
+        return $this->render('JCSf2LosServiciosBundle:Default:actoresorm.html.twig', array('actores' => $actores));
+    }
+
     public function actorAction() {
 
         $request = $this->getRequest();
@@ -54,7 +63,8 @@ class DefaultController extends Controller {
         $id = $request->get('id');
         $to = $request->get('to');
         
-        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
+//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
+        $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
 
         $invitacionService->enviaInvitacion($id, $to);
 

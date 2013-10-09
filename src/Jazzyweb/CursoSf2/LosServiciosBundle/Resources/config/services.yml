@@ -10,9 +10,17 @@ parameters:
     jc_sf2_los_servicios.sakila.dbpass: root
     jc_sf2_los_servicios.sakila.dbhost: localhost
     jc_sf2_los_servicios.sakila.chatset: utf8
-    
+
+    jc_sf2_los_servicios.sakilaorm.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\SakilaORMService
+
+    jc_sf2_los_servicios.sakilaorm2.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\SakilaORM2Service
+
     
     jc_sf2_los_servicios.invitacion.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\InvitacionService
+    jc_sf2_los_servicios.invitacion.subject: Curso Symfony2 te invita al cine
+    jc_sf2_los_servicios.invitacion.from: noreply@cursosf2.es
+
+    jc_sf2_los_servicios.invitacionconeventos.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\InvitacionConEventosService
     
     
     
@@ -34,10 +42,41 @@ services:
           - %jc_sf2_los_servicios.sakila.dbpass%
           - %jc_sf2_los_servicios.sakila.dbhost%
           - %jc_sf2_los_servicios.sakila.chatset%
-   
-    jc_sf2_los_servicios.invitacion: 
+
+    jc_sf_los_servicios.sakilaorm:
+        class: %jc_sf2_los_servicios.sakilaorm.class%
+        arguments:
+          - "@doctrine.orm.entity_manager"
+
+    jc_sf2_los_servicios.invitacion:
         class:  %jc_sf2_los_servicios.invitacion.class%
         arguments:
           - "@jc_sf2_los_servicios.sakila"
           - "@mailer"
           - "@templating"
+          - %jc_sf2_los_servicios.invitacion.subject%
+          - %jc_sf2_los_servicios.invitacion.from%
+
+    jc_sf2_los_servicios.invitacionconeventos:
+        class:  %jc_sf2_los_servicios.invitacionconeventos.class%
+        arguments:
+          - "@jc_sf2_los_servicios.sakila"
+          - "@event_dispatcher"
+          - "@templating"
+          - %jc_sf2_los_servicios.invitacion.subject%
+          - %jc_sf2_los_servicios.invitacion.from%
+
+    jc_sf2_los_servicios.logger.listener:
+        class: Jazzyweb\CursoSf2\LosServiciosBundle\EventListener\LoggerListener
+        arguments:
+          - "@logger"
+        tags:
+          - { name: kernel.event_listener, event: invitacion_send, method: onEventInfo }
+#          - { name: kernel.event_listener, event: otro_evento , method: onEventError }
+
+    jc_sf2_los_servicios.mailer.listener:
+        class: Jazzyweb\CursoSf2\LosServiciosBundle\EventListener\MailerListener
+        arguments:
+          - "@mailer"
+        tags:
+          - { name: kernel.event_listener, event: invitacion_send, method: sendMail }

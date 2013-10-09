@@ -4,10 +4,12 @@ namespace Jazzyweb\CursoSf2\LosServiciosBundle\Services;
 
 class InvitacionService {
 
-    public function __construct($sakila, $mailer, $templating) {
+    public function __construct($sakila, $mailer, $templating, $subject, $from ) {
         $this->sakila = $sakila;
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->subject = $subject;
+        $this->from = $from;
     }
 
     public function enviaInvitacion($idFilm, $to) {
@@ -15,8 +17,8 @@ class InvitacionService {
         $film = $this->sakila->getFilmById($idFilm);        
 
         $message = \Swift_Message::newInstance()
-                ->setSubject('CursoSf2 te invita al cine')
-                ->setFrom('cursosf2@noreply.com')
+                ->setSubject($this->subject)
+                ->setFrom($this->from)
                 ->setTo($to)
                 ->setBody(
                 $this->templating->render(
@@ -27,5 +29,4 @@ class InvitacionService {
 
         $this->mailer->send($message);
     }
-
 }
