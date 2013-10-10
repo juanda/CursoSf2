@@ -24,4 +24,8 @@ jc_sf2_seguridad_no_segura:
     pattern:  /nosegura
     defaults: { _controller: JCSf2SeguridadBundle:Default:noSegura }
 
+jc_sf2_seguridad_encoder:
+    pattern:  /encoder
+    defaults: { _controller: JCSf2SeguridadBundle:Default:encoder }
+
 

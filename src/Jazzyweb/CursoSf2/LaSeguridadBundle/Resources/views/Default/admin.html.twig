@@ -1,13 +1,7 @@
 {% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
 
 {% block container %}
-<p>
-    Hola {{ app.user.username }}
-</p>
-
-<p>
-    <a href="{{ path('jc_sf2_seguridad_logout') }}">Desconectar</a>
-</p>
+{% include 'JCSf2SeguridadBundle:Default:profile.html.twig' %}
 
 <h1>Administración</h1>
 

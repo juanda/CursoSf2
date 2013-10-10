@@ -108,6 +108,7 @@ class DefaultController extends Controller {
         $em->persist($p1);
         $em->persist($p2);
         $em->persist($p3);
+        ;
 
         $em->flush();
 
@@ -115,12 +116,9 @@ class DefaultController extends Controller {
 
         $personas = $repoPersona->findAll();
 
-        foreach($personas as $persona){
-            echo $this->echoPersona($persona);
-            echo '<br/>';
-        }
+        return $this->render('JCSf2ORMDoctrineBundle:Default:persistirRelaciones.html.twig', array(
+            'personas' => $personas));
 
-        exit;
     }
 
     private function  echoPersona($persona){

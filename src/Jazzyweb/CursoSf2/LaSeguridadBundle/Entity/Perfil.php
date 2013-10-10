@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Perfil
  *
- * @ORM\Table()
+ * @ORM\Table(name="sec_perfil")
  * @ORM\Entity(repositoryClass="Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\PerfilRepository")
  */
 class Perfil {

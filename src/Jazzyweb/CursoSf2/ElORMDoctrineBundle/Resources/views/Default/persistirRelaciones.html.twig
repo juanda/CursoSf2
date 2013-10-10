@@ -1,0 +1,28 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+<h1>Persistencia de relaciones</h1>
+
+<h3>Se han persistido en la base de datos las siguientes personas con sus direcciones:</h3>
+
+<table class="table">
+    <tr>
+        <th>Nombre</th>        
+        <th>Apellidos</th>
+        <th>Direccion</th>
+    </tr>    
+{% for persona in personas %}
+    <tr>
+        <td>{{ persona.nombre }}</td>
+   
+        <td>{{ persona.apellidos }}</td>
+        {% if persona.direccion is not null %}
+        <td>{{ persona.direccion.calle }}, {{ persona.direccion.numero }}</td>
+        {% else %}
+        <td>no tiene dirección asociada</td>
+        {% endif %}
+    </tr>
+{% endfor %}
+
+</table>
+{% endblock %}

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Usuario
  *
- * @ORM\Table()
+ * @ORM\Table(name="sec_usuario")
  * @ORM\Entity(repositoryClass="Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\UsuarioRepository")
  */
 class Usuario implements AdvancedUserInterface {
@@ -95,6 +95,10 @@ class Usuario implements AdvancedUserInterface {
 
     /**
      * @ORM\ManyToMany(targetEntity="Perfil", inversedBy="usuarios")
+     * @ORM\JoinTable(name="sec_usuario_perfil",
+     *      joinColumns={@ORM\JoinColumn(name="persona_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="grupo_id", referencedColumnName="id")}
+     *      )
      */
     private $perfiles;
 
