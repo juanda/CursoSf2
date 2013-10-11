@@ -13,13 +13,12 @@ class DefaultController extends Controller {
 
     public function servicioBasicoAction() {
 
-        $miServicio = $this->get('jc_sf2_los_servicios.servicio_basico');
-
         /**
          * wrapper de $this->container->get('jc_sf2_los_servicios.servicio_basico');
          */
-        $mensaje = $miServicio->diHola();        
-        
+        $miServicio = $this->get('jc_sf2_los_servicios.servicio_basico');
+
+        $mensaje = $miServicio->diHola();
 
         return $this->render('JCSf2LosServiciosBundle:Default:servicioBasico.html.twig', array('mensaje' => $mensaje));
     }

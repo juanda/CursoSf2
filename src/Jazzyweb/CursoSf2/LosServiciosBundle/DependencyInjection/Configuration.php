@@ -24,10 +24,11 @@ class Configuration implements ConfigurationInterface {
         // more information on that topic.
 
         $rootNode
-                ->children()
+            ->children()
                 ->arrayNode('servicio_basico')->children()
-                ->scalarNode('kaka')->defaultValue('bar')->end()
-                ->end();
+                ->scalarNode('p1')->defaultValue('p1 default value')->end()
+                ->scalarNode('p2')->defaultValue('p2 default value')->end()
+            ->end();
 
         return $treeBuilder;
     }

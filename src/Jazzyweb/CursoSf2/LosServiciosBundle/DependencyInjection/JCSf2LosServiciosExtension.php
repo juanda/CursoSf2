@@ -21,8 +21,16 @@ class JCSf2LosServiciosExtension extends Extension
     {   
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        
+
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+//        if(isset($config['servicio_basico'])){
+//            $container->setParameter('jc_sf2_los_servicios.servicio_basico.p1', $config['servicio_basico']['p1']);
+//            $container->setParameter('jc_sf2_los_servicios.servicio_basico.p2', $config['servicio_basico']['p2']);
+//        }
+
+
     }
 }

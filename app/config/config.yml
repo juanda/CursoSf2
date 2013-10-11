@@ -2,9 +2,14 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-jc_sf2_los_servicios:
-   servicio_basico:    
-      kaka: keke  
+#jc_sf2_los_servicios:
+#   servicio_basico: ~
+#
+#jc_sf2_los_servicios:
+#   servicio_basico:
+#      p1: holaaaaa
+#      p2: adiossss
+
 
 #raul_fraile_ladybug:
 #   object:

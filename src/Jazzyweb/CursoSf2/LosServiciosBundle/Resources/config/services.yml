@@ -7,7 +7,7 @@ parameters:
     jc_sf2_los_servicios.sakila.class: Jazzyweb\CursoSf2\LosServiciosBundle\Services\SakilaService
     jc_sf2_los_servicios.sakila.dbname: sakila
     jc_sf2_los_servicios.sakila.dbuser: root
-    jc_sf2_los_servicios.sakila.dbpass: 1cadsggm2
+    jc_sf2_los_servicios.sakila.dbpass: root
     jc_sf2_los_servicios.sakila.dbhost: localhost
     jc_sf2_los_servicios.sakila.chatset: utf8
 
