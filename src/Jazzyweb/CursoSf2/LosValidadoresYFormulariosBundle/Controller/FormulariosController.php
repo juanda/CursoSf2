@@ -25,13 +25,13 @@ class FormulariosController extends Controller {
         $veloLuz->setUnidad('m/s');
 
         $form = $this->createFormBuilder($veloLuz)
-                ->add('nombre', 'text', array())
-                ->add('valor', 'number')
-                ->add('unidad', 'text')
-                ->getForm();
+            ->add('nombre', 'text', array())
+            ->add('valor', 'number')
+            ->add('unidad', 'text')
+            ->getForm();
 
         return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
-                    'form' => $form->createView()
+            'form' => $form->createView()
         ));
     }
 
@@ -45,7 +45,36 @@ class FormulariosController extends Controller {
         $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
 
         return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
-                    'form' => $form->createView()
+            'form' => $form->createView()
+        ));
+    }
+
+    public function envioAction() {
+
+        $request = $this->getRequest();
+
+        $veloLuz = new ConstanteUniversal();
+
+        $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // perform some action, such as saving the task to the database
+
+            $this->get('session')->getFlashBag()->add('notice', 'El formulario era válido!');
+
+
+            return $this->redirect($this->generateUrl('jc_sf2_valy_forms_formularios_envio'));
+        }
+
+
+//        return $this->render('JCSf2ValyFormsBundle:Formularios:formenvio.html.twig', array(
+//                    'form' => $form->createView()
+//        ));
+
+        return $this->render('JCSf2ValyFormsBundle:Formularios:formenviowidgets.html.twig', array(
+            'form' => $form->createView()
         ));
     }
 
@@ -54,8 +83,8 @@ class FormulariosController extends Controller {
         $request = $this->getRequest();
 
         $persona = new Persona();
-        
-        
+
+
 
         $form = $this->createForm(new PersonaType, $persona);
 
@@ -76,40 +105,7 @@ class FormulariosController extends Controller {
 
 
         return $this->render('JCSf2ValyFormsBundle:Formularios:embeddedForm.html.twig', array(
-                    'form' => $form->createView()
-        ));
-    }
-
-    public function envioAction() {        
-
-        $request = $this->getRequest();
-//        
-        ld($_FILES);
-        ld($request);
-
-        $veloLuz = new ConstanteUniversal();
-
-        $form = $this->createForm(new ConstanteUniversalType, $veloLuz);
-
-        if ($request->isMethod('POST')) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                // perform some action, such as saving the task to the database
-
-                $this->get('session')->getFlashBag()->add('notice', 'El formulario era válido!');
-
-
-                return $this->redirect($this->generateUrl('jc_sf2_valy_forms_formularios_envio'));
-            }
-        }
-
-//        return $this->render('JCSf2ValyFormsBundle:Formularios:formenvio.html.twig', array(
-//                    'form' => $form->createView()
-//        ));
-
-        return $this->render('JCSf2ValyFormsBundle:Formularios:formenviowidgets.html.twig', array(
-                    'form' => $form->createView()
+            'form' => $form->createView()
         ));
     }
 
@@ -120,7 +116,7 @@ class FormulariosController extends Controller {
         $form = $this->createForm(new CosaType, $datos);
 
         return $this->render('JCSf2ValyFormsBundle:Formularios:formulario.html.twig', array(
-                    'form' => $form->createView()
+            'form' => $form->createView()
         ));
     }
 

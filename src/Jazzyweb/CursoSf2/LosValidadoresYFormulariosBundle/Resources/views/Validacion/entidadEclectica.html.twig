@@ -1,0 +1,26 @@
+<table class="table">
+    <tr>
+        <td>Nombre</td><td>{{ entidad.nombre }}</td>
+    </tr>
+    <tr>
+        <td>Descripcion</td><td>{{ entidad.descripcion }}</td>
+    </tr>
+    <tr>
+        <td>Mail</td><td>{{ entidad.email }}</td>
+    </tr>
+    <tr>
+        <td>Fecha</td><td>{{  entidad.fecha |date("d/m/Y") }}</td>
+    </tr>
+    <tr>
+        <td>Fichero</td><td>{{  entidad.fichero }}</td>
+    </tr>
+    <tr>
+        <td>IP</td><td>{{  entidad.ip }}</td>
+    </tr>
+    <tr>
+        <td>Puntuación</td><td>{{ entidad.puntuacion }}</td>
+    </tr>
+    <tr>
+        <td>URL</td><td>{{ entidad.url }}</td>
+    </tr>
+</table>

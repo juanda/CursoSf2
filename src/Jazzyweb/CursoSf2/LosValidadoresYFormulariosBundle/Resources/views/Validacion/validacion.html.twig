@@ -1,73 +1,63 @@
 {% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
 
-{% block javascripts%}
-
-{{ parent() }}
-
-<script>
-$('#e1').popover('toggle');
-$('#e1').popover('hide');
-$('#e2').popover('toggle');
-$('#e2').popover('hide');
-$('#e3').popover('toggle');
-$('#e3').popover('hide');
-</script>
-{% endblock%}
-
 {% block container %}
 
-<h1>Los Validadores en funcionamiento</h1>
-<div class="well">
-    
-    <h3>Objeto <a href="#" class="btn" data-title="Objeto $e1" data-html="true" data-placement="bottom" data-content="<pre>{{ e1 }}</pre>" id="e1">$e1</a>:</h3>
-    
-   {% if e1_errors|length > 0 %}
-      {% for error in e1_errors %}
-        <div class="alert alert-error">
-        {{ error.message }}
-        </div>
-      {% endfor %}
-    {% else %}
-        <div class="alert alert-success">
-            Objeto <code>$e1</code> OK!
-        </div>
-    {% endif %}
-</div>
+    <h1>Los Validadores en funcionamiento</h1>
+    <div class="well">
 
-<div class="well">
-    
-    <h3>Objeto <a href="#" class="btn" data-title="Objeto $e2" data-html="true" data-placement="bottom" data-content="<pre>{{ e2 }}</pre>" id="e2">$e2</a>:</h3>
-    
+        <h3>Objeto $e1:</h3>
+        {%  include 'JCSf2ValyFormsBundle:Validacion:entidadEclectica.html.twig' with {'entidad': e1} %}
 
-    {% if e2_errors|length > 0 %}
-      {% for error in e2_errors %}
-        <div class="alert alert-error">
-        {{ error.message }}
-        </div>
-      {% endfor %}
-    {% else %}
-        <div class="alert alert-success">
-            Objeto <code>$e2</code> OK!
-        </div>
-    {% endif %}
-</div>
+        <h3>Validación $e1:</h3>
+        {% if e1_errors|length > 0 %}
+            {% for error in e1_errors %}
+                <div class="alert alert-error">
+                    {{ error.message }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-success">
+                Objeto <code>$e1</code> OK!
+            </div>
+        {% endif %}
+    </div>
 
-<div class="well">
-    
-    <h3>Objeto <a href="#" class="btn" data-title="Objeto $e3" data-html="true" data-placement="bottom" data-content="<pre>{{ e3 }}</pre>" id="e3">$e3</a>:</h3>
-    
+    <div class="well">
 
-    {% if e3_errors|length > 0 %}
-      {% for error in e3_errors %}
-        <div class="alert alert-error">
-        {{ error.message }}
-        </div>
-      {% endfor %}
-    {% else %}
-        <div class="alert alert-success">
-            Objeto <code>$e3</code> OK!
-        </div>
-    {% endif %}
-</div>
+        <h3>Objeto $e2:</h3>
+        {%  include 'JCSf2ValyFormsBundle:Validacion:entidadEclectica.html.twig' with {'entidad': e2} %}
+
+        <h3>Validación $e2:</h3>
+        {% if e2_errors|length > 0 %}
+            {% for error in e2_errors %}
+                <div class="alert alert-error">
+                    {{ error.message }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-success">
+                Objeto <code>$e2</code> OK!
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="well">
+
+        <h3>Objeto $e3</h3>
+        {%  include 'JCSf2ValyFormsBundle:Validacion:entidadEclectica.html.twig' with {'entidad': e3} %}
+
+        <h3>Validación $e3:</h3>
+        {% if e3_errors|length > 0 %}
+            {% for error in e3_errors %}
+                <div class="alert alert-error">
+                    {{ error.message }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-success">
+                Objeto <code>$e3</code> OK!
+            </div>
+        {% endif %}
+    </div>
 
 {% endblock %}

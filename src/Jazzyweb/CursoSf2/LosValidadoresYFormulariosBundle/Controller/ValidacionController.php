@@ -16,7 +16,8 @@ class ValidacionController extends Controller {
         $e1->setDescripcion("Lorem ipsum dolor sit amet, consectetur adipisicing elit");
         $e1->setEmail('entidad@gmail.com');
         $e1->setFecha(new \DateTime());        
-        $e1->setFichero('/home/juanda/sites/CursoSf2/einstein.pdf');
+        $e1->setFichero(__DIR__.'/../../../../../number_theory.pdf');
+
         $e1->setIp('10.10.203.22');
         $e1->setPuntuacion(3);
         $e1->setUrl('http://juandarodriguez.es');
@@ -27,7 +28,7 @@ class ValidacionController extends Controller {
         $e2->setDescripcion("Lorem ipsum dolor sit amet, consectetur adipisicing elit");
         $e2->setEmail('entidad at gmail.com');
         $e2->setFecha(new \DateTime());        
-        $e2->setFichero('/home/juanda/sites/CursoSf2/console.json');
+        $e2->setFichero(__DIR__.'/../../../../../composer.json');
         $e2->setIp('10.10.203.289');
         $e2->setPuntuacion(3);
         $e2->setUrl('http://juandarodriguez.es');
@@ -38,7 +39,7 @@ class ValidacionController extends Controller {
         $e3->setDescripcion("Lorem ipsum dolor sit amet, consectetur adipisicing elit");
         $e3->setEmail('entidad@gmail.com');
         $e3->setFecha(new \DateTime());        
-        $e3->setFichero('/home/juanda/sites/CursoSf2/einstein.pdf');
+        $e3->setFichero(__DIR__.'/../../../../../number_theory.pdf');
         $e3->setIp('10.10.203.22');
         $e3->setPuntuacion(45);
         $e3->setUrl('juandarodriguez.ez');
