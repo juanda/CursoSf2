@@ -1,0 +1,57 @@
+{% extends 'JCSf2TemplatesBundle::layout.html.twig' %}
+
+{% block container %}
+    <h1>Ejemplo de formulario</h1>
+
+    <form action="#" method="post" {{ form_enctype(form) }}>
+        <div class="well">
+            {{ form_row(form.nombre) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.descripcion) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.email) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.cantidad) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.password) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.porcentaje) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.sistema_operativo) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.intereses) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.numero_empleados) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.paises) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.fecha1) }}
+        </div>
+
+        <div class="well">
+            {{ form_row(form.fecha2) }}
+        </div>
+
+        <input type="submit" />
+    </form>
+{% endblock %}

@@ -4,16 +4,17 @@ namespace Jazzyweb\CursoSf2\LosServiciosBundle\Services;
 
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
+
 
 class SakilaORMService {
 
     private $em;
 
-    public function __construct(EntityManagerInterface $em){
+    public function __construct($em){
 
         $this->em = $em;
         $this->repoActor = $this->em->getRepository('Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor');
+        $this->repoPelicula = $this->em->getRepository('Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula');
     }
 
     public function getActors() {
@@ -49,7 +50,9 @@ class SakilaORMService {
             throw new Exception("Falta el parámetro $id");
         }
 
-        // ...
+        $pelicula = $this->repoPelicula->find($id);
+
+        return $pelicula;
     }
 
     public function getFilmsOfActor($id) {

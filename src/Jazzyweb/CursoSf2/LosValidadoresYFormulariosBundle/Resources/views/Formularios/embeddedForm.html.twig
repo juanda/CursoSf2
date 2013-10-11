@@ -10,7 +10,15 @@
 {% endfor %}
 
 <form action="{{ path('jc_sf2_valy_forms_formularios_embeddedForm') }}" method="post" {{ form_enctype(form) }} novalidate>
-    {{ form_widget(form) }}
+    <div class="well">
+        {{ form_row(form.nombre) }}
+        <div class="well">
+            {{ form_row(form.direccion) }}
+        </div>
+    </div>
+
+
+
 
     <input type="submit" />
 </form>

@@ -1,54 +1,31 @@
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-
-fos_user_profile:
-    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /profile
-
-fos_user_register:
-    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /register
-
-fos_user_resetting:
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting
-
-fos_user_change_password:
-    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /profile
-
-jc_sf2_fos_user:
-    resource: "@JCSf2FOSUserBundle/Resources/config/routing.yml"
-    prefix:   /fos_seguridad
-    
 jc_sf2_control_rutas:
     resource: "@JCSf2ControlRutasBundle/Resources/config/routing.yml"
-    prefix:   /controladoresyrutas
+    prefix: /controladoresyrutas
 
 homepage:
-    pattern:  /
+    pattern: /
     defaults: { _controller: JCSf2TemplatesBundle:Default:inicio }
-    
+
 jc_sf2_seguridad:
     resource: "@JCSf2SeguridadBundle/Resources/config/routing.yml"
-    prefix:   /seguridad
-    
+    prefix: /seguridad
+
 jc_sf2_orm_doctrine:
     resource: "@JCSf2ORMDoctrineBundle/Resources/config/routing.yml"
-    prefix:   /doctrine
+    prefix: /doctrine
 
 jc_sf2_valy_forms:
     resource: "@JCSf2ValyFormsBundle/Resources/config/routing.yml"
-    prefix:   /valyforms
+    prefix: /valyforms
 
 jc_sf2_los_servicios:
     resource: "@JCSf2LosServiciosBundle/Resources/config/routing.yml"
-    prefix:   /services
+    prefix: /services
 
 jc_sf2_templates:
     resource: "@JCSf2TemplatesBundle/Resources/config/routing.yml"
-    prefix:   /templates
+    prefix: /templates
 
 jc_sf2_fundamentos:
     resource: "@JCSf2FundamentosBundle/Resources/config/routing.yml"
-    prefix:   /fundamentos
+    prefix: /fundamentos

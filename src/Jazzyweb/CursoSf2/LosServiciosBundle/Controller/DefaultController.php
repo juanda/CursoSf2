@@ -63,7 +63,19 @@ class DefaultController extends Controller {
         $id = $request->get('id');
         $to = $request->get('to');
         
-//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
+        $invitacionService = $this->get('jc_sf2_los_servicios.invitacion');
+//        $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
+
+        $invitacionService->enviaInvitacion($id, $to);
+
+        return $this->render('JCSf2LosServiciosBundle:Default:invitacionSuccess.html.twig', array('to' => $to));
+    }
+
+    public function invitacionConEventosAction() {
+        $request = $this->getRequest();
+        $id = $request->get('id');
+        $to = $request->get('to');
+
         $invitacionService = $this->get('jc_sf2_los_servicios.invitacionconeventos');
 
         $invitacionService->enviaInvitacion($id, $to);
@@ -83,7 +95,7 @@ class DefaultController extends Controller {
 
         $em->flush();
 
-        ldd($actor);
+        return $this->render('JCSf2LosServiciosBundle:Default:insertarActor.html.twig', array('actor' => $actor));
     }
 
 }

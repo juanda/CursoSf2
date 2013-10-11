@@ -1,7 +1,0 @@
-parameters:
-#    jc_sf2_fos_user.example.class: Jazzyweb\CursoSf2\ElFOSUserBundle\Example
-
-services:
-#    jc_sf2_fos_user.example:
-#        class: %jc_sf2_fos_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

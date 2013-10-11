@@ -2,7 +2,7 @@
 
 namespace Jazzyweb\CursoSf2\LosServiciosBundle\EventListener;
 
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class LoggerListener {
@@ -19,10 +19,11 @@ class LoggerListener {
     }
 
     public function postPersist(LifecycleEventArgs $args){
-        $entity = $args->getObject();
+
+        $entity = $args->getEntity();
 //        $entityManager = $args->getObjectManager();
-//    ldd($args);
-        $this->logger->info(serialize($entity));
+
+        $this->logger->info( 'postPersist event | ' . serialize($entity));
     }
 
 }

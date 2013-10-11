@@ -46,12 +46,12 @@ services:
     jc_sf_los_servicios.sakilaorm:
         class: %jc_sf2_los_servicios.sakilaorm.class%
         arguments:
-          - "@doctrine.orm.entity_manager"
+          - "@doctrine.orm.default_entity_manager"
 
     jc_sf2_los_servicios.invitacion:
         class:  %jc_sf2_los_servicios.invitacion.class%
         arguments:
-          - "@jc_sf2_los_servicios.sakila"
+          - "@jc_sf_los_servicios.sakilaorm"
           - "@mailer"
           - "@templating"
           - %jc_sf2_los_servicios.invitacion.subject%
@@ -60,7 +60,7 @@ services:
     jc_sf2_los_servicios.invitacionconeventos:
         class:  %jc_sf2_los_servicios.invitacionconeventos.class%
         arguments:
-          - "@jc_sf2_los_servicios.sakila"
+          - "@jc_sf_los_servicios.sakilaorm"
           - "@event_dispatcher"
           - "@templating"
           - %jc_sf2_los_servicios.invitacion.subject%

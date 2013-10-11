@@ -22,6 +22,10 @@ jc_sf2_los_servicios_sakila_invitacion:
     pattern:  /invitacion/{id}/{to}
     defaults: { _controller: JCSf2LosServiciosBundle:Default:invitacion }
 
+jc_sf2_los_servicios_sakila_invitacionconeventos:
+    pattern:  /invitacionconeventos/{id}/{to}
+    defaults: { _controller: JCSf2LosServiciosBundle:Default:invitacionConEventos }
+
 jc_sf2_los_servicios_insertar_actor:
     pattern:  /insertar/actor
     defaults: { _controller: JCSf2LosServiciosBundle:Default:insertarActor }

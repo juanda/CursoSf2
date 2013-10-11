@@ -10,23 +10,13 @@ imports:
 #      p1: holaaaaa
 #      p2: adiossss
 
-
-#raul_fraile_ladybug:
-#   object:
-#        max_nesting_level:    8
-  
-fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: Jazzyweb\CursoSf2\ElFOSUserBundle\Entity\User
-
 framework:
     #esi:             ~
-    translator:      { fallback: %locale% }
+    #translator:      { fallback: %locale% }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
-        strict_requirements: %kernel.debug%
+        strict_requirements: ~
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
@@ -37,6 +27,7 @@ framework:
     trusted_proxies: ~
     session:         ~
     fragments:       ~
+    http_method_override: true
 
 # Twig Configuration
 twig:
@@ -66,9 +57,6 @@ doctrine:
         user:     %database_user%
         password: %database_password%
         charset:  UTF8
-        mapping_types:
-          enum: string
-          set: string
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path:     %database_path%
@@ -79,11 +67,8 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: gmail
-    username:  serafindemeses
-    password:  1cadsggm2
-#    transport: %mailer_transport%
-#    host:      %mailer_host%
-#    username:  %mailer_user%
-#    password:  %mailer_password%
-#    spool:     { type: memory }
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }
