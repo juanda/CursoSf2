@@ -181,9 +181,7 @@ class DefaultController extends Controller {
         $repoActores = $this->getDoctrine()
             ->getRepository('Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Actor');
 
-
-
-        $actores = $repoActores->findByNombreLike("%JOHN%");
+        $actores = $repoActores->findByNombreLike("A%");
 
         $repoPeliculas = $this->getDoctrine()
             ->getRepository('Jazzyweb\CursoSf2\ElORMDoctrineBundle\Entity\Sakila\Pelicula');
