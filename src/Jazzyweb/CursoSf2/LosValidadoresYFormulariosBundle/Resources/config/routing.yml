@@ -34,3 +34,7 @@ jc_sf2_valy_forms_formularios_tiposwidgets:
 jc_sf2_valy_forms_formularios_embeddedForm:
     pattern:  /formularios/embeddedForm
     defaults: { _controller: JCSf2ValyFormsBundle:Formularios:embeddedForm }
+
+jc_sf2_valy_forms_formularios_collectionForm:
+    pattern:  /formularios/collectionForm
+    defaults: { _controller: JCSf2ValyFormsBundle:Formularios:collectionForm }

@@ -2,6 +2,9 @@
 
 namespace Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Controller;
 
+use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\Tag;
+use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\Task;
+use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\ConstanteUniversal;
 use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\Persona;
@@ -9,6 +12,7 @@ use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Entity\Direccion;
 use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\ConstanteUniversalType;
 use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\CosaType;
 use Jazzyweb\CursoSf2\LosValidadoresYFormulariosBundle\Form\Type\PersonaType;
+use Symfony\Component\HttpFoundation\Request;
 
 class FormulariosController extends Controller {
 
@@ -109,6 +113,36 @@ class FormulariosController extends Controller {
 
         return $this->render('JCSf2ValyFormsBundle:Formularios:embeddedForm.html.twig', array(
             'form' => $form->createView()
+        ));
+    }
+
+    public function collectionFormAction(Request $request)
+    {
+        $task = new Task();
+
+        // dummy code - this is here just so that the Task has some tags
+        // otherwise, this isn't an interesting example
+        $tag1 = new Tag();
+        $tag1->setName('tag1');
+        $task->getTags()->add($tag1);
+        $tag2 = new Tag();
+        $tag2->setName('tag2');
+        $task->getTags()->add($tag2);
+        // end dummy code
+
+        $form = $this->createForm(new TaskType(), $task);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->get('session')->getFlashBag()->add('notice', 'El formulario era válido!');
+
+
+            return $this->redirect($this->generateUrl('jc_sf2_valy_forms_formularios_collectionForm'));
+        }
+
+        return $this->render('JCSf2ValyFormsBundle:Formularios:newTask.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 
