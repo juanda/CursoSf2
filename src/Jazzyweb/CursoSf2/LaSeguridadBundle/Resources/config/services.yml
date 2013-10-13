@@ -1,6 +1,14 @@
 parameters:
-    jc_sf2_seguridad.customuser.class: Jazzyweb\CursoSf2\LaSeguridadBundle\CustomUser\UserProvider
+    jc_sf2_seguridad.customuser.class: Jazzyweb\CursoSf2\LaSeguridadBundle\CustomUserProvider\UserProvider
 
 services:
     jc_sf2_seguridad.customuser:
         class: %jc_sf2_seguridad.customuser.class%
+
+    custom.security.authentication.provider:
+        class:  Jazzyweb\CursoSf2\LaSeguridadBundle\CustomAuthenticationProvider\Provider
+        arguments: [""]
+
+    custom.security.authentication.listener:
+        class:  Jazzyweb\CursoSf2\LaSeguridadBundle\CustomAuthenticationProvider\Listener
+        arguments: ["@security.context", "@security.authentication.manager"]

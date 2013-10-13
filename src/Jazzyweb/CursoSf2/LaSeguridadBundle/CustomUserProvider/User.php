@@ -1,6 +1,6 @@
 <?php
 
-namespace Jazzyweb\CursoSf2\LaSeguridadBundle\CustomUser;
+namespace Jazzyweb\CursoSf2\LaSeguridadBundle\CustomUserProvider;
 
 
 use Symfony\Component\Security\Core\Role\Role;
