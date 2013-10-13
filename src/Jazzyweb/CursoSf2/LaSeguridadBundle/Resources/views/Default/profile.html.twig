@@ -1,5 +1,10 @@
 <p>
-    Hola {{ app.user.username }}
+    Hola
+    {% if app.user.username is defined %}
+        {{ app.user.username }}
+    {% else %}
+        Invitado
+    {% endif %}
 </p>
 
 <p>

@@ -1,7 +1,6 @@
 parameters:
-#    jc_sf2_seguridad.example.class: Jazzyweb\CursoSf2\LaSeguridadBundle\Example
+    jc_sf2_seguridad.customuser.class: Jazzyweb\CursoSf2\LaSeguridadBundle\CustomUser\UserProvider
 
 services:
-#    jc_sf2_seguridad.example:
-#        class: %jc_sf2_seguridad.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    jc_sf2_seguridad.customuser:
+        class: %jc_sf2_seguridad.customuser.class%

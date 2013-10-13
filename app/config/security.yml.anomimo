@@ -33,13 +33,9 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        area_nosegura:
-            pattern: ^/seguridad/(nosegura|login)
-            security: false
             
         area_segura:
-            pattern: ^/seguridad/
+            pattern: /
             provider: chain_provider
 
 #            http_basic:
@@ -52,7 +48,7 @@ security:
             logout:
                 path: jc_sf2_seguridad_logout
                 target: jc_sf2_seguridad_no_segura
-#            anonymous: ~
+            anonymous: ~
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
