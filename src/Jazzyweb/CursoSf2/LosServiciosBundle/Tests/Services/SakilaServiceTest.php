@@ -10,18 +10,11 @@ class SakilaServiceTest extends \PHPUnit_Framework_TestCase {
 
     public static function setUpBeforeClass()
     {
-        $config = array(
-            'dbname' => 'sakila',
-            'dbuser' => 'root',
-            'dbpass' => '1cadsggm2',
-            'dbhost' => '10.200.16.27'
-        );
-
         self::$service = new SakilaService(
-            $config['dbname'],
-            $config['dbuser'],
-            $config['dbpass'],
-            $config['dbhost']
+            $GLOBALS['DB_NAME'],
+            $GLOBALS['DB_USER'],
+            $GLOBALS['DB_PASS'],
+            $GLOBALS['DB_HOST']
         );
     }
 
