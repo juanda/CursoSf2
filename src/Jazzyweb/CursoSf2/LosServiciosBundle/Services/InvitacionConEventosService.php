@@ -27,6 +27,5 @@ class InvitacionConEventosService {
             )
         );
         $this->dispatcher->dispatch('invitacion_send', new GenericEvent($subject));
-
     }
 }
