@@ -25,9 +25,17 @@ class FixturesCommand extends ContainerAwareCommand {
             $em = $doctrine->getEntityManager();
 
             $query = $em
+                ->createQuery('DELETE FROM JCSf2SeguridadBundle:Group g');
+            $query->execute();
+
+            $query = $em
+                ->createQuery('DELETE FROM JCSf2SeguridadBundle:User u');
+            $query->execute();
+
+            $query = $em
                     ->createQuery('DELETE FROM JCSf2SeguridadBundle:Perfil p');
             $query->execute();
-            
+
             $query = $em
                     ->createQuery('DELETE FROM JCSf2SeguridadBundle:Usuario u');
             $query->execute();

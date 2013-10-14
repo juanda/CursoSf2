@@ -96,8 +96,8 @@ class Usuario implements AdvancedUserInterface {
     /**
      * @ORM\ManyToMany(targetEntity="Perfil", inversedBy="usuarios")
      * @ORM\JoinTable(name="sec_usuario_perfil",
-     *      joinColumns={@ORM\JoinColumn(name="persona_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="grupo_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="cascade")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="grupo_id", referencedColumnName="id", onDelete="cascade")}
      *      )
      */
     private $perfiles;

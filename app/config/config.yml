@@ -9,10 +9,16 @@ imports:
 #   servicio_basico:
 #      p1: holaaaaa
 #      p2: adiossss
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\User
+    group:
+       group_class: Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Group
 
 framework:
     #esi:             ~
-    #translator:      { fallback: %locale% }
+    translator:      { fallback: %locale% }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"

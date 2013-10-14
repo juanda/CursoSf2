@@ -1,3 +1,38 @@
+Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Group:
+  group1:
+    __construct: [administrador, a:1:{i:0;s:10:"ROLE_ADMIN";}]
+
+  group2:
+    __construct: [registrado, a:1:{i:0;s:15:"ROLE_REGISTRADO";}]
+
+
+Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\User:
+  user{alice, bob}:
+    username: <current()>
+    usernameCanonical: <current()>
+    email: <current()>@cursosf2.es
+    emailCanonical: <current()>@cursosf2.es
+    enabled: 1
+    salt: salt
+    password: pruebas
+    locked: 0
+    expired: 0
+    credentialsExpired: 0
+    groups: [@group1]
+
+  user{albert, max}:
+    username: <current()>
+    usernameCanonical: <current()>
+    email: <current()>@cursosf2.es
+    emailCanonical: <current()>@cursosf2.es
+    enabled: 1
+    salt: salt
+    password: pruebas
+    locked: 0
+    expired: 0
+    credentialsExpired: 0
+    groups: [@group2]
+
 Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Perfil:
   perfil1:
     nombre: registrado

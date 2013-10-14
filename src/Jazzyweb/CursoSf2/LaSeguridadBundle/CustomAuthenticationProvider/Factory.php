@@ -11,9 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class Factory implements SecurityFactoryInterface{
 
-    public function  __construct(){
-        echo "Factory:Factory/";
-    }
+
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
     {
         echo "Factory:create/";
