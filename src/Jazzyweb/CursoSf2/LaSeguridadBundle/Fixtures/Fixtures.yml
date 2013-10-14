@@ -1,9 +1,9 @@
 Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\Group:
   group1:
-    __construct: [administrador, a:1:{i:0;s:10:"ROLE_ADMIN";}]
+    __construct: [administrador, [ROLE_ADMIN]]
 
   group2:
-    __construct: [registrado, a:1:{i:0;s:15:"ROLE_REGISTRADO";}]
+    __construct: [registrado, [ROLE_REDACTOR]]
 
 
 Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\User:
@@ -14,7 +14,7 @@ Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\User:
     emailCanonical: <current()>@cursosf2.es
     enabled: 1
     salt: salt
-    password: pruebas
+    password: VrgRfiMUKHFd4eaUYVBOfJeBDq4IrWYzkmekRCt/zKwcmJV7nL5mYycjJR+cMi+iT7pJHfgxAuRaCWGo27h5qw==
     locked: 0
     expired: 0
     credentialsExpired: 0
@@ -27,7 +27,7 @@ Jazzyweb\CursoSf2\LaSeguridadBundle\Entity\User:
     emailCanonical: <current()>@cursosf2.es
     enabled: 1
     salt: salt
-    password: pruebas
+    password: VrgRfiMUKHFd4eaUYVBOfJeBDq4IrWYzkmekRCt/zKwcmJV7nL5mYycjJR+cMi+iT7pJHfgxAuRaCWGo27h5qw==
     locked: 0
     expired: 0
     credentialsExpired: 0

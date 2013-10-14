@@ -12,3 +12,9 @@ services:
     custom.security.authentication.listener:
         class:  Jazzyweb\CursoSf2\LaSeguridadBundle\CustomAuthenticationProvider\Listener
         arguments: ["@security.context", "@security.authentication.manager"]
+
+    jc_sf2_seguridad.password_resetting:
+        class: Jazzyweb\CursoSf2\LaSeguridadBundle\FOSListeners\ChangePasswordListener
+        arguments: [@router]
+        tags:
+           - { name: kernel.event_subscriber }
