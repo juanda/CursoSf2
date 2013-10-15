@@ -4,7 +4,8 @@ Guión
 Security
 --------
 
-1. Configuración. security.yml -> security.yml.normal, plantilla profile.html.twig NO FOS
+1. Configuración. security.yml -> security.yml.normal, plantilla profile.html.twig NO FOS,
+   database sakila.
 
 2. Explicar conceptos: user provider, firewall, acces_control, encoder, role_hierarchy
 
