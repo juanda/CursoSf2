@@ -35,16 +35,13 @@ class DefaultController extends Controller {
         );
     }
 
-    public function loginCheckAction() {
-        
-    }
-
     public function noSeguraAction() {
 
         return $this->render('JCSf2SeguridadBundle:Default:noSegura.html.twig');
     }
 
-    public function adminAction() {       
+    public function adminAction() {
+//        var_dump($this->getUser());
         return $this->render('JCSf2SeguridadBundle:Default:admin.html.twig');
     }
 
@@ -60,8 +57,8 @@ class DefaultController extends Controller {
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword('pruebas', $user->getSalt());
 
-        ld($encoder);
-        ldd($password);
+        var_dump($encoder);
+        var_dump($password);exit;
     }
 
 }

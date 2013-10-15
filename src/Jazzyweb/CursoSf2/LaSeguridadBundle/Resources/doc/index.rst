@@ -5,7 +5,7 @@ Security
 --------
 
 1. Configuración. security.yml -> security.yml.normal, plantilla profile.html.twig NO FOS,
-   database sakila.
+   database cursosf2.
 
 2. Explicar conceptos: user provider, firewall, acces_control, encoder, role_hierarchy
 

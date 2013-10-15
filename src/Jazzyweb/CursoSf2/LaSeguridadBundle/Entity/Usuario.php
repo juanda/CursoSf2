@@ -292,50 +292,6 @@ class Usuario implements AdvancedUserInterface {
     }
 
     /**
-     * Get salt
-     *
-     * @return string 
-     */
-    public function getSalt() {
-        return $this->salt;
-    }
-
-    public function eraseCredentials() {
-        
-    }
-
-    public function getRoles() {
-
-        $roles = array();
-        foreach ($this->getPerfiles() as $p) {
-            $roles[] = $p->getRol();
-        }
-
-        return $roles;
-    }
-
-    public function isAccountNonExpired() {
-
-        $hoy = new \DateTime();
-        if ($this->getFechaVencimiento() >= $hoy)
-            return true;
-
-        return false;
-    }
-
-    public function isAccountNonLocked() {
-        return !$this->bloqueado;
-    }
-
-    public function isCredentialsNonExpired() {
-        return true;
-    }
-
-    public function isEnabled() {
-        return !$this->bloqueado;
-    }
-
-    /**
      * Constructor
      */
     public function __construct() {
@@ -395,4 +351,49 @@ class Usuario implements AdvancedUserInterface {
     {
         return $this->email;
     }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt() {
+        return $this->salt;
+    }
+
+    public function eraseCredentials() {
+
+    }
+
+    public function getRoles() {
+
+        $roles = array();
+        foreach ($this->getPerfiles() as $p) {
+            $roles[] = $p->getRol();
+        }
+
+        return $roles;
+    }
+
+    public function isAccountNonExpired() {
+
+        $hoy = new \DateTime();
+        if ($this->getFechaVencimiento() >= $hoy)
+            return true;
+
+        return false;
+    }
+
+    public function isAccountNonLocked() {
+        return !$this->bloqueado;
+    }
+
+    public function isCredentialsNonExpired() {
+        return true;
+    }
+
+    public function isEnabled() {
+        return !$this->bloqueado;
+    }
+
 }
