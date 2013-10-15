@@ -40,19 +40,19 @@ security:
             
         area_segura:
             pattern: ^/seguridad/
-            provider: chain_provider
+            provider: in_memory
 
-#            http_basic:
-#              realm: "Area Segura"
+            http_basic:
+              realm: "Area Segura"
 
-            form_login:
-                login_path: jc_sf2_seguridad_login
-                check_path: jc_sf2_seguridad_login_check
-
-            logout:
-                path: jc_sf2_seguridad_logout
-                target: jc_sf2_seguridad_no_segura
-            anonymous: ~
+#            form_login:
+#                login_path: jc_sf2_seguridad_login
+#                check_path: jc_sf2_seguridad_login_check
+#
+#            logout:
+#                path: jc_sf2_seguridad_logout
+#                target: jc_sf2_seguridad_no_segura
+#            anonymous: ~
 
 #             custom: ~
 

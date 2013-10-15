@@ -19,6 +19,8 @@ security:
             logout:       true
             anonymous:    true
 
+            logout: ~
+
     access_control:
         - { path: ^/seguridad/nosegura, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/seguridad/admin, roles: ROLE_ADMIN }
