@@ -42,16 +42,16 @@ security:
             pattern: ^/seguridad/
             provider: in_memory
 
-            http_basic:
-              realm: "Area Segura"
+#            http_basic:
+#              realm: "Area Segura"
 
-#            form_login:
-#                login_path: jc_sf2_seguridad_login
-#                check_path: jc_sf2_seguridad_login_check
-#
-#            logout:
-#                path: jc_sf2_seguridad_logout
-#                target: jc_sf2_seguridad_no_segura
+            form_login:
+                login_path: jc_sf2_seguridad_login
+                check_path: jc_sf2_seguridad_login_check
+
+            logout:
+                path: jc_sf2_seguridad_logout
+                target: jc_sf2_seguridad_no_segura
 #            anonymous: ~
 
 #             custom: ~
@@ -60,3 +60,7 @@ security:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/seguridad/admin, roles:ROLE_ADMIN }
         - { path: ^/seguridad/redaccion, roles: ROLE_REDACTOR }
+
+    access_decision_manager:
+            # strategy can be: affirmative, unanimous or consensus
+            strategy: unanimous

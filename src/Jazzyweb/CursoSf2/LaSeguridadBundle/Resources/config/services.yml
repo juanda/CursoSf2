@@ -18,3 +18,10 @@ services:
         arguments: [@router]
         tags:
            - { name: kernel.event_subscriber }
+
+#    jc_sf2_seguridad.access.blacklist_voter:
+#        class:      Jazzyweb\CursoSf2\LaSeguridadBundle\Authorization\ClientIpVoter
+#        arguments:  ["@service_container", [123.123.123.123, 171.171.171.171, 127.0.0.1]]
+#        public:     false
+#        tags:
+#           - { name: security.voter }
