@@ -14,8 +14,7 @@ class ConstanteUniversalTypeTest extends TypeTestCase{
         $formData = array(
             'nombre' => 'Constante de la luz',
             'unidad' => 'm/s',
-            'valor' => 300000,
-            'file'  => new UploadedFile('/home/juanda/sites/CursoSf2/kk','name')
+            'valor' => 300000
         );
 
         $type = new ConstanteUniversalType();
